@@ -1,0 +1,12 @@
+$for(months)$
+<section id="$month$">
+  <h2>$englishMonth$</h2>
+  $for(posts)$
+  <section class="post">
+    <time datetime="$date$">$englishDate$</time>
+    <h3><a href="$url$">$title$</a></h3>
+    <div class="teaser">$teaser$</div>
+  </section>
+  $endfor$
+</section>
+$endfor$

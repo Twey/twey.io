@@ -1,0 +1,17 @@
+---
+title: Title — newtitle
+subtitle: Subtitle
+date: 2021-10-05
+---
+
+
+Preamble
+
+== Second header
+Second content footnote:[with a footnote] and a naught
+
+=== Third header
+Third content
+
+== Fourth header
+Fourth content
