@@ -165,6 +165,7 @@ main = hakyll $ do
         let indexCtx = mconcat
               [ listField "posts" postContext (return posts)
               , constField "pageClass" "index"
+              , constField "title" ""
               , tocField "toc" "rawhtml"
               , pageContext
               ]

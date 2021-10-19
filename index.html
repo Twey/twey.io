@@ -1,15 +1,14 @@
----
-title: Home
----
+<div class="symbol">&amp;</div>
 
-<h2>Hello</h2>
+<h1>About</h1>
+<p>
 
-<p>Welcome to my blog!</p>
 
-<p>I've reproduced a list of recent posts here for your reading pleasure:</p>
-
-<h2>Posts</h2>
-
-$partial("templates/archive.html")$
-
-<p>…or you can find more in the <a href="/archive/">archives</a>.</p>
+<ul class="posts">
+$for(posts)$
+<li>
+  <a href="$url$">$title$</a>
+  <time datetime="$date$">($englishDate$)</time>
+</li>
+$endfor$
+</ul>

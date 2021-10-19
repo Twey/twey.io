@@ -51,11 +51,26 @@ h1, h2, h3 {
     width: 10em;
     font-size: 0.9em;
 }
+.index time { font-size: 0.9em; }
 .teaser .sidenote { display: none; }
 .teaser h1,
 .teaser h2,
 .teaser h3,
 .teaser h4 { display: none; }
+
+.index h1 { font-size: 3em; }
+.index nav#sitenav { text-align: left; }
+.index .symbol {
+    font-family: 'EB Garamond 08';
+    font-style: italic;
+    font-size: 10em;
+    text-align: center;
+    transform: rotate(180deg);
+    margin-top: 0;
+    margin-bottom: 3rem;
+    padding-top: 0;
+    line-height: 1em;
+}
 
 .section-heading {
     visibility: hidden;
@@ -167,14 +182,23 @@ article p { text-align: justify; }
 
 body {
     position: relative;
-    margin-top: 1rem;
+}
+
+main, .sidebar {
+    padding-top: 1rem;
 }
 
 footer {
     border-top: 1px dashed var(--colour-very-faded);
     padding-top: 0.5rem;
     font-size: 0.7em;
-    margin-top: 1rem;
+    margin-top: -2rem;
+    height: 2rem;
+}
+footer ul { margin: 0; }
+main {
+    min-height: 100vh;
+    padding-bottom: 2rem;
 }
 footer ul {
     padding-left: 0;
