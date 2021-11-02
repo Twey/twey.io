@@ -1,7 +1,8 @@
 :root {
-    --font-text: "Times New Roman", serif;
+    --font-text: "Liberation Serif", "Times New Roman", serif;
     --font-header: "EB Garamond 08", "Times New Roman", serif;
-    --font-around: "DM Mono", monospace;
+    --font-around: var(--font-header);
+    --font-footer: "DM Mono", monospace;
 }
 @media (prefers-color-scheme: light) {
     :root {
@@ -60,16 +61,23 @@ h1, h2, h3 {
 
 .index h1 { font-size: 3em; }
 .index nav#sitenav { text-align: left; }
-.index .symbol {
-    font-family: 'EB Garamond 08';
-    font-style: italic;
-    font-size: 10em;
-    text-align: center;
+.logo {
+    font-family: 'Euphoria Script', serif;
     transform: rotate(180deg);
-    margin-top: 0;
-    margin-bottom: 3rem;
-    padding-top: 0;
+    font-size: 8em;
+    margin-top: -1.8rem;
     line-height: 1em;
+    margin-bottom: 1rem;
+}
+.logo a:link, .logo a:visited {
+    color: var(--colour-fg);
+}
+.logo a:hover, .logo a:visited:hover {
+    color: var(--colour-highlight-fg);
+}
+.index .logo {
+    font-size: 20em;
+    margin-right: 1rem;
 }
 
 .section-heading {
@@ -85,8 +93,52 @@ a:link, a:visited {
     text-decoration: none;
 }
 
-#sitenav, #docnav, footer {
+#sitenav, #docnav {
     font-family: var(--font-around);
+}
+
+footer { font-family: var(--font-footer); }
+
+footer img { max-height: 1em; width: auto; }
+
+main pre {
+    margin: 0;
+}
+
+main ul li {
+    list-style-type: none;
+}
+
+main ul li {
+    padding-left: 1ch;
+    text-indent: -2.5ch;
+}
+
+main ul li:before {
+    content: '❖ ';
+    vertical-align: middle;
+    color: var(--colour-slightly-faded);
+}
+
+main ul.posts {
+    margin-left: 0;
+    padding-left: 0.5rem;
+}
+main ul.posts li {
+    padding-left: 0;
+    text-indent: 0;
+}
+main ul.posts li:before {
+    content: '';
+}
+main .listingblock {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+ul.posts time {
+    display: block;
+    margin-left: 2em;
 }
 
 #sitenav ul li {
@@ -106,25 +158,34 @@ a:hover, a:visited:hover {
 }
 
 main a:visited {
-    color: var(--colour-highlight-fg);
     border-bottom-color: var(--colour-very-faded);
 }
 
 .doctitle {
     margin-bottom: 2rem;
-    margin-top: 1rem;
     text-align: right;
 }
 .doctitle h1 {
     font-size: 1.5rem;
 }
 .doctitle .subtitle {
-    text-align: right;
+    margin-bottom: 0.5rem;
 }
 
 .sidebar {
     margin-top: 0.3rem;
     padding-right: 1.5rem;
+}
+.sidebar time {
+    font-weight: normal;
+    font-size: 0.9em;
+    font-style: italic;
+}
+.sidebar time:before {
+    content: '― ';
+}
+.sidebar time:after {
+    content: ' ―';
 }
 nav#sitenav {
     font-size: 0.8rem;
@@ -206,8 +267,8 @@ footer ul {
 footer ul li {
     display: inline-block;
 }
-footer ul li:before {
-    content: "/ ";
+footer ul li:not(:first-child):before {
+    content: '/ ';
 }
 
 .sidenote {
