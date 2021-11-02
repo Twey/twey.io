@@ -1,0 +1,27 @@
+<div class="col-lg-3 sidebar">
+  <div class="logo">&amp;</div>
+
+  <header class="doctitle">
+    <h1>$title$</h1>
+    $if(subtitle)$
+    <p class="subtitle">$subtitle$</p>
+    $endif$
+    $if(englishDate)$
+    <time datetime="$date$">$englishDate$</time>
+    $endif$
+  </header>
+
+  $if(toc)$
+  <nav id="docnav">
+    <ul class="nav">
+      $for(toc)$
+      <li class="nav-item"><a class="nav-link" href="#$fragment$">$title$</a></li>
+      $endfor$
+    </ul>
+  </nav>
+  $endif$
+</div>
+
+<main class="col-lg-6">
+  $body$
+</main>

@@ -30,9 +30,9 @@ asciiDoctorOptions =
   , "--out-file", "-"
   , "--attribute", "idprefix="
   , "--attribute", "idseparator=-"
+  , "--attribute", "source-highlighter=rouge"
   , "-"
   ]
-
 
 -- ensure all tags are closed — for snippets we might have cut off in
 -- the middle
@@ -56,6 +56,12 @@ asciiDocCompiler = do
 
 postRoute = foldl composeRoutes idRoute
   [ gsubRoute "^posts/" $ const ""
+  , cleanRoute
+  ]
+
+tagRoute = foldl composeRoutes idRoute
+  [ gsubRoute "[^a-zA-Z0-9/]+" $ const "-"
+  , gsubRoute "[A-Z]+" $ map toLower
   , cleanRoute
   ]
 
@@ -125,9 +131,32 @@ cleanUrlField key = field key $ \i -> do
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
+  match "static/**" $ do
+    route $ gsubRoute "^static/" (const "")
+    compile copyFileCompiler
+
   match "assets/**/*.css" $ do
     route   idRoute
     compile compressCssCompiler
+
+  tags <- buildTags "posts/**" $ fromCapture "tags/*"
+
+  tagsRules tags $ \tag pat -> do
+    route tagRoute
+    compile $ do
+      posts <- loadAllSnapshots pat "rawhtml"
+      let ctx = mconcat
+            [ constField "title" tag
+            , monthsField "months" posts
+            , constField "pageClass" "archive"
+            , tocField "toc" "rawhtml"
+            , pageContext
+            ]
+      makeItem ""
+        >>= loadAndApplyTemplate "templates/archive.html" ctx
+        >>= saveSnapshot "rawhtml"
+        >>= loadAndApplyTemplate "templates/default.html" ctx
+        >>= relativizeUrls
 
   match "assets/**" $ do
     route   idRoute
@@ -149,9 +178,7 @@ main = hakyll $ do
   create ["archive.html"] $ do
     route     cleanRoute
     compile $ do
-      archiveCtx <- loadAll "posts/**"
-        >>= recentFirst
-        >>= return . archiveContext
+      archiveCtx <- archiveContext <$> loadAll "posts/**"
       makeItem ""
         >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
         >>= saveSnapshot "rawhtml"
@@ -243,15 +270,17 @@ monthContext = englishMonthField <> monthField <> postsField
       -> return $ map toLower (monthName month) <> "-" <> show year
 
     postsField :: Context ((Year, MonthOfYear), [Item String])
-    postsField = listFieldWith "posts" postContext (return . snd . itemBody)
+    postsField = listFieldWith "posts" postContext $
+      return . snd . itemBody
 
+monthsField :: String -> [Item String] -> Context a
+monthsField name = listField name monthContext . groupByMonth
 
 archiveContext :: [Item String] -> Context String
 archiveContext posts = mconcat
-  [ listField "posts" postContext (return posts)
-  , constField "pageClass" "archive"
+  [ constField "pageClass" "archive"
   , constField "title" "Archives"
-  , listField "months" monthContext (groupByMonth posts)
+  , monthsField "months" posts
   , tocField "toc" "rawhtml"
   , pageContext
   ]
