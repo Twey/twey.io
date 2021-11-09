@@ -1,0 +1,146 @@
+---
+title: Site design & construction
+subtitle: philosophy and realization
+date: 2021-11-09
+tags: Web, Design, Haskell
+---
+== Design
+
+I often focus too hard on the design of websites to the detriment of
+the content, so the design of this site was intended to front the
+content.  Originally I didn't even have a title on pages, but I've
+never been able to pass up the opportunity for a subtitle. ☺
+
+Still, all metadata about the article is relegated to the sidebar, and
+all of it but the table of contents of the article being read
+disappears into the horizon as the user engages with the content.  In
+the spirit of pass:[<abbr title="You Ain't Gonna Need It">YAGNI</abbr>],
+there are explicitly no up-front categories.  There are tags I can
+link to (e.g. from the home page), but they are not part of the
+interface.
+
+The philosophy of the design is heavily inspired by
+link:https://edwardtufte.github.io/tufte-css/[Tufte CSS], though my
+implementation is almost certainly not as well rounded.  I do,
+however, have a similar implementation of sidenotes. footnote:[Mind
+you, my version is much simplified — the mobile version currently has
+no support for toggling!] I was also particularly struck by the notion
+that structure should be embedded in the text, so my CSS only supports
+two levels of headers.
+
+=== Typography
+
+Much of the design of this site is inspired by
+link:http://www.georgduffner.at/ebgaramond/[EB Garamond], Georg
+Duffner's excellent digitization of Claude Garamont's classic
+typeface.  As a culture, even as we gain, we have lost much to the
+advent of the typewriter, the supremacy of ASCII, and the regimented
+binary thinking that computers demand of us.  I hope the elegant
+letterforms, with typographical colour reminiscent of ink on a page,
+can serve as a ‘memento analogou’ that the digital exists to serve the
+needs of the analogue, never the other way around. footnote:[In fact I
+deliberately chose the variant intended for smaller point sizes, which
+amplifies this effect in a way I enjoy.  Sue me ☺]
+
+The logo is rendered in
+link:https://fonts.google.com/specimen/Euphoria+Script[Euphoria
+Script] by link:https://typesenses.com/[Sabrina Lopez].  It's a
+stylized version of the turned ampersand, the symbol for ‘par’ or
+externally-scheduled parallel execution in
+link:https://plato.stanford.edu/entries/logic-linear/[linear logic].
+
+Code is rendered in link:https://github.com/googlefonts/dm-mono[DM
+Mono], with thanks to Saoirse/withoutboats, whose
+link:https://without.boats/[beautiful (and informative) website] first
+introduced me to it when I was reading about
+link:https://without.boats/blog/ringbahn/[Ringbahn], their
+implementation of a safe API to
+link:https://lwn.net/Articles/776703[`io_uring`] in
+link:https://www.rust-lang.org/[Rust].
+
+The body text is rendered in plain old Times New Roman, or its free
+substitute
+link:https://en.wikipedia.org/wiki/Liberation_fonts[Liberation Serif]
+if available on your system, to minimize distractions whilst reading.
+
+== Technology
+
+This is a static site, backed by
+link:https://jaspervdj.be/hakyll/[Hakyll].  I looked around at several
+options, but I eventually ended up back where I started — Hakyll has
+been my mainstay for my personal website since at least 2010, for
+several reasons:
+
+- Haskell as a language seems well-suited for Web development — its
+  productivity allows me to minimize the code I need to write, while
+  its type system helps me catch silly mistakes;
+- Hakyll has a simple DSL that can get a site up and running in just a
+  few commands (the full Haskell code for this site, which includes
+  some features I'm not using at the moment, runs to about 300 lines).
+
+At the time of posting, a couple of other alternatives appealed to me.
+My first port of call was link:https://github.com/srid/rib[Rib], which
+has been superseded by link:https://ema.srid.ca/[Ema].  I gave it a
+go, but found Ema introduced a lot of complexity for its hot-reload
+functionality, a use-case I don't care about much.
+
+I also tried link:https://hackage.haskell.org/package/slick[Slick],
+primarily because for some time I've been meaning to get more
+comfortable with link:https://shakebuild.com/[Shake] after reading the
+excellent
+link:https://www.microsoft.com/en-us/research/uploads/prod/2018/03/build-systems.pdf[Build
+Systems à la Carte] paper.  But I found that Slick's defaults were not
+a great match for me.  I much prefer structured-XML Heist templates to
+unstructured-text Mustache templates, and as a result I spent some
+time trying to get
+link:https://hackage.haskell.org/package/heist[Heist] working with
+Slick.  As I did so, I came to a few realizations:
+
+- Once you're not using Mustache templates, Slick doesn't really provide much over raw Shake;
+- Shake is very powerful and general-purpose, and therefore
+  significantly less ergonomic for site generation than Hakyll's
+  equivalent `Rules` and `Compiler` monads;
+- Heist's new compiled mode is heavily advised by
+  link:https://github.com/kaol/heist-tutorial/blob/master/tutorial.md[modern
+  resources], but again adds a lot of complexity to aid runtime
+  performance, something I don't care about too much.
+
+After spending a while poring over Heist source and trying to get
+various things to work, I eventually realized I was spending too much
+time fiddling with website technology instead of writing content, so I
+fell back to my old familiar Hakyll, and replaced my 6+ source files
+with one `site.hs`.  Some day, I would like to build a type-safe
+templating language that understands both its target language and the
+types of its arguments.
+
+I also owe an acknowledgement to
+link:https://www.rohanjain.in/hakyll-clean-urls/[Rohan Jain] for
+reminding me that clean URLs are possible in Hakyll.
+
+== Content
+
+One big change from my previous implementation is that I have two
+content paths: one raw HTML path, for pages that require precise
+control over the generated markup; and one in which the content is
+written in link:https://asciidoc.org/[AsciiDoc], using
+link:https://asciidoctor.org/[AsciiDoctor].
+
+I'm a big fan of AsciiDoc as a content language.  It presents an
+ergonomic frontend like Markdown, but unlike Markdown compiles to
+link:https://docbook.org/[DocBook], a semantically rich language with
+many backends and a well-specified standard.  The result of this is
+that AsciiDoc content is somewhat insulated from the inevitable
+vagaries and inconsistencies of a language designed to be written
+conveniently by humans.
+
+As an implementation, AsciiDoctor also has the advantage of being
+highly customizable, which allows me to produce content well-suited to
+my website, rather than having to adjust my templates and stylesheets
+to match the whims of my backend.
+
+My aim here is that I should be able to produce content with very
+little overhead where required, allowing me to write short pieces to
+capture the state of a problem I'm thinking about, without having to
+think too hard about it and distracting myself from the original
+concern — an aim at which I have obviously failed in my very first
+post!
