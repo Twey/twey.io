@@ -192,7 +192,7 @@ main = hakyll $ do
         let indexCtx = mconcat
               [ listField "posts" postContext (return posts)
               , constField "pageClass" "index"
-              , constField "title" ""
+              , constField "title" "twey.io"
               , tocField "toc" "rawhtml"
               , pageContext
               ]

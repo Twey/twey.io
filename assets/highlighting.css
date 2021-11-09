@@ -1,10 +1,13 @@
 .highlight {
-    color:black;
-    background-color:#ddd;
+    color: var(--colour-text);
+    background-color: var(--colour-highlight-bg);
 }
 
 .highlight .hll{}
-.highlight .c{color: #777;font-family:var(--font-text)}
+.highlight .c {
+    color: var(--colour-slightly-faded);
+    font-family: var(--font-text);
+}
 .highlight .err{}
 .highlight .g{}
 .highlight .k{font-weight: bold}
@@ -35,7 +38,7 @@
 .highlight .kt{}
 .highlight .ld{}
 .highlight .m{}
-.highlight .s{}
+.highlight .s{color:var(--colour-highlight-fg)}
 .highlight .na{}
 .highlight .nb{}
 .highlight .nc{}
@@ -73,4 +76,7 @@
 .highlight .vi{}
 .highlight .il{}
 
-.highlight .linenos { padding: 0.5rem; font-family: var(--font-text); }
+.highlight .linenos {
+    padding: 0.5rem;
+    font-family: var(--font-text);
+}
