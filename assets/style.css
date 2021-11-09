@@ -1,8 +1,9 @@
 :root {
     --font-text: "Liberation Serif", "Times New Roman", serif;
-    --font-header: "EB Garamond 08", "Times New Roman", serif;
+    --font-header: "EB Garamond", "Times New Roman", serif;
     --font-around: var(--font-header);
-    --font-footer: "DM Mono", monospace;
+    --font-code: "DM Mono", monospace;
+    --font-footer: var(--font-code);
 }
 @media (prefers-color-scheme: light) {
     :root {
@@ -18,7 +19,7 @@
 }
 @media (prefers-color-scheme: dark) {
     :root {
-        --colour-highlight-fg: #903;
+        --colour-highlight-fg: #a03;
         --colour-highlight-bg: #222;
         --colour-bg: #111;
         --colour-fg: #eee;
@@ -43,6 +44,10 @@ header.doctitle {
 h1, h2, h3 {
     font-family: var(--font-header);
 }
+code {
+    color: var(--colour-slightly-faded);
+    font-family: var(--font-code);
+}
 .archive h3 {
     font-size: 1.3em;
 }
@@ -58,6 +63,8 @@ h1, h2, h3 {
 .teaser h2,
 .teaser h3,
 .teaser h4 { display: none; }
+
+.index .doctitle { display: none; }
 
 .index h1 { font-size: 3em; }
 .index nav#sitenav { text-align: left; }
@@ -99,25 +106,31 @@ a:link, a:visited {
 
 footer { font-family: var(--font-footer); }
 
-footer img { max-height: 1em; width: auto; }
+footer img {
+    max-height: 1em;
+    width: auto;
+    vertical-align: -0.1em;
+}
 
 main pre {
     margin: 0;
+    font-family: var(--font-code);
 }
 
-main ul li {
-    list-style-type: none;
+main ul {
+    margin-left: 0;
+    padding-left: 1em;
+    list-style: symbols(cyclic '❧');
 }
 
-main ul li {
-    padding-left: 1ch;
-    text-indent: -2.5ch;
-}
-
-main ul li:before {
-    content: '❖ ';
-    vertical-align: middle;
+main ul li::marker {
     color: var(--colour-slightly-faded);
+}
+
+main ul li {
+}
+
+main ul li {
 }
 
 main ul.posts {
@@ -173,8 +186,9 @@ main a:visited {
 }
 
 .sidebar {
-    margin-top: 0.3rem;
+    padding-top: 0.3rem;
     padding-right: 1.5rem;
+    height: 100%;
 }
 .sidebar time {
     font-weight: normal;
@@ -220,26 +234,34 @@ nav#docnav a.nav-link.active {
     color: var(--colour-fg);
 }
 
-main p:first-of-type {
+main h2 + p:first-of-type {
     min-height: 3em;
 }
 
-main p:first-of-type:first-letter {
+main h2 + p:first-of-type::first-letter {
     color: var(--colour-highlight-fg);
     background-color: var(--colour-highlight-bg);
     font-family: var(--font-header);
-    font-size: 2.9em;
+    font-size: 2.8em;
     float: left;
+    /* Hack:
+       Chrome draws the background up to line-height,
+       Firefox only draws it behind the letter's bounding box.
+       But, Firefox ignores line-height here, and Chrome doesn't.
+       So we compensate.
+       http://nicolasgallagher.com/css-typography-experiment/demo/bugs.html#firstletter-float-alt
+    */
+    line-height: 0.7em;
     padding: 0.17em 0.1em;
+    margin: 0;
     margin-right: 0.1em;
-    margin-bottom: 0;
 }
 
-article p:first-of-type:first-line {
+article h2 + p:first-of-type:first-line {
     font-variant: small-caps;
 }
 
-article p { text-align: justify; }
+article { text-align: justify; }
 
 body {
     position: relative;
@@ -257,7 +279,7 @@ footer {
     height: 2rem;
 }
 footer ul { margin: 0; }
-main {
+body>.container {
     min-height: 100vh;
     padding-bottom: 2rem;
 }
@@ -278,11 +300,17 @@ footer ul li:not(:first-child):before {
     color: var(--colour-slightly-faded);
 }
 
+@media (max-width: 991px) {
+    .sidenote::before {content: '('}
+    .sidenote::after {content: ')'}
+}
+
 @media (min-width: 992px) {
     .sidenote {
         float: right;
         clear: right;
         margin-right: -55%;
+        margin-top: -2rem;
         width: 50%;
         position: relative;
     }

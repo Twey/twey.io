@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>$title$</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon.png">
     <link
       rel="stylesheet"
       type="text/css"
@@ -13,7 +14,7 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap">
+      href="https://fonts.googleapis.com/css2?family=Euphoria+Script&family=DM+Mono&display=swap">
     <link rel="stylesheet" type="text/css" href="/assets/EBGaramond/font.css">
     <link rel="stylesheet" type="text/css" href="/assets/style.css">
     <link rel="stylesheet" type="text/css" href="/assets/highlighting.css">
@@ -26,6 +27,7 @@
     $if(toc)$
     data-bs-spy="scroll"
     data-bs-target="docnav"
+    data-bs-offset="100"
     $endif$
 
     $if(pageClass)$
@@ -33,28 +35,8 @@
     $endif$>
     <div class="container">
       <div class="row">
-        <div class="col-lg-3 sidebar">
-          <div class="logo"><a href="/">&amp;</a></div>
-
-          <header class="doctitle">
-            <h1>$title$</h1>
-            $if(subtitle)$
-            <p class="subtitle">$subtitle$</p>
-            $endif$
-            $if(englishDate)$
-            <time datetime="$date$">$englishDate$</time>
-            $endif$
-          </header>
-
-          $if(toc)$
-          <nav id="docnav">
-            <ul class="nav">
-              $for(toc)$
-              <li class="nav-item"><a class="nav-link" href="#$fragment$">$title$</a></li>
-              $endfor$
-            </ul>
-          </nav>
-          $endif$
+        <div class="col-lg-3">
+          $partial("templates/sidebar.html")$
         </div>
 
         <main class="col-lg-6">
@@ -62,12 +44,13 @@
         </main>
       </div>
     </div>
+
     <footer>
       <div class="container">
         <div class="row">
           <div class="col-lg-3">
           </div>
-          <div class="col-lg-9">
+          <div class="col-lg-6">
             <ul>
               <li><a href="mailto:twey@twey.co.uk">@</a></li>
               <li>
