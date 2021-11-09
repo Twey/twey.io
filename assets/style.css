@@ -44,6 +44,8 @@ header.doctitle {
 h1, h2, h3 {
     font-family: var(--font-header);
 }
+h3 { font-size: 1.4rem; }
+
 code {
     color: var(--colour-slightly-faded);
     font-family: var(--font-code);
@@ -120,30 +122,20 @@ main pre {
 main ul {
     margin-left: 0;
     padding-left: 1em;
-    list-style: symbols(cyclic '❧');
+}
+
+main ul li::marker {
+    content: '❧ ';
+    height: 1em;
+}
+
+main ul li {
 }
 
 main ul li::marker {
     color: var(--colour-slightly-faded);
 }
 
-main ul li {
-}
-
-main ul li {
-}
-
-main ul.posts {
-    margin-left: 0;
-    padding-left: 0.5rem;
-}
-main ul.posts li {
-    padding-left: 0;
-    text-indent: 0;
-}
-main ul.posts li:before {
-    content: '';
-}
 main .listingblock {
     margin-bottom: 1rem;
     margin-top: 1rem;
