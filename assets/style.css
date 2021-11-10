@@ -5,17 +5,15 @@
     --font-code: "DM Mono", monospace;
     --font-footer: var(--font-code);
 }
-@media (prefers-color-scheme: light) {
-    :root {
-        --colour-highlight-fg: #903;
-        --colour-highlight-bg: #ddd;
-        --colour-bg: #eee;
-        --colour-fg: black;
-        --colour-slightly-faded: #666;
-        --colour-faded: #888;
-        --colour-very-faded: #ddd;
-        --colour-bright-highlight: red;
-    }
+:root {
+    --colour-highlight-fg: #903;
+    --colour-highlight-bg: #ddd;
+    --colour-bg: #eee;
+    --colour-fg: black;
+    --colour-slightly-faded: #666;
+    --colour-faded: #888;
+    --colour-very-faded: #ddd;
+    --colour-bright-highlight: red;
 }
 @media (prefers-color-scheme: dark) {
     :root {
@@ -126,10 +124,19 @@ main ul {
 
 main ul li::marker {
     content: '❧ ';
-    height: 1em;
 }
 
-main ul li {
+main hr, main hr:not([size]) {
+    border: 0;
+    height: 4rem;
+    margin: 1em;
+    background: center/contain url(divider.svg) transparent no-repeat;
+}
+
+@media (prefers-color-scheme: dark) {
+    main hr, main hr:not([size]) {
+        filter: invert(100%);
+    }
 }
 
 main ul li::marker {

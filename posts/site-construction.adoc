@@ -9,7 +9,7 @@ tags: Web, Design, Haskell
 I often focus too hard on the design of websites to the detriment of
 the content, so the design of this site was intended to front the
 content.  Originally I didn't even have a title on pages, but I've
-never been able to pass up the opportunity for a subtitle. ☺
+never been able to pass up the opportunity for a subtitle…
 
 Still, all metadata about the article is relegated to the sidebar, and
 all of it but the table of contents of the article being read
@@ -144,3 +144,8 @@ capture the state of a problem I'm thinking about, without having to
 think too hard about it and distracting myself from the original
 concern — an aim at which I have obviously failed in my very first
 post!
+
+'''
+
+Source for this website can be found
+link:https://github.com/Twey/twey.io[on GitHub].
