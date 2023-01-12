@@ -291,7 +291,7 @@ article h2 + p:first-of-type:first-line {
     font-variant: small-caps;
 }
 
-article { text-align: justify; }
+article p { text-align: justify; }
 
 article .quoteblock {
     font-style: italic;
