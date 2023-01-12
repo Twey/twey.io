@@ -1,6 +1,6 @@
 .highlight {
     color: var(--colour-text);
-    background-color: var(--colour-highlight-bg);
+    background-color: var(--colour-slight-highlight-bg);
 }
 
 .highlight .hll{}
@@ -76,7 +76,12 @@
 .highlight .vi{}
 .highlight .il{}
 
+.highlight {
+    padding: 0.5rem 1rem;
+}
+
 .highlight .linenos {
-    padding: 0.5rem;
+    padding-right: 0.5rem;
     font-family: var(--font-text);
+    color: var(--colour-faded);
 }
