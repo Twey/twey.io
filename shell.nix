@@ -4,5 +4,9 @@ let
   asciidoctor = callPackage nix/asciidoctor { };
 in
 mkShell {
-  buildInputs = [ ghc haskellPackages.hakyll asciidoctor bashInteractive ];
+  buildInputs = [
+    gnumake ghc haskellPackages.hakyll asciidoctor
+    (python3.withPackages (ps: [ps.fontforge])) ttfautohint-nox
+    bashInteractive
+  ];
 }
