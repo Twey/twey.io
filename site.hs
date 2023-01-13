@@ -182,16 +182,16 @@ main = hakyll $ do
     route     postRoute
     compile $ pandocCompiler >>= compilePost
 
-  match "index.html" $ do
+  create ["index.html"] $ do
     route idRoute
     compile $ do
       posts <- recentFirst =<< loadAll "posts/**"
-      let indexCtx = indexContext posts
-      getResourceBody
-        >>= applyAsTemplate indexCtx
+      let ctx = indexContext posts
+      makeItem ""
+        >>= loadAndApplyTemplate "templates/archive.html" ctx
         >>= saveSnapshot "rawhtml"
-        >>= loadAndApplyTemplate "templates/index.html" indexCtx
-        >>= loadAndApplyTemplate "templates/default.html" indexCtx
+        >>= loadAndApplyTemplate "templates/index.html" ctx
+        >>= loadAndApplyTemplate "templates/default.html" ctx
         >>= relativizeUrls
 
     match "templates/*" $ compile templateBodyCompiler
