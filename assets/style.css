@@ -60,15 +60,9 @@ code {
 }
 
 /* index */
-.index .about {
-    font-size: 1.5em;
-    border: 1px solid var(--colour-slightly-faded);
-    padding: 1em;
-    margin: 1rem 10rem;
-    margin-top: 0;
-}
-.index .about-padding { height: 2rem; }
-.index .about h2 { font-size: 2em; margin-top: 0; }
+.index { padding-top: 4em; }
+.index .about { font-size: 1.5em; text-align: right; margin-top: 2em; }
+.index .about h2 { font-size: 2em; }
 .index .doctitle { display: none; }
 
 .index h1 { font-size: 3em; }
@@ -76,6 +70,8 @@ code {
 .logo {
     font-family: 'euphoria script', serif;
     transform: rotate(180deg);
+}
+.sidebar .logo {
     font-size: 8em;
     margin-top: -1.8rem;
     line-height: 1em;
@@ -88,7 +84,9 @@ code {
     color: var(--colour-highlight-fg);
 }
 .index .logo {
-    font-size: 10em;
+    line-height: 3em;
+    height: 1.8em;
+    font-size: 20em;
     margin-right: 2rem;
     margin-bottom: -1em;
 }

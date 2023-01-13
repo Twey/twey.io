@@ -113,14 +113,13 @@ tocField name snapshot = listFieldWith name sectionContext $ \item -> do
   return $ do
     TST.TagBranch "section" as cs <- tags
     id <- maybeToList $ lookup "id" as
-    [flip itemSetBody item $ Section { sectionFragment = id, sectionTitle = renderTags' (getTitle cs) }]
+    title <- maybeToList $ getTitle cs
+    [flip itemSetBody item $ Section { sectionFragment = id, sectionTitle = renderTags' title }]
   where
     sectionContext :: Context Section
     sectionContext = field "fragment" (return . sectionFragment . itemBody)
                   <> field "title" (return . sectionTitle . itemBody)
-    getTitle xs = do
-      TST.TagBranch "h2" _ c <- xs
-      TST.flattenTree c
+    getTitle xs = TST.flattenTree <$> listToMaybe [ c | TST.TagBranch "h2" _ c <- xs ]
 
 data Header = Header
   { headerTag :: TS.Tag String
