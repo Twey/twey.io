@@ -58,22 +58,17 @@ code {
     font-family: var(--font-code);
     padding: 0.1em 0.3em;
 }
-.archive h3 {
-    font-size: 1.3em;
-}
-.archive time {
-    font-style: italic;
-    float: right;
-    width: 10em;
-    font-size: 0.9em;
-}
-.index time { font-size: 0.9em; }
-.teaser .sidenote { display: none; }
-.teaser h1,
-.teaser h2,
-.teaser h3,
-.teaser h4 { display: none; }
 
+/* index */
+.index .about {
+    font-size: 1.5em;
+    border: 1px solid var(--colour-slightly-faded);
+    padding: 1em;
+    margin: 1rem 10rem;
+    margin-top: 0;
+}
+.index .about-padding { height: 2rem; }
+.index .about h2 { font-size: 2em; margin-top: 0; }
 .index .doctitle { display: none; }
 
 .index h1 { font-size: 3em; }
@@ -93,9 +88,25 @@ code {
     color: var(--colour-highlight-fg);
 }
 .index .logo {
-    font-size: 20em;
-    margin-right: 1rem;
+    font-size: 10em;
+    margin-right: 2rem;
+    margin-bottom: -1em;
 }
+.index h3 {
+    font-size: 1.3em;
+}
+.index .sidebar { margin-top: 1em; }
+.index time {
+    font-style: italic;
+    float: right;
+    width: 10em;
+    font-size: 0.9em;
+}
+.teaser .sidenote { display: none; }
+.teaser h1,
+.teaser h2,
+.teaser h3,
+.teaser h4 { display: none; }
 
 .section-heading {
     visibility: hidden;
@@ -293,14 +304,14 @@ article h2 + p:first-of-type:first-line {
     font-variant: small-caps;
 }
 
-article p { text-align: justify; }
+article p, .teaser p { text-align: justify; }
 
-article .quoteblock {
+.quoteblock {
     font-style: italic;
     margin: 1em;
 }
 
-article .quoteblock blockquote {
+.quoteblock blockquote {
     padding-left: 1em;
     margin-bottom: 0.3em;
     border-left: 2px solid var(--colour-highlight-bg);
@@ -346,8 +357,25 @@ footer ul li:not(:first-child):before {
 }
 
 @media (max-width: 991px) {
-    .sidenote::before {content: '('}
-    .sidenote::after {content: ')'}
+    .sidenote { display: block; margin: 1em; }
+    label.sidenote-toggle {
+        display: inline-block;
+        cursor: pointer;
+        font-family: 'EB Garamond 12';
+        color: var(--colour-highlight-fg);
+    }
+    input.sidenote-toggle:not(:checked) + label.sidenote-toggle::before {
+        content: '❦';
+        margin-right: 0.3em;
+    }
+    input.sidenote-toggle:checked + label.sidenote-toggle::before {
+        content: '❧';
+    }
+    input.sidenote-toggle { display: none; }
+    input.sidenote-toggle:not(:checked) + label.sidenote-toggle + .sidenote {
+        display: none;
+    }
+
 }
 
 @media (min-width: 992px) {

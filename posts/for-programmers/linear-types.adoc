@@ -158,19 +158,19 @@ but there is a subtlety here.
 
 In these examples, we've been working with Rust.  Rust is an _affine_
 language by its nature.  An affine language, like a linear language,
-forbids arbitrary duplication of values. footnote:[The difference is
-that in an affine language we are allowed to _drop_ any value whenever
-we please.  In a truly linear language, values are not only
-_resources_ that may be consumed by the program to help it perform its
-goal, but also _obligations_ that must be discharged: if a program has
-a value of type `A` in scope, it _must_ perform an operation that
-disposes of the `A`.  This can be used to ensure that, for example,
-the program always correctly cleans up any memory it owns or files it
-has created, or that it always executes a protocol correctly through
-to its end.]  If this were not the case, our `With` above would be
-essentially the same as `Times`: we could obtain both an `A` by
-calling `awithb.left()` as well as a `B` by calling `awithb.right()`
-and thereby write the function:
+forbids arbitrary duplication of values. footnote:affinity[The
+difference is that in an affine language we are allowed to _drop_ any
+value whenever we please.  In a truly linear language, values are not
+only _resources_ that may be consumed by the program to help it
+perform its goal, but also _obligations_ that must be discharged: if a
+program has a value of type `A` in scope, it _must_ perform an
+operation that disposes of the `A`.  This can be used to ensure that,
+for example, the program always correctly cleans up any memory it owns
+or files it has created, or that it always executes a protocol
+correctly through to its end.]  If this were not the case, our `With`
+above would be essentially the same as `Times`: we could obtain both
+an `A` by calling `awithb.left()` as well as a `B` by calling
+`awithb.right()` and thereby write the function:
 
 [source,rust]
 ----

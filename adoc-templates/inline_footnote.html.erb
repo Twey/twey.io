@@ -1,1 +1,5 @@
+<% $sidenote_id = 0 unless defined?($sidenote_id) %>
+<input type="checkbox" id="sidenote:<%= $sidenote_id %>" class="sidenote-toggle">
+<label for="sidenote:<%= $sidenote_id %>" class="sidenote-toggle"></label>
 <span class="sidenote"><%= text %></span>
+<% $sidenote_id += 1 %>

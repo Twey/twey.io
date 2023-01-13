@@ -69,6 +69,7 @@ compilePost :: Item String -> Compiler (Item String)
 compilePost = foldl ((>=>)) return
   [ saveSnapshot "rawhtml"
   , loadAndApplyTemplate "templates/post.html" postContext
+  , loadAndApplyTemplate "templates/page.html" postContext
   , loadAndApplyTemplate "templates/default.html" postContext
   , compilePage
   ]
@@ -154,6 +155,7 @@ main = hakyll $ do
       makeItem ""
         >>= loadAndApplyTemplate "templates/archive.html" ctx
         >>= saveSnapshot "rawhtml"
+        >>= loadAndApplyTemplate "templates/page.html" ctx
         >>= loadAndApplyTemplate "templates/default.html" ctx
         >>= relativizeUrls
 
@@ -174,37 +176,19 @@ main = hakyll $ do
     route     postRoute
     compile $ pandocCompiler >>= compilePost
 
-  create ["archive.html"] $ do
-    route     cleanRoute
+  match "index.html" $ do
+    route idRoute
     compile $ do
-      archiveCtx <- archiveContext <$> loadAll "posts/**"
-      makeItem ""
-        >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
+      posts <- recentFirst =<< loadAll "posts/**"
+      let indexCtx = indexContext posts
+      getResourceBody
+        >>= applyAsTemplate indexCtx
         >>= saveSnapshot "rawhtml"
-        >>= loadAndApplyTemplate "templates/default.html" archiveCtx
+        >>= loadAndApplyTemplate "templates/index.html" indexCtx
+        >>= loadAndApplyTemplate "templates/default.html" indexCtx
         >>= relativizeUrls
 
-    match "index.html" $ do
-      route idRoute
-      compile $ do
-        posts <- recentFirst =<< loadAll "posts/**"
-        let indexCtx = mconcat
-              [ listField "posts" postContext (return posts)
-              , constField "pageClass" "index"
-              , constField "title" "twey.io"
-              , tocField "toc" "rawhtml"
-              , pageContext
-              ]
-        getResourceBody
-          >>= applyAsTemplate indexCtx
-          >>= saveSnapshot "rawhtml"
-          >>= loadAndApplyTemplate "templates/default.html" indexCtx
-          >>= relativizeUrls
-
     match "templates/*" $ compile templateBodyCompiler
-
-archiveField :: Item String -> Context a
-archiveField = undefined
 
 englishDateField :: String -> Context a
 englishDateField key = field key $ \i -> do
@@ -275,10 +259,10 @@ monthContext = englishMonthField <> monthField <> postsField
 monthsField :: String -> [Item String] -> Context a
 monthsField name = listField name monthContext . groupByMonth
 
-archiveContext :: [Item String] -> Context String
-archiveContext posts = mconcat
-  [ constField "pageClass" "archive"
-  , constField "title" "Archives"
+indexContext :: [Item String] -> Context String
+indexContext posts = mconcat
+  [ constField "pageClass" "index"
+  , constField "title" "twey.io"
   , monthsField "months" posts
   , tocField "toc" "rawhtml"
   , pageContext

@@ -1,1 +1,3 @@
 <p><%= content %></p>
+<% if !defined?($not_teaser) %><!--more--><% end %>
+<% $not_teaser = true %>
