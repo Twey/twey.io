@@ -65,6 +65,8 @@ code {
 .index .about h2 { font-size: 2em; }
 .index .doctitle { display: none; }
 
+
+
 .index h1 { font-size: 3em; }
 .index nav#sitenav { text-align: left; }
 .logo {
@@ -84,10 +86,10 @@ code {
     color: var(--colour-highlight-fg);
 }
 .index .logo {
-    line-height: 3em;
-    height: 1.8em;
     font-size: 20em;
-    margin-bottom: -1em;
+    margin-right: 1.5rem;
+    margin-bottom: -5rem;
+    margin-top: -9rem;
 }
 .index h3 {
     font-size: 1.3em;
@@ -355,6 +357,8 @@ footer ul li:not(:first-child):before {
 }
 
 @media (max-width: 991px) {
+    .about-row { min-height: 100vh; }
+
     .sidenote { display: block; margin: 1em; }
     label.sidenote-toggle {
         display: inline-block;
@@ -373,7 +377,6 @@ footer ul li:not(:first-child):before {
     input.sidenote-toggle:not(:checked) + label.sidenote-toggle + .sidenote {
         display: none;
     }
-
 }
 
 @media (min-width: 992px) {
