@@ -99,6 +99,7 @@ code {
 .index time {
     font-style: italic;
     float: right;
+    text-align: right;
     width: 10em;
     font-size: 0.9em;
 }
