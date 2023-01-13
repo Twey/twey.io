@@ -139,6 +139,8 @@ main li {
 
 main ul li::marker {
     content: '❧';
+    font-family: 'EB Garamond 12';
+    font-feature-settings: "cv90"; /* ornate ❧ */
 }
 
 main ol li::marker {

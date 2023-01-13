@@ -29,15 +29,13 @@ and must be used, exactly once.
 == Why are linear types interesting?
 
 Linear types allow the programmer to model systems in which using
-something changes its type.
+something changes its type.  A common example involves a ‘cost’: if I
+have a vending machine that will give me either a chocolate bar or a
+packet of crisps for a dollar, I cannot simply put the dollar in twice
+and get both.  Using the dollar for one item _consumes_ the dollar,
+and it is no longer available to get the other item.
 
-A usual example involves a ‘cost’: if I have a vending machine that
-will give me either a chocolate bar or a packet of crisps for a
-dollar, I cannot simply put the dollar in twice and get both.  Using
-the dollar for one item _consumes_ the dollar, and it is no longer
-available to get the other item.
-
-A more common example in everyday programming involves objects that
+A more usual example in everyday programming involves objects that
 have certain protocols (a sequencing of the available operations) that
 must be obeyed.  For example, once a file handle has been closed, it
 can no longer be written to: from the programmer's perspective, the
@@ -116,7 +114,8 @@ value.  If some code has some `Times<A, B>` in scope,
 
 [source,rust]
 ----
-let atimesb: Times<A, B> = make_ATimesB();
+let atimesb: Times<A, B>
+  = make_ATimesB();
 …
 ----
 
@@ -175,7 +174,9 @@ and thereby write the function:
 
 [source,rust]
 ----
-fn with_to_times<A, B>(awithb: With<A, B>) -> Times<A, B> {
+fn with_to_times<A, B>(
+  awithb: With<A, B>,
+) -> Times<A, B> {
   Times {
     left:  awithb.left(),
     right: awithb.right(),
@@ -224,7 +225,10 @@ It is tempting to use the Rust function type to define _A_ ⅋ _B_ as:
 [source,rust]
 ----
 impl<A, B> Par<A, B> {
-  fn par(self, left: impl FnOnce(A) -> !) -> B { … }
+  fn par(
+    self,
+    left: impl FnOnce(A) -> !,
+  ) -> B { … }
 }
 ----
 
