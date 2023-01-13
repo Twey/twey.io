@@ -19,18 +19,22 @@ import Hakyll.Core.Compiler.Internal
 type MonthOfYear = Int
 type Year = Integer
 
-cleanRoute :: Routes
-cleanRoute = customRoute $ \ident ->
-  replaceExtension (toFilePath ident) "" </> "index.html"
+dirPath :: Identifier -> FilePath
+dirPath ident = replaceExtension (toFilePath ident) ""
 
-asciiDoctorOptions :: [String]
-asciiDoctorOptions =
+cleanRoute :: Routes
+cleanRoute = customRoute $ \ident -> dirPath ident </> "index.html"
+
+asciiDoctorOptions :: FilePath -> [String]
+asciiDoctorOptions out =
   [ "--template-dir", "adoc-templates"
   , "--embedded"
   , "--out-file", "-"
+  , "-r", "asciidoctor-diagram"
   , "--attribute", "idprefix="
   , "--attribute", "idseparator=-"
   , "--attribute", "source-highlighter=rouge"
+  , "--attribute", "imagesoutdir=_site/" ++ takeDirectory out
   , "-"
   ]
 
@@ -51,8 +55,11 @@ asciiDocCompiler :: Rules (Compiler (Item String))
 asciiDocCompiler = do
   match "adoc-templates/*" $ compile getResourceBody
   dep <- makePatternDependency "adoc-templates/*"
-  rulesExtraDependencies [dep] . return $ getResourceBody
-    >>= withItemBody (unixFilter "asciidoctor" asciiDoctorOptions)
+  rulesExtraDependencies [dep] . return $ do
+    body <- getResourceBody
+    Just route <- getUnderlying >>= getRoute
+    debugCompiler (show route)
+    withItemBody (unixFilter "asciidoctor" (asciiDoctorOptions route)) body
 
 postRoute = foldl composeRoutes idRoute
   [ gsubRoute "^posts/" $ const ""
