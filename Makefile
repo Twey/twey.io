@@ -1,6 +1,3 @@
-fonts:
-	make -C EB-Garamond WEB=../assets/fonts/eb-garamond webfonts
-
 build: fonts
 	cabal run . -- build
 
@@ -10,4 +7,7 @@ rebuild: fonts
 push: build
 	rsync -av _site/ twey.co.uk:www.io/
 
-.PHONY: build rebuild push
+fonts:
+	make -C EB-Garamond WEB=../assets/fonts/eb-garamond webfonts
+
+.PHONY: build rebuild push fonts
