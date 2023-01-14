@@ -246,11 +246,6 @@ nav#sitenav a:link {
     border-bottom: 1px dashed;
 }
 
-nav#docnav {
-    position: sticky;
-    top: 1em;
-}
-
 nav#docnav ul.nav {
     flex-direction: column;
     align-items: flex-end;
@@ -387,6 +382,11 @@ footer ul li:not(:first-child):before {
 
     .sidenote-toggle {
         display: none;
+    }
+
+    nav#docnav {
+        position: sticky;
+        top: 1em;
     }
 }
 
