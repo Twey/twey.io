@@ -6,24 +6,24 @@
     --font-footer: var(--font-code);
 }
 :root {
-    --colour-highlight-fg: #903;
+    --colour-highlight-fg: #8e0a00;
     --colour-highlight-bg: #ddd;
     --colour-slight-highlight-bg: #e5e5e5;
     --colour-bg: #eee;
     --colour-fg: black;
     --colour-slightly-faded: #666;
     --colour-faded: #888;
-    --colour-very-faded: #ddd;
+    --colour-very-faded: #bbb;
     --colour-bright-highlight: red;
 }
 @media (prefers-color-scheme: dark) {
     :root {
-        --colour-highlight-fg: #a03;
+        --colour-highlight-fg: #8e0a00;
         --colour-highlight-bg: #222;
         --colour-slight-highlight-bg: #191919;
         --colour-bg: #111;
         --colour-fg: #eee;
-        --colour-slightly-faded: #bbb;
+        --colour-slightly-faded: #ddd;
         --colour-faded: #666;
         --colour-very-faded: #444;
         --colour-bright-highlight: red;
@@ -78,6 +78,7 @@ code {
 }
 .logo a:link, .logo a:visited {
     color: var(--colour-fg);
+    text-decoration: none;
 }
 .logo a:hover, .logo a:visited:hover {
     color: var(--colour-highlight-fg);
@@ -115,7 +116,6 @@ code {
 
 a:link, a:visited {
     color: var(--colour-highlight-fg);
-    text-decoration: none;
 }
 
 #sitenav, #docnav {
@@ -199,16 +199,12 @@ ul.posts time {
     content: "/ ";
 }
 
-main a:link {
-    border-bottom: 1px dashed var(--colour-highlight-fg);
-}
-
 a:hover, a:visited:hover {
     color: var(--colour-bright-highlight);
 }
 
 main a:visited {
-    border-bottom-color: var(--colour-very-faded);
+    text-decoration-color: var(--colour-faded);
 }
 
 .doctitle {
@@ -320,7 +316,6 @@ body {
 }
 
 footer {
-    border-top: 1px dashed var(--colour-very-faded);
     padding-top: 0.5rem;
     font-size: 0.7em;
     margin-top: -2rem;
