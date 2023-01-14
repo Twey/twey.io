@@ -66,6 +66,9 @@ postRoute = foldl composeRoutes idRoute
   , cleanRoute
   ]
 
+draftRoute = foldl composeRoutes idRoute
+  [ cleanRoute ]
+
 tagRoute = foldl composeRoutes idRoute
   [ gsubRoute "[^a-zA-Z0-9/]+" $ const "-"
   , gsubRoute "[A-Z]+" $ map toLower
@@ -180,6 +183,18 @@ main = hakyll $ do
 
   match "posts/**" $ do
     route     postRoute
+    compile $ pandocCompiler >>= compilePost
+
+  match "drafts/**.adoc" $ do
+    route     draftRoute
+    compile $ adocCompiler >>= compilePost
+
+  match "drafts/**.html" $ do
+    route     draftRoute
+    compile $ getResourceBody >>= compilePost
+
+  match "drafts/**" $ do
+    route     draftRoute
     compile $ pandocCompiler >>= compilePost
 
   create ["index.html"] $ do
