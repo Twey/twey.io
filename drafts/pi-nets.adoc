@@ -1,0 +1,35 @@
+---
+title: π-calculus and Interaction Nets
+subtitle: there and back again
+date: 2022-12-10
+tags: Programming Languages, Concurrency, Asynchrony, Interaction Nets
+---
+
+== Recursion vs Replication
+In the π-calculus replication suffices to replace recursively-defined
+terms.  But this is only because connections in the π-calculus are
+_inherently_ recursive: a replicated term can refer to another copy of
+itself by using a channel it shares with that copy.  Without this
+capability, e.g. in the private π-calculus, replication does not
+suffice to reproduce recursion.
+
+[#pi-calculus]
+== π-calculus
+There are many variants of the π-calculus.  The variant discussed here
+has replication and restriction.
+
+[subs="+quotes"]
+----
+P *::=* 0          end
+    *|* P | Q      parallel composition
+    *|* x(y). P    read y from x, then continue as P
+    *|* ̅x⟨y⟩. P    write y to x, then continue as P
+    *|* (νx). P    restrict the name x to P
+    *|* !P         replication
+----
+
+[#asynchronous-pi-calculus]
+== Asynchronous π-calculus
+One simplification we can make is to remove the notion of output prefixing.  This
+
+== Fusion Calculus
