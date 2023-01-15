@@ -63,14 +63,14 @@ code {
 
 /* index */
 .index .about {
-    margin-top: 5rem;
+    margin: 5rem 1rem 0;
     text-align: right;
 }
 .index .about>* {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-size: 1.5em;
+    font-size: 1.3em;
     margin-bottom: 5rem;
 }
 .index img.logo { height: 15rem; }
@@ -336,6 +336,7 @@ footer ul li:not(:first-child):before {
     input.sidenote-toggle:not(:checked) + label.sidenote-toggle + .sidenote {
         display: none;
     }
+    .index .logo { text-align: center; }
 }
 
 @media (min-width: 992px) {
