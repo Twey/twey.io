@@ -210,9 +210,15 @@ their argument exactly once.]
 This one is quite tricky to express in Rust, because it requires us to
 think a bit harder about what we mean by a ‘value’.  A par _A_ ⅋ _B_
 requires that the _calling_ code be split into two separate ‘threads’.
-footnote:[Not necessarily OS threads!  When I use the term ‘threads’
-here, I merely mean logical flows that don't share data (in a way that
-could lead to unsafety).]  The par itself then gets to schedule those
+
+[WARNING]
+.not necessarily OS threads!
+====
+When I use the term ‘threads’ here, I merely mean logical flows that
+don't share data (in a way that could lead to unsafety).
+====
+
+The par itself then gets to schedule those
 threads as it likes, including responding to intermediate outputs —
 for example, scheduling a function's argument before its result so
 that it can pass the argument into the function that is expecting it.

@@ -61,6 +61,10 @@ code {
     padding: 0.1em 0.3em;
 }
 
+.highlight code {
+    padding: 0;
+}
+
 /* index */
 .index .about {
     padding: 5rem 1rem 0;
@@ -316,6 +320,26 @@ footer ul li:not(:first-child):before {
     vertical-align: baseline;
     line-height: 1.3;
     color: var(--colour-slightly-faded);
+}
+
+.admonitionblock {
+    margin: 1em;
+    padding: 0 1em;
+    padding-top: 0.5em;
+    border: 3px double var(--colour-very-faded);
+}
+
+.admonitionblock .title {
+    font-family: var(--font-header);
+    font-size: 1.3em;
+}
+
+.admonitionblock .title::before {
+    color: var(--colour-highlight-fg);
+}
+
+.admonitionblock.warning .title::before {
+    content: 'Cavē: ';
 }
 
 @media (max-width: 991px) {

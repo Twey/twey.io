@@ -35,6 +35,7 @@ asciiDoctorOptions out =
   , "--attribute", "idseparator=-"
   , "--attribute", "source-highlighter=rouge"
   , "--attribute", "imagesoutdir=_site/" ++ takeDirectory out
+  , "--attribute", "icons=font"
   , "-"
   ]
 
