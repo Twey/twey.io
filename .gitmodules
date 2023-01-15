@@ -1,3 +1,6 @@
 [submodule "EB-Garamond"]
 	path = fonts/EB-Garamond
 	url = git@github.com:georgd/EB-Garamond
+[submodule "fonts/EB-Garamond"]
+	path = fonts/EB-Garamond
+	url = git@github.com:georgd/EB-Garamond
