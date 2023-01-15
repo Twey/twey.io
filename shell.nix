@@ -6,7 +6,7 @@ in
 mkShell {
   buildInputs = [
     gnumake ghc haskellPackages.hakyll asciidoctor graphviz-nox
-    (python3.withPackages (ps: [ps.fontforge])) ttfautohint-nox
+    (python3.withPackages (ps: [ps.fontforge])) ttfautohint-nox imagemagick
     bashInteractive
   ];
 }

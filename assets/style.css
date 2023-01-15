@@ -28,6 +28,8 @@
         --colour-very-faded: #444;
         --colour-bright-highlight: red;
     }
+
+    img.logo { filter: invert(100%); }
 }
 
 body {
@@ -61,42 +63,36 @@ code {
 
 /* index */
 .index .about {
+    margin-bottom: 5rem;
+    padding-top: 2rem;
     text-align: right;
+}
+.index .about>* {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: flex-end;
     font-size: 1.5em;
-    padding-left: 2rem;
+}
+.index .logo {
+    height: 10rem;
 }
 .index .about a {
     white-space: nowrap;
 }
 
-.index nav#sitenav { text-align: left; }
-.logo {
-    font-family: 'euphoria script', serif;
-    transform: rotate(180deg);
-}
-.sidebar .logo {
-    font-size: 8em;
-    margin-top: -1.8rem;
-    line-height: 1em;
-}
-.logo a:link, .logo a:visited {
+.sidebar .logo { height: 5rem; }
+a:link .logo, a:visited .logo {
     color: var(--colour-fg);
     text-decoration: none;
 }
-.logo a:hover, .logo a:visited:hover {
-    color: var(--colour-highlight-fg);
-}
-.index .logo { font-size: 20em; }
 .index h3 { font-size: 1.3em; }
 .index .sidebar { margin-top: 1em; }
 .index time {
     font-style: italic;
     float: right;
     text-align: right;
-    width: 10em;
+    width: 12em;
     font-size: 0.9em;
 }
 .teaser .sidenote { display: none; }
@@ -117,7 +113,7 @@ a:link, a:visited {
     color: var(--colour-highlight-fg);
 }
 
-#sitenav, #docnav {
+#docnav {
     font-family: var(--font-around);
 }
 
@@ -190,14 +186,6 @@ ul.posts time {
     margin-left: 2em;
 }
 
-#sitenav ul li {
-    display: inline-block;
-}
-
-#sitenav ul li:before {
-    content: "/ ";
-}
-
 a:hover, a:visited:hover {
     color: var(--colour-bright-highlight);
 }
@@ -208,7 +196,6 @@ main a:visited {
 
 .doctitle {
     margin-bottom: 2rem;
-    text-align: right;
 }
 .doctitle h1 {
     font-size: 1.5rem;
@@ -218,7 +205,8 @@ main a:visited {
 }
 
 .sidebar {
-    padding-top: 0.3rem;
+    text-align: right;
+    padding-top: 1rem;
     padding-right: 1.5rem;
     height: 100%;
 }
@@ -233,10 +221,6 @@ main a:visited {
 .sidebar time:after {
     content: ' ―';
 }
-nav#sitenav {
-    font-size: 0.8rem;
-    text-align: right;
-}
 nav#sitenav a:link {
     border-bottom: 1px dashed;
 }
@@ -245,7 +229,6 @@ nav#docnav ul.nav {
     flex-direction: column;
     align-items: flex-end;
     align-content: flex-end;
-    text-align: right;
 }
 
 nav#docnav a.navbar-brand {
@@ -310,10 +293,6 @@ body {
     position: relative;
 }
 
-.sidebar {
-    padding-top: 1rem;
-}
-
 footer {
     padding-top: 0.5rem;
     font-size: 0.7em;
@@ -343,7 +322,8 @@ footer ul li:not(:first-child):before {
 }
 
 @media (max-width: 991px) {
-    .about-row { min-height: 100vh; }
+    .index .about { min-height: 100vh; }
+    .index .about>* { justify-content: flex-start; }
 
     .sidenote { display: block; margin: 1em; }
     label.sidenote-toggle {

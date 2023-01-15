@@ -1,16 +1,29 @@
-build: fonts
+HERE = $(shell pwd)
+
+build: assets
 	cabal run . -- build
 
-rebuild: fonts
+rebuild: assets
 	cabal run . -- rebuild
 
-watch: fonts
+watch: assets
 	cabal run . -- watch
 
 push: build
-	rsync -av _site/ twey.co.uk:www.io/
+	scp -r _site/* twey.co.uk:www.io/
 
 fonts:
-	make -C EB-Garamond WEB=../assets/fonts/eb-garamond webfonts
+	make -C fonts/EB-Garamond WEB=../../assets/fonts/eb-garamond webfonts
 
-.PHONY: build rebuild watch push fonts
+logo:
+	convert \
+	  -pointsize 144 \
+	  -font fonts/EuphoriaScript/EuphoriaScript-Regular.otf \
+	  -rotate 180 \
+	  -trim \
+	  label:'&' \
+	  assets/logo.svg
+
+assets: logo fonts
+
+.PHONY: build rebuild watch push fonts logo assets
