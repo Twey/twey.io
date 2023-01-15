@@ -63,7 +63,7 @@ code {
 
 /* index */
 .index .about {
-    margin: 5rem 1rem 0;
+    padding: 5rem 1rem 0;
     text-align: right;
 }
 .index .about>* {
