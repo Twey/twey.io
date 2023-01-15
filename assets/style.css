@@ -63,27 +63,23 @@ code {
 
 /* index */
 .index .about {
-    margin-bottom: 5rem;
-    padding-top: 2rem;
+    margin-top: 5rem;
     text-align: right;
 }
 .index .about>* {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
     font-size: 1.5em;
+    margin-bottom: 5rem;
 }
-.index .logo {
-    height: 10rem;
-}
+.index img.logo { height: 15rem; }
 .index .about a {
     white-space: nowrap;
 }
 
-.sidebar .logo { height: 5rem; }
-a:link .logo, a:visited .logo {
-    color: var(--colour-fg);
+.sidebar img.logo { height: 5rem; }
+a:link img.logo, a:visited img.logo {
     text-decoration: none;
 }
 .index h3 { font-size: 1.3em; }
@@ -162,7 +158,7 @@ main ol {
     list-style-type: lower-roman;
 }
 
-main hr, main hr:not([size]) {
+hr, hr:not([size]) {
     border: 0;
     height: 4rem;
     margin-bottom: 1em;
@@ -171,7 +167,7 @@ main hr, main hr:not([size]) {
 }
 
 @media (prefers-color-scheme: dark) {
-    main hr, main hr:not([size]) {
+    hr, hr:not([size]) {
         filter: invert(100%);
     }
 }
@@ -251,7 +247,7 @@ main h2 + p:first-of-type {
 main h2 + p:first-of-type::first-letter {
     color: var(--colour-highlight-fg);
     background-color: var(--colour-highlight-bg);
-    font-family: 'EB Garamond Initials', 'EB Garamond';
+    font-family: 'EB Garamond Initials', 'EB Garamond', serif;
     font-size: 3.3em;
     float: left;
     /* Hack:
@@ -322,9 +318,6 @@ footer ul li:not(:first-child):before {
 }
 
 @media (max-width: 991px) {
-    .index .about { min-height: 100vh; }
-    .index .about>* { justify-content: flex-start; }
-
     .sidenote { display: block; margin: 1em; }
     label.sidenote-toggle {
         display: inline-block;
