@@ -23,7 +23,7 @@
         --colour-slight-highlight-bg: #191919;
         --colour-bg: #111;
         --colour-fg: #eee;
-        --colour-slightly-faded: #ddd;
+        --colour-slightly-faded: #aaa;
         --colour-faded: #666;
         --colour-very-faded: #444;
         --colour-bright-highlight: red;
@@ -111,14 +111,6 @@ a:link, a:visited {
 
 #docnav {
     font-family: var(--font-around);
-}
-
-footer { font-family: var(--font-footer); }
-
-footer img {
-    max-height: 1em;
-    width: auto;
-    vertical-align: -0.1em;
 }
 
 main pre {
@@ -289,18 +281,27 @@ body {
     position: relative;
 }
 
+body>.container {
+    min-height: 100vh;
+    padding-bottom: 2rem;
+}
+
 footer {
     padding-top: 0.5rem;
     font-size: 0.7em;
     margin-top: -2rem;
     height: 2rem;
+    font-family: var(--font-footer);
 }
-footer ul { margin: 0; }
-body>.container {
-    min-height: 100vh;
-    padding-bottom: 2rem;
+
+footer img {
+    max-height: 1em;
+    width: auto;
+    vertical-align: -0.1em;
 }
+
 footer ul {
+    margin: 0;
     padding-left: 0;
 }
 footer ul li {
