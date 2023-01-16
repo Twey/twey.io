@@ -265,6 +265,7 @@ main h2 + p:first-of-type::first-letter {
 
 article h2 + p:first-of-type:first-line {
     font-variant: small-caps;
+    letter-spacing: 0.1em;
 }
 
 article p, .teaser p { text-align: justify; }
