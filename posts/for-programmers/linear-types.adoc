@@ -237,10 +237,11 @@ would like to be able to write the par as a ‘function’ that can return
 multiple results (using the keywords `return_left` and `return_right`
 here):
 
+[subs=+quotes]
 ----
 impl<A, B> Par<A, B> {
-  fn par(self) -> A ⅋ B {
-    let a: A^⊥^ = return_left mkA();
+  fn par(self) -> (A ⅋ B) {
+    let a: ⊥<A> = return_left mkA();
     return_right mkB(a);
   }
 }
