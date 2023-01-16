@@ -1,7 +1,7 @@
 ---
 title: Linear types for programmers
 subtitle: reasoning about resources
-date: 2022-04-11
+date: 2023-01-16
 tags: Types, Syntax, Semantics, Formal Verification, Programming Languages
 ---
 :source-language: rust
