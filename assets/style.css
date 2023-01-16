@@ -55,7 +55,8 @@ article>section:first-child h2 {
 }
 
 code {
-    color: var(--colour-fg);
+    /* bootstrap defines this to be a rather violent shade of fuschia */
+    color: currentColor;
     background-color: var(--colour-slight-highlight-bg);
     font-family: var(--font-code);
     padding: 0.1em 0.3em;
@@ -326,7 +327,7 @@ footer ul li:not(:first-child):before {
     margin: 1em;
     padding: 0 1em;
     padding-top: 0.5em;
-    border: 3px double var(--colour-very-faded);
+    border: 3px double var(--colour-highlight-bg);
 }
 
 .admonitionblock .title {
@@ -335,11 +336,22 @@ footer ul li:not(:first-child):before {
 }
 
 .admonitionblock .title::before {
-    color: var(--colour-highlight-fg);
+    font-variant: small-caps;
 }
 
 .admonitionblock.warning .title::before {
+    color: #8e0a00;
     content: 'Cavē: ';
+}
+
+.admonitionblock.note .title::before {
+    color: #505a8e;
+    content: 'Notā: ';
+}
+
+.admonitionblock.tip .title::before {
+    color: #0a8e00;
+    content: 'Moneō: ';
 }
 
 @media (max-width: 991px) {
@@ -366,6 +378,7 @@ footer ul li:not(:first-child):before {
 
 @media (min-width: 992px) {
     .sidenote {
+        display: block;
         float: right;
         clear: right;
         margin-right: -55%;
