@@ -10,7 +10,7 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <link
       rel="stylesheet"
       type="text/css"
@@ -20,13 +20,18 @@
     <link rel="stylesheet" type="text/css" href="/assets/highlighting.css">
 
     <script
+      src="https://code.jquery.com/jquery-3.6.3.slim.min.js"
+      integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo="
+      crossorigin="anonymous"></script>
+    <script
       type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
   </head>
   <body
     $if(toc)$
-    data-bs-spy="scroll"
-    data-bs-target="#docnav"
+    data-spy="scroll"
+    data-target="#docnav"
+    data-offset="0"
     $endif$
 
     $if(pageClass)$
