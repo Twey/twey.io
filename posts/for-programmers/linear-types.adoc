@@ -4,6 +4,7 @@ subtitle: reasoning about resources
 date: 2022-04-11
 tags: Types, Syntax, Semantics, Formal Verification, Programming Languages
 ---
+:source-language: rust
 
 == Introduction
 
@@ -22,9 +23,16 @@ more.
 == What are linear types?
 
 Linear types are an application to type theory of the discipline of
-_linear logic_, first described by Jean-Yves Girard.  Linear types are
-a refinement of standard type theory in which each value can be used,
-and must be used, exactly once.
+_linear logic_, first described by Jean-Yves Girard
+(link:http://girard.perso.math.cnrs.fr/linear.pdf[Girard, 1987]).
+Linear types are a refinement of standard type theory in which each
+value can be used, and must be used, exactly once, and popularized by
+Henry Baker in a series of articles about applying them to remove
+garbage collection from Lisp. footnote:[Henry Baker was a prominent
+Lisp hacker and one of the original creators of the Lisp Machine,
+which is often considered to have failed due to the ‘pause’ required
+for garbage collection on the relatively slow hardware of the time,
+which the winning C-based UNIX machines did not suffer from.]
 
 == Why are linear types interesting?
 
@@ -90,7 +98,6 @@ The times and the plus are familiar to programmers used to a modern
 programming language.  In Rust, for example, the times _A_ ⊗ _B_
 corresponds to the familiar `struct` type former:
 
-[source,rust]
 ----
 struct Times<A, B> {
   left:  A,
@@ -100,7 +107,6 @@ struct Times<A, B> {
 
 while the plus _A_ ⊕ _B_ corresponds to the `enum` type former:
 
-[source,rust]
 ----
 enum Plus<A, B> {
   Left (A),
@@ -112,7 +118,6 @@ Before we get onto the less comfortable examples, it's instructive to
 pause here and look at what this means for the code _consuming_ the
 value.  If some code has some `Times<A, B>` in scope,
 
-[source,rust]
 ----
 let atimesb: Times<A, B>
   = make_ATimesB();
@@ -125,7 +130,6 @@ responsibility to create both an `A` _and_ a `B`.
 
 On the other hand, if it has some `Plus<A, B>` in scope,
 
-[source,rust]
 ----
 let aplusb: Plus<A, B> = make_APlusB();
 …
@@ -146,7 +150,6 @@ gets to choose which one is produced.
 
 In Rust, we might encode this as a type with two functions:
 
-[source,rust]
 ----
 impl<A, B> With<A, B> {
   fn left(self) -> A { … }
@@ -172,7 +175,6 @@ above would be essentially the same as `Times`: we could obtain both
 an `A` by calling `awithb.left()` as well as a `B` by calling
 `awithb.right()` and thereby write the function:
 
-[source,rust]
 ----
 fn with_to_times<A, B>(
   awithb: With<A, B>,
@@ -198,73 +200,124 @@ the two functions can be called for each `With<A, B>`.
 
 Probably the most exotic beast we'll talk about here, but perhaps also
 the most interesting, the _par_ operation _A_ ⅋ _B_ is a value that
-will produce one of an _A_ and a _B_, but it is not known in advance
-which it will produce.  One of the most common uses of the par is to
-express a function: the function type _A_ ⊸ _B_ is defined as _A_^⊥^ ⅋
-_B_, where the notation _A_^⊥^ indicates the formula that is the
-negation or opposite of _A_. footnote:[The notation used here, rather
-than the usual function arrow →, is actually that of the ‘lollipop,’ a
-symbol used to indicate the type of _linear_ functions that consume
-their argument exactly once.]
+will produce both an _A_ and a _B_, but gets to decide in what order
+they are produced.  Note the duality with the times: whereas the
+consumer of a times may consume the values in either order, and the
+producer must account for that, with a par the producer may produce
+the values in either order, and the consumer must account for that.
+
+One of the most common uses of the par is to express a function: the
+function type _A_ ⊸ _B_ is defined as _A_^⊥^ ⅋ _B_, where the notation
+_A_^⊥^ indicates the formula that is the negation or opposite of _A_ —
+or, equivalently, a continuation that consumes an _A_.  footnote:[The
+notation used here, rather than the usual function arrow →, is
+actually that of the ‘lollipop,’ a symbol used to indicate the type of
+_linear_ functions that consume their argument exactly once.]  This
+makes use of a rather fundamental equivalence between _scheduling_ and
+_causality_.  A function cannot be expressed by use of the times
+because the consumer of the times may access its components in any
+order, and therefore the caller can't know that the ‘result’ of the
+function won't be expected before its argument has been provided.
+However, in the case of the par, because the producer of the par gets
+to schedule the execution of both components, it can choose to ensure
+that the argument is evaluated before producing a result, and
+therefore vary the result it produces based on the behaviour of the
+argument.  The easiest way to use this information, and a key example
+of a function, is the identity function _A_ ⊸ _A_ ≝ _A_^⊥^ ⅋ _A_,
+which can be implemented simply by passing the _A_ provided to the
+_A_^⊥^ directly out of the other component.
 
 This one is quite tricky to express in Rust, because it requires us to
-think a bit harder about what we mean by a ‘value’.  A par _A_ ⅋ _B_
-requires that the _calling_ code be split into two separate ‘threads’.
+think a bit harder about what we mean by a ‘value’.  Notionally, we
+would like to be able to write the par as a ‘function’ that can return
+multiple results (using the keywords `return_left` and `return_right`
+here):
 
-[WARNING]
-.not necessarily OS threads!
-====
-When I use the term ‘threads’ here, I merely mean logical flows that
-don't share data (in a way that could lead to unsafety).
-====
-
-The par itself then gets to schedule those
-threads as it likes, including responding to intermediate outputs —
-for example, scheduling a function's argument before its result so
-that it can pass the argument into the function that is expecting it.
-This means that a value _A_ ⅋ _B_ can be interpreted as a kind of
-‘scheduler’ of independent threads expecting an _A_ and a _B_
-respectively.
-
-It is tempting to use the Rust function type to define _A_ ⅋ _B_ as:
-
-[source,rust]
 ----
 impl<A, B> Par<A, B> {
-  fn par(
-    self,
-    left: impl FnOnce(A) -> !,
-  ) -> B { … }
+  fn par(self) -> A ⅋ B {
+    let a: A^⊥^ = return_left mkA();
+    return_right mkB(a);
+  }
 }
 ----
 
-where the implementation of `par` can use threading primitives
-(e.g. `std::thread::spawn`) to schedule the execution of `left` as it
-likes.  However, this is subtly wrong!  The reason for this is that in
-Rust once we return our `B` from the function to trigger execution of
-the continuation waiting on the function's return value, the function
-scope is disposed of and can no longer schedule the execution — there
-is a fundamental asymmetry between arguments and return values.
+Unfortunately, this operation doesn't exist in Rust. footnote:[Indeed,
+it can't exist: due to Rust's stack-based semantics, as soon as we
+return one result, the stack frame is destroyed, meaning we can no
+longer continue running the code to produce the other.  In `async`
+functions, this doesn't have to be true – one could return a pair of
+`oneshot::Receiver` objects and then fulfil them both in any order
+from a newly `spawn`ed task — but Rust provides no way to guarantee
+the order of their consumption matches the order of production, which
+may lead to deadlocks.]  Instead, we must use a bit of a trick.
+_Continuation-passing style_ is a way of writing programs such that
+instead of producing return values from our functions, we take as a
+function argument a callback, or continuation, indicating how the
+function should proceed.  That is, instead of writing
 
-Instead, we must go the whole hog, and define:
-
-[source,rust]
 ----
-impl<A, B> Par<A, B> {
+fn foo(arg: A) -> B { … }
+----
+
+we can instead write
+
+----
+fn foo(
+  arg: A,
+  cont: impl FnOnce(result: B) -> !,
+) -> ! { … }
+----
+
+with much the same meaning, passing the ‘continuation’ of the program
+(i.e. what is to be done after the value is successfully produced) as
+a callback that will be called after the computation is
+complete.
+
+[NOTE]
+.return values
+====
+
+The `!` type in Rust is the empty type, or ‘never type’, which has no
+values.  Since it is impossible to construct, its use here means that
+we will never return a value.  An equivalent construction would be to
+allow these functions to notionally produce a value of _any_ type,
+
+----
+fn foo<R>(
+  arg: A,
+  cont: impl FnOnce(result: B) -> R,
+) -> R { … }
+----
+
+since we will never actually be required to construct it.
+====
+
+Continuation-passing style can simplify reasoning about control flow,
+and is key to some crucial compiler translations — for example, it is
+often used to implement non-local control (such as
+link:https://en.wikipedia.org/wiki/Exception_handling[exceptions],
+link:https://en.wikipedia.org/wiki/Async/await[async/await], or
+link:https://en.wikipedia.org/wiki/Effect_system[effects]
+a.k.a. link:https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html[restarts]).
+
+Armed with this tool, we can define:
+
+----
+impl Par<A, B> {
   fn par(
     self,
-    left:  impl FnOnce(A) -> !,
+    left: impl FnOnce(A) -> !,
     right: impl FnOnce(B) -> !,
   ) -> ! { … }
 }
 ----
 
-Again, note that, because we must provide _both_ `left` and `right`
+Note that, because we must provide _both_ `left` and `right`
 continuations, the contexts must be disjoint!  In fact, this yields an
 interesting insight into our boring times: notice that this signature
 is basically equivalent to
 
-[source,rust]
 ----
 impl<A, B> Par<A, B> {
   fn par(
@@ -280,3 +333,15 @@ impl<A, B> Par<A, B> {
 In fact, _A_ ⊗ _B_ must be interpreted as both _A_ and _B_, but
 defined _independently_, i.e. using disjoint contexts and, crucially,
 without relying on _A_ and _B_ being executed in a particular order.
+
+== Conclusion and retrospective
+
+Hopefully this has provided an accessible introduction to linear logic
+and its interpretation into programming languages in the form of
+linear types.
+
+I had hoped for this article to motivate the concepts rather than explain
+them, but I fear I have ended up producing more of a technical
+explanation of what the connectives of linear logic _are_ in a
+computational sense.  I'm not totally satisfied with this outcome, but
+I hope it will improve in future articles.
