@@ -20,6 +20,10 @@ maybe not so familiar to the lay programmer.
 I also hope this will serve as a good on-ramp for me to start writing
 more.
 
+In this article, I hope to explain how linear logic can be applied to
+programming, why it's worthwhile, and give computational
+interpretations of the linear logic connectives using Rust.
+
 == What are linear types?
 
 Linear types are an application to type theory of the discipline of
@@ -28,11 +32,11 @@ _linear logic_, first described by Jean-Yves Girard
 Linear types are a refinement of standard type theory in which each
 value can be used, and must be used, exactly once, and popularized by
 Henry Baker in a series of articles about applying them to remove
-garbage collection from Lisp. footnote:[Henry Baker was a prominent
+garbage collection from Lisp. footnote:[Henry Baker is a prominent
 Lisp hacker and one of the original creators of the Lisp Machine,
-which is often considered to have failed due to the ‘pause’ required
-for garbage collection on the relatively slow hardware of the time,
-which the winning C-based UNIX machines did not suffer from.]
+which is sometimes considered to have lost to the C-based UNIX
+machines due to the long and unpredictable ‘pause’ required for
+garbage collection on the relatively slow hardware of the time.]
 
 == Why are linear types interesting?
 
