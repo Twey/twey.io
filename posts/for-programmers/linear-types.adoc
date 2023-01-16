@@ -268,7 +268,7 @@ we can instead write
 
 ----
 fn foo(
-  arg: A,
+  arg:  A,
   cont: impl FnOnce(result: B) -> !,
 ) -> ! { … }
 ----
@@ -289,7 +289,7 @@ allow these functions to notionally produce a value of _any_ type,
 
 ----
 fn foo<R>(
-  arg: A,
+  arg:  A,
   cont: impl FnOnce(result: B) -> R,
 ) -> R { … }
 ----
@@ -311,7 +311,7 @@ Armed with this tool, we can define:
 impl Par<A, B> {
   fn par(
     self,
-    left: impl FnOnce(A) -> !,
+    left:  impl FnOnce(A) -> !,
     right: impl FnOnce(B) -> !,
   ) -> ! { … }
 }
