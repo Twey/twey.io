@@ -253,7 +253,7 @@ return one result, the stack frame is destroyed, meaning we can no
 longer continue running the code to produce the other.  In `async`
 functions, this doesn't have to be true – one could return a pair of
 `oneshot::Receiver` objects and then fulfil them both in any order
-from a newly `spawn`ed task — but Rust provides no way to guarantee
+from a newly ``spawn``ed task — but Rust provides no way to guarantee
 the order of their consumption matches the order of production, which
 may lead to deadlocks.]  Instead, we must use a bit of a trick.
 _Continuation-passing style_ is a way of writing programs such that
