@@ -59,7 +59,7 @@ code {
     color: currentColor;
     background-color: var(--colour-slight-highlight-bg);
     font-family: var(--font-code);
-    padding: 0.1em 0.3em;
+    padding: 0 0.3em;
 }
 
 .highlight code {
@@ -362,6 +362,9 @@ footer ul li:not(:first-child):before {
         cursor: pointer;
         font-family: 'EB Garamond 12';
         color: var(--colour-highlight-fg);
+        margin-bottom: 0;
+        height: 1em;
+        vertical-align: top;
     }
     input.sidenote-toggle:not(:checked) + label.sidenote-toggle::before {
         content: '❦';
