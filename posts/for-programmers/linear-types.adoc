@@ -344,8 +344,13 @@ Hopefully this has provided an accessible introduction to linear logic
 and its interpretation into programming languages in the form of
 linear types.
 
-I had hoped for this article to motivate the concepts rather than explain
-them, but I fear I have ended up producing more of a technical
+I had hoped for this article to motivate the concepts rather than
+explain them, but I fear I have ended up producing more of a technical
 explanation of what the connectives of linear logic _are_ in a
-computational sense.  I'm not totally satisfied with this outcome, but
-I hope it will improve in future articles.
+computational sense.  I'm not totally dissatisfied with this outcome,
+but I hope it will improve in future articles.
+
+Things I'd like to try next:
+
+- more pictures/diagrams
+- more focus on motivation and less on explanation
