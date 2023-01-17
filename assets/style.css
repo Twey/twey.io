@@ -333,7 +333,7 @@ footer ul li:not(:first-child):before {
 
 .admonitionblock .title {
     font-family: var(--font-header);
-    font-size: 1.3em;
+    font-size: 1.5em;
 }
 
 .admonitionblock .title::before {
@@ -346,7 +346,7 @@ footer ul li:not(:first-child):before {
 }
 
 .admonitionblock.note .title::before {
-    color: #505a8e;
+    color: #505aae;
     content: 'Notā: ';
 }
 
