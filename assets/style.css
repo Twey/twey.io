@@ -326,7 +326,7 @@ footer ul li:not(:first-child):before {
 
 .admonitionblock {
     margin: 1em 0;
-    padding: 0 1em;
+    padding: 0.5em 0.75em;
     padding-top: 0.5em;
     border: 3px double var(--colour-highlight-bg);
 }
