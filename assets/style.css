@@ -7,7 +7,7 @@
 }
 :root {
     --colour-highlight-fg: #8e0a00;
-    --colour-highlight-bg: #ddd;
+    --colour-highlight-bg: #ccc;
     --colour-slight-highlight-bg: #e5e5e5;
     --colour-bg: #eee;
     --colour-fg: black;
@@ -19,7 +19,7 @@
 @media (prefers-color-scheme: dark) {
     :root {
         --colour-highlight-fg: #8e0a00;
-        --colour-highlight-bg: #222;
+        --colour-highlight-bg: #333;
         --colour-slight-highlight-bg: #191919;
         --colour-bg: #111;
         --colour-fg: #eee;
@@ -146,7 +146,6 @@ main ol li::marker {
 
 main li::marker {
     color: var(--colour-faded);
-    background-color: var(--colour-highlight-bg);
     font-weight: bold;
     font-family: var(--font-header);
 }
@@ -306,7 +305,7 @@ footer ul li:not(:first-child):before {
     margin: 1em 0;
     padding: 0.5em 0.75em;
     padding-top: 0.5em;
-    border: 3px double var(--colour-highlight-bg);
+    border: 3px double var(--colour-slight-highlight-bg);
 }
 
 .admonitionblock .title {
