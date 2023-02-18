@@ -112,6 +112,7 @@ a:link img.logo, a:visited img.logo {
 
 a:link, a:visited {
     color: var(--colour-highlight-fg);
+    text-decoration: underline;
 }
 
 #docnav {
@@ -183,7 +184,7 @@ a:hover, a:visited:hover {
 }
 
 main a:visited {
-    text-decoration-color: var(--colour-faded);
+    color: var(--colour-slightly-faded);
 }
 
 .doctitle {
