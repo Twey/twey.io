@@ -1,5 +1,5 @@
 <% if content.chr =~ /[A-Z]/ %>
-    <p><span class="initial" style="--initial-letter: '<%= content.chr %>'; --initial-adjust: var(--initial-adjust-<%= content.chr %>, 0em)"><%= content.chr %></span><%= content[1..-1] %></p>
+    <p><span class="initial" style="--initial-letter: '<%= content.chr %>'"><%= content.chr %></span><%= content[1..-1] %></p>
 <% else %>
     <p><%= content %></p>
 <% end  %>
