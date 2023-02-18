@@ -6,7 +6,7 @@
     --font-footer: var(--font-code);
 }
 :root {
-    --colour-highlight-fg: #8e0a00;
+    --colour-highlight-fg: #806040;
     --colour-highlight-bg: #ccc;
     --colour-slight-highlight-bg: #e5e5e5;
     --colour-bg: #eee;
@@ -14,11 +14,11 @@
     --colour-slightly-faded: #666;
     --colour-faded: #888;
     --colour-very-faded: #bbb;
-    --colour-bright-highlight: red;
+    --colour-bright-highlight: #c0a000;
 }
 @media (prefers-color-scheme: dark) {
     :root {
-        --colour-highlight-fg: #8e0a00;
+        --colour-highlight-fg: #907040;
         --colour-highlight-bg: #333;
         --colour-slight-highlight-bg: #191919;
         --colour-bg: #111;
@@ -26,7 +26,7 @@
         --colour-slightly-faded: #aaa;
         --colour-faded: #666;
         --colour-very-faded: #444;
-        --colour-bright-highlight: red;
+        --colour-bright-highlight: #c0a000;
     }
 
     img.logo { filter: invert(100%); }
