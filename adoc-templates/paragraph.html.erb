@@ -1,3 +1,8 @@
-<p><%= content %></p>
+<% if content.chr =~ /[A-Z]/ %>
+    <p><span class="initial" style="--initial-letter: '<%= content.chr %>'; --initial-adjust: var(--initial-adjust-<%= content.chr %>, 0em)"><%= content.chr %></span><%= content[1..-1] %></p>
+<% else %>
+    <p><%= content %></p>
+<% end  %>
+
 <% if !defined?($not_teaser) %><!--more--><% end %>
 <% $not_teaser = true %>

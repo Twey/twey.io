@@ -62,3 +62,19 @@
     font-display: swap;
     src: url(EBGaramond-Initials.woff) format('woff');
 }
+
+@font-face {
+  font-family: 'EB Garamond Initials Background';
+  font-style: normal;
+  font-weight: bold;
+  font-display: swap;
+  src: url(EBGaramond-InitialsF1.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'EB Garamond Initials Foreground';
+  font-style: normal;
+  font-weight: bold;
+  font-display: swap;
+  src: url(EBGaramond-InitialsF2.woff) format('woff');
+}

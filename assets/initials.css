@@ -1,0 +1,39 @@
+:root {
+  --initial-adjust-base: 0.1em;
+
+  --initial-adjust-A: -0.02em;
+  --initial-adjust-B: -0.035em;
+  --initial-adjust-C: -0.02em;
+  --initial-adjust-D: 0.02em;
+  --initial-adjust-E: -0.02em;
+  --initial-adjust-G: -0.005em;
+  --initial-adjust-H: -0.02em;
+  --initial-adjust-I: -0.02em;
+  --initial-adjust-M: -0.02em;
+  --initial-adjust-P: -0.02em;
+  --initial-adjust-Q: -0.035em;
+  --initial-adjust-V: 0.03em;
+  --initial-adjust-W: 0.03em;
+}
+
+main h2 + p .initial {
+  color: var(--colour-highlight-fg);
+  font-family: 'EB Garamond Initials Foreground';
+
+  font-size: 4em;
+  float: left;
+  line-height: 1em;
+  margin-top: calc(0.1em + var(--initial-adjust, 0em));
+  margin-right: 0.1em;
+}
+
+main h2 + p .initial::before {
+  content: var(--initial-letter, '');
+  font-family: 'EB Garamond Initials Background';
+  color: var(--colour-highlight-bg);
+  height: 0;
+  display: block;
+  /* uncomment this to bring the background over the foreground,
+     intertwining the vines with the letters */
+  /* position: relative; */
+}
