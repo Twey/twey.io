@@ -24,9 +24,10 @@ link:https://edwardtufte.github.io/tufte-css/[Tufte CSS], though my
 implementation is almost certainly not as well rounded.  I do,
 however, have a similar implementation of sidenotes. footnote:[Mind
 you, my version is much simplified — the mobile version currently has
-no support for toggling!] I was also particularly struck by the notion
-that structure should be embedded in the text, so my CSS only supports
-two levels of headers.
+no support for toggling! (Update 2023: toggling support was added some
+time last year…)] I was also particularly struck by the notion that
+structure should be embedded in the text, so my CSS only supports two
+levels of headers.
 
 === Typography
 
@@ -41,6 +42,16 @@ can serve as a ‘memento analogou’ that the digital exists to serve the
 needs of the analogue, never the other way around. footnote:[In fact I
 deliberately chose the variant intended for smaller point sizes, which
 amplifies this effect in a way I enjoy.  Sue me ☺]
+
+The dropcaps use the initials variant of this font put together by
+many people, but significantly by link:https://github.com/timgrei[Tim
+Greinert], who completed the remaining designs apparently over the
+course of about a week.  They are just rendered in ``<span>``s: I
+wanted to do something more sophisticated using the `::first-letter`
+pseudo-element, but Chrome and Firefox rendered the positioning
+drastically differently, so I eventually gave up.  The background is
+at least rendered using a `::before` so shouldn't harm screenreader
+accessibility.
 
 The logo is rendered in
 link:https://fonts.google.com/specimen/Euphoria+Script[Euphoria
