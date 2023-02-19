@@ -14,7 +14,7 @@ import System.FilePath
 import Data.List (isSuffixOf)
 import Data.Time (toGregorian, defaultTimeLocale, utctDay)
 import Data.Time.Format (formatTime)
-import Data.Maybe (isNothing)
+import Data.Maybe (isJust)
 import Hakyll.Core.Compiler.Internal
 
 type MonthOfYear = Int
@@ -266,7 +266,7 @@ monthContext = englishMonthField <> monthField <> postsField
       return . snd . itemBody
 
 published :: MonadMetadata m => [Item a] -> m [Item a]
-published = filterM $ \x -> isNothing <$> getMetadataField (itemIdentifier x) "draft"
+published = filterM $ \x -> isJust <$> getMetadataField (itemIdentifier x) "date"
 
 monthsField :: String -> [Item String] -> Context a
 monthsField name = listField name monthContext . groupByMonth

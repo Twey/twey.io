@@ -44,14 +44,12 @@ header.doctitle {
     font-weight: bold;
 }
 h1, h2, h3 {
-    margin-top: 1em;
-    margin-bottom: 0.5em;
     font-family: var(--font-header);
 }
 h3 { font-size: 1.4rem; }
 
-article>section:first-child h2 {
-    margin-top: 0.4em;
+article>section {
+    margin-bottom: 2em;
 }
 
 code {
@@ -89,7 +87,7 @@ a:link img.logo, a:visited img.logo {
 }
 .index h3 { font-size: 1.3em; }
 .index .sidebar { margin-top: 1em; }
-.index time {
+.index time, .archive time {
     font-style: italic;
     float: right;
     text-align: right;
@@ -229,9 +227,11 @@ main article a:visited {
 
 .sidebar {
     text-align: right;
-    padding-top: 1rem;
     padding-right: 1.5rem;
     height: 100%;
+}
+.sidebar h1 {
+    margin-top: 1em;
 }
 .sidebar time {
     font-weight: normal;
@@ -298,6 +298,7 @@ body {
 body>.container {
     min-height: 100vh;
     padding-bottom: 2rem;
+    padding-top: 1.5rem;
 }
 
 footer {
@@ -389,7 +390,7 @@ footer ul li:not(:first-child):before {
     input.sidenote-toggle:not(:checked) + label.sidenote-toggle + .sidenote {
         display: none;
     }
-    .index .logo { text-align: center; }
+    .index .logo { text-align: center; width: 80vw; }
 }
 
 @media (min-width: 992px) {
