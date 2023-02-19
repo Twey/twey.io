@@ -78,18 +78,19 @@ In addition to the three syntactic forms, the (call-by-name)
 λ-calculus comes with a single _reduction rule_ describing what
 happens when you apply a function to an argument:
 
-- stem:[(λ x. e_1) e_2] evaluates to stem:[e_1] with stem:[x] replaced
-  by stem:[e_2] (often written stem:[e_1[x/e_2\]]). footnote:[To be
-  pedantic, this is actually _non-capturing substitution_, i.e. any
-  variable names in stem:[e_2] should be renamed to make sure they
-  don't conflict with variable names elsewhere in stem:[e_1].]
+- stem:[(λ x. e_1) e_2] evaluates to (written stem:[\Longrightarrow])
+  stem:[e_1] with stem:[x] replaced by stem:[e_2] (often written
+  stem:[e_1[x/e_2\]]). footnote:[To be pedantic, this is actually
+  _non-capturing substitution_, i.e. any variable names in stem:[e_2]
+  should be renamed to make sure they don't conflict with variable
+  names elsewhere in stem:[e_1].]
 
 That's it!  This simple programming language is powerful enough to
 encode all (pure) programs.  As an example, take the _Y combinator_,
 
 [stem]
 ++++
-4Y ≝ (λx. x x)(λx. x x)
+Y ≝ (λx. x x)(λx. x x)
 ++++
 
 This program is an infinite loop!  If we replace all the stem:[x]s in
@@ -98,8 +99,8 @@ the first term with stem:[(λx. x x)], we get:
 [stem]
 ++++
 \begin{eqnarray}
-  (λx. x x)(λx. x x) &\Rightarrow (x x)[x/(λx. x x)] \\
-    &= (λx. x x)(λx. x x)
+  (λx. x x)(λx. x x) &\Longrightarrow& (x x)[x/(λx. x x)] \\
+    &=& (λx. x x)(λx. x x)
 \end{eqnarray}
 ++++
 
@@ -138,7 +139,7 @@ And so on:
 \begin{eqnarray}
   2 &≝& λfx.f(fx) \\
   3 &≝& λfx.f(f(fx)) \\
-  …
+  &…&
 \end{eqnarray}
 ++++
 
@@ -223,13 +224,13 @@ stem:[τ], written stem:[e : τ].  Types stem:[τ] are either:
 
 - a base type stem:[A] drawn from some (usually unspecified) set of
   base types (e.g. `string`, `int`); or
-- a function type stem:[σ ⇒ τ] from values of type stem:[σ] to values
+- a function type stem:[σ → τ] from values of type stem:[σ] to values
   of type stem:[τ].
 
 Along with the types we associate a _typing rule_:
 
 - if stem:[e] has type stem:[τ] when stem:[x] has type stem:[σ], then
-  stem:[λx. e] has type stem:[σ ⇒ τ].
+  stem:[λx. e] has type stem:[σ → τ].
 
 Notably the λ-calculus extended with (only) this type system is no
 longer Turing-complete, because in order to type something like the Y
