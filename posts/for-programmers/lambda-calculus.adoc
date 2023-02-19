@@ -48,6 +48,17 @@ expression:
 - _applications_, written stem:[f e], where both stem:[f] and stem:[e]
   are terms.
 
+The λ-calculus syntax can be understood easily with reference to a
+subset of a language supporting higher-order functions, like
+JavaScript:
+
+- variables work the same: a variable is represented by a valid
+  variable name.
+- abstractions stem:[λx. e] are a shorter syntax for function
+  expressions `function(x) { return e; }` (or, in modern JavaScript,
+  `x => e`).
+- applications stem:[f e] simply mean `f(e)`.
+
 Brackets may be used to disambiguate groupings; there are a couple of
 conventions for this, and they are opposing, so you have to know which
 is in use.  In most contexts application is _left-associative_,
@@ -63,8 +74,9 @@ here.
 As a shorthand, functions that immediately return functions, such as
 stem:[λf.λx.x], can be abbreviated to stem:[λfx.x].
 
-In addition to the three syntactic forms, the λ-calculus comes with a
-single _reduction rule_ indicating how computation takes place:
+In addition to the three syntactic forms, the (call-by-name)
+λ-calculus comes with a single _reduction rule_ describing what
+happens when you apply a function to an argument:
 
 - stem:[(λ x. e_1) e_2] evaluates to stem:[e_1] with stem:[x] replaced
   by stem:[e_2] (often written stem:[e_1[x/e_2\]]). footnote:[To be
@@ -72,22 +84,12 @@ single _reduction rule_ indicating how computation takes place:
   variable names in stem:[e_2] should be renamed to make sure they
   don't conflict with variable names elsewhere in stem:[e_1].]
 
-The λ-calculus can be understood easily with reference to a subset of
-a language like JavaScript:
-
-- variables work the same: a variable is represented by a valid
-  variable name.
-- abstractions stem:[λx. e] are a shorter syntax for function
-  expressions `function(x) { return e; }` (or, in modern JavaScript,
-  `x => e`).
-- applications stem:[f e] simply mean `f(e)`.
-
 That's it!  This simple programming language is powerful enough to
 encode all (pure) programs.  As an example, take the _Y combinator_,
 
 [stem]
 ++++
-Y ≝ (λx. x x)(λx. x x)
+4Y ≝ (λx. x x)(λx. x x)
 ++++
 
 This program is an infinite loop!  If we replace all the stem:[x]s in
