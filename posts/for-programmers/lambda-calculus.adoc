@@ -10,8 +10,9 @@ tags: Syntax, Semantics, Programming Languages
 If you've done much functional programming, you've probably heard of
 the λ-calculus, invented by Alonzo Church in the 1930s.  If you
 haven't, the term might be quite new to you; but don't worry, despite
-the intimidating name, the λ-calculus is actually very simple.  In
-fact, that's exactly what it's used for: it exists as a very
+the intimidating name the λ-calculus is actually very simple.
+
+In fact, that's exactly what it's used for: it exists as a very
 simplified programming language that nevertheless captures all the
 difficult parts of a real programming language (such as
 Turing-completeness), so that it can be used as a playground for
