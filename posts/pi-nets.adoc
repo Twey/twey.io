@@ -3,6 +3,7 @@ title: π-calculus and Interaction Nets
 subtitle: there and back again
 date: 2022-12-10
 tags: Programming Languages, Concurrency, Asynchrony, Interaction Nets
+draft: yes
 ---
 
 == Recursion vs Replication

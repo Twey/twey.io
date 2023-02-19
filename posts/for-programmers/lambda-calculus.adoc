@@ -28,7 +28,7 @@ well-understood language features that go into making a real
 programming language designed for enterprise use.  Of course,
 sometimes it is then unclear how different features should be
 integrated into the same language, a problem that initiated a lot of
-the work on link:/drafts/for-programmers/algebraic-effects/[algebraic
+the work on link:../algebraic-effects/[algebraic
 effects].
 
 The variants of the λ-calculus are too numerous to list here, but I
@@ -240,7 +240,7 @@ recovered in typed λ-calculi by adding explicit terms for recursion as
 primitive, such as the Y combinator or recursive `let rec` bindings
 that may refer to themselves by name.]  This kind of type system is
 the basis of type systems in modern programming languages, and
-link:/drafts/for-programmers/curry-howard/[corresponds to] _minimal
+link:../curry-howard/[corresponds to] _minimal
 logic_, a very simple logic with only (conjunction and) implication.
 
 Other type systems of interest include those extended with the ability
@@ -256,7 +256,7 @@ into ‘real’ programming languages:
   as trees or lists, a.k.a. _generic types_ in languages like Rust or
   Java.
 - _ΛΠ_ allows writing
-  link:/drafts/for-programmers/dependent-types/[_dependent types_],
+  link:../dependent-types/[_dependent types_],
   wherein types depend on terms, allowing the expression of types like
   ‘arrays of length 3’ or ‘integers that are multiples of _k_’ for
   some variable _k_.

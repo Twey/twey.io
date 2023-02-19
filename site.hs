@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE NamedFieldPuns #-}
-import Control.Monad ((>=>))
+import Control.Monad ((>=>), filterM)
 import           Hakyll hiding (teaserField, teaserFieldWithSeparator)
 import qualified Text.HTML.TagSoup as TS
 import qualified Text.HTML.TagSoup.Tree as TST
@@ -14,6 +14,7 @@ import System.FilePath
 import Data.List (isSuffixOf)
 import Data.Time (toGregorian, defaultTimeLocale, utctDay)
 import Data.Time.Format (formatTime)
+import Data.Maybe (isNothing)
 import Hakyll.Core.Compiler.Internal
 
 type MonthOfYear = Int
@@ -67,9 +68,6 @@ postRoute = foldl composeRoutes idRoute
   [ gsubRoute "^posts/" $ const ""
   , cleanRoute
   ]
-
-draftRoute = foldl composeRoutes idRoute
-  [ cleanRoute ]
 
 tagRoute = foldl composeRoutes idRoute
   [ gsubRoute "[^a-zA-Z0-9/]+" $ const "-"
@@ -155,7 +153,7 @@ main = hakyll $ do
   tagsRules tags $ \tag pat -> do
     route tagRoute
     compile $ do
-      posts <- loadAllSnapshots pat "rawhtml"
+      posts <- published =<< loadAllSnapshots pat "rawhtml"
       let ctx = mconcat
             [ constField "title" tag
             , monthsField "months" posts
@@ -187,22 +185,10 @@ main = hakyll $ do
     route     postRoute
     compile $ pandocCompiler >>= compilePost
 
-  match "drafts/**.adoc" $ do
-    route     draftRoute
-    compile $ adocCompiler >>= compilePost
-
-  match "drafts/**.html" $ do
-    route     draftRoute
-    compile $ getResourceBody >>= compilePost
-
-  match "drafts/**" $ do
-    route     draftRoute
-    compile $ pandocCompiler >>= compilePost
-
   create ["index.html"] $ do
     route idRoute
     compile $ do
-      posts <- recentFirst =<< loadAll "posts/**"
+      posts <- recentFirst =<< published =<< loadAll "posts/**"
       let ctx = indexContext posts
       makeItem ""
         >>= loadAndApplyTemplate "templates/archive.html" ctx
@@ -278,6 +264,9 @@ monthContext = englishMonthField <> monthField <> postsField
     postsField :: Context ((Year, MonthOfYear), [Item String])
     postsField = listFieldWith "posts" postContext $
       return . snd . itemBody
+
+published :: MonadMetadata m => [Item a] -> m [Item a]
+published = filterM $ \x -> isNothing <$> getMetadataField (itemIdentifier x) "draft"
 
 monthsField :: String -> [Item String] -> Context a
 monthsField name = listField name monthContext . groupByMonth

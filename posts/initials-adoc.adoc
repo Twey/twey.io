@@ -3,6 +3,7 @@ title: Initials test
 subtitle: an example page for me to play with initials on
 date: 2023-02-17
 tags: Natural Language, Typography, Example, Test
+draft: yes
 ---
 
 == A
