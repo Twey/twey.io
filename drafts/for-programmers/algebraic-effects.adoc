@@ -1,0 +1,12 @@
+---
+title: Algebraic effects for programmers
+subtitle: user-definable composable side-effects
+date: 2023-02-19
+tags: Effects, Syntax, Semantics, Programming Languages
+---
+
+== Coming soon.
+
+=== Exceptions
+=== Free monads
+=== Hexagonal architecture

@@ -1,0 +1,8 @@
+---
+title: Dependent types for programmers
+subtitle: programming the type system
+date: 2023-02-19
+tags: Logic, Syntax, Programming Languages
+---
+
+== Coming soon.

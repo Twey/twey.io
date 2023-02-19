@@ -1,0 +1,8 @@
+---
+title: Computational type theory
+subtitle: function over form
+date: 2023-02-19
+tags: Syntax, Semantics, Programming Languages
+---
+
+== Coming soon.

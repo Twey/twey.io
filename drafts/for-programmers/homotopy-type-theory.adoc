@@ -1,0 +1,8 @@
+---
+title: Homotopy type theory
+subtitle: drawing parallels between programs
+date: 2023-02-19
+tags: Syntax, Programming Languages
+---
+
+== Coming soon.

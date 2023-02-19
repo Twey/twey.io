@@ -1,0 +1,296 @@
+---
+title: λ-calculus for programmers
+subtitle: programming language fundamentals
+date: 2023-02-19
+tags: Syntax, Semantics, Programming Languages
+---
+
+== Introduction
+
+If you've done much functional programming, you've probably heard of
+the λ-calculus, invented by Alonzo Church in the 1930s.  If you
+haven't, the term might be quite new to you; but don't worry, despite
+the intimidating name, the λ-calculus is actually very simple.  In
+fact, that's exactly what it's used for: it exists as a very
+simplified programming language that nevertheless captures all the
+difficult parts of a real programming language (such as
+Turing-completeness), so that it can be used as a playground for
+experimentation on different programming language features or as a
+basis for a real programming language (that will be defined, if not
+implemented, by a syntactic translation into a core λ-calculus).
+
+By using the λ-calculus instead of working on a fully-featured
+programming language like C# or Haskell, the programming language
+designer can focus on building the features they want to build, with
+minimal distraction from the large amounts of syntactic sugar and
+well-understood language features that go into making a real
+programming language designed for enterprise use.  Of course,
+sometimes it is then unclear how different features should be
+integrated into the same language, a problem that initiated a lot of
+the work on link:/drafts/for-programmers/algebraic-effects/[algebraic
+effects].
+
+The variants of the λ-calculus are too numerous to list here, but I
+will try to give a couple of representative examples and show how they
+are useful.
+
+[#the-untyped-lambda-calculus]
+== The untyped λ-calculus
+
+This is the simplest form of the calculus, and the basis on which all
+the others are built.  It simply consists of three types of
+expression:
+
+- _variables_, named by some set of names, e.g. stem:[x];
+- _abstractions_, written stem:[λx. e] where stem:[x] is a variable
+  name and stem:[e] is another expression;
+- _applications_, written stem:[f e], where both stem:[f] and stem:[e]
+  are terms.
+
+Brackets may be used to disambiguate groupings; there are a couple of
+conventions for this, and they are opposing, so you have to know which
+is in use.  In most contexts application is _left-associative_,
+meaning that stem:[f g h] means stem:[(f g) h] and bracketing will
+only be used to represent stem:[f (g h)].  However, in some semantics
+work, especially that in which multiple arguments are applied at once
+such as Jean-Jaques Lévy's work on optimal reduction, the syntax for
+an application always includes brackets around the function,
+e.g. stem:[(f)gh…] to mean that the function stem:[f] is applied to
+arguments stem:[g] and stem:[h].  I will use the former convention
+here.
+
+As a shorthand, functions that immediately return functions, such as
+stem:[λf.λx.x], can be abbreviated to stem:[λfx.x].
+
+In addition to the three syntactic forms, the λ-calculus comes with a
+single _reduction rule_ indicating how computation takes place:
+
+- stem:[(λ x. e_1) e_2] evaluates to stem:[e_1] with stem:[x] replaced
+  by stem:[e_2] (often written stem:[e_1[x/e_2\]]). footnote:[To be
+  pedantic, this is actually _non-capturing substitution_, i.e. any
+  variable names in stem:[e_2] should be renamed to make sure they
+  don't conflict with variable names elsewhere in stem:[e_1].]
+
+The λ-calculus can be understood easily with reference to a subset of
+a language like JavaScript:
+
+- variables work the same: a variable is represented by a valid
+  variable name.
+- abstractions stem:[λx. e] are a shorter syntax for function
+  expressions `function(x) { return e; }` (or, in modern JavaScript,
+  `x => e`).
+- applications stem:[f e] simply mean `f(e)`.
+
+That's it!  This simple programming language is powerful enough to
+encode all (pure) programs.  As an example, take the _Y combinator_,
+
+[stem]
+++++
+Y ≝ (λx. x x)(λx. x x)
+++++
+
+This program is an infinite loop!  If we replace all the stem:[x]s in
+the first term with stem:[(λx. x x)], we get:
+
+[stem]
+++++
+\begin{eqnarray}
+  (λx. x x)(λx. x x) &\Rightarrow (x x)[x/(λx. x x)] \\
+    &= (λx. x x)(λx. x x)
+\end{eqnarray}
+++++
+
+… which is back where we started.  Despite its lack of any looping or
+recursion primitives, or even function names to use to perform
+recursive calls, we can loop in the λ-calculus just by using the name
+of the argument twice.
+
+=== An encoding example: Church numerals
+
+Not only that, because we have so many different functions to work
+with, we can encode values like natural numbers directly into the
+calculus itself, and manipulate them using the reduction rule.  A
+well-known example is that of the _Church numerals_, named after
+Alonzo Church.  In the Church numerals, a natural number _n_ is
+encoded as a function that takes a function and an argument and
+applies the function to the argument _n_ times.  For example, the
+Church numeral 0 is defined as:
+
+[stem]
+++++
+0 ≝ λfx.x
+++++
+
+The Church numeral 1:
+
+[stem]
+++++
+1 ≝ λfx.fx
+++++
+
+And so on:
+
+[stem]
+++++
+\begin{eqnarray}
+  2 &≝& λfx.f(fx) \\
+  3 &≝& λfx.f(f(fx)) \\
+  …
+\end{eqnarray}
+++++
+
+It's easy to see that, given a Church numeral _n_, we can define its
+successor as stem:[λfx.f(nfx)], since this means that we take the
+numeral _n_ (a function that applies a given function to its argument
+_n_ times) and apply the function to the result one more time.  We can
+codify this:
+
+[stem]
+++++
+  \operatorname{succ} ≝ λmfx.f(mfx)
+++++
+
+Remember that stem:[λmfx.] is just shorthand for stem:[λm.λf.λx.], so
+stem:[\operatorname{succ} n] evaluates to stem:[λfx.f(nfx)].
+
+With a zero and a successor function, we can construct any natural
+number we like.  Only one thing remains to have a complete encoding of
+the naturals, which is the computations _out_ of the naturals: the
+ability to distinguish between different naturals and alter the course
+of the computation based on them.  Thankfully, the Church numerals
+encode this functionality into the number itself: because the encoding
+of the numeral _n_ applies the function _n_ times, it's possible to
+pass a function that ‘counts’ the number of times it has been called
+on an argument and do something different.
+
+For example, given (arbitrary) terms stem:[\def\tt{{\mathrm{\bf
+t\!t}}}\tt] and stem:[\def\ff{{\mathrm{\bf f\!f}}}\ff] representing
+the Booleans `true` and `false`, we can write a predicate
+stem:[\operatorname{isZero}]:
+
+[stem]
+++++
+\operatorname{isZero} ≝ λn. n (λx. \tt) \ff
+++++
+
+If the function is called zero times, we get stem:[\ff]; but as soon
+as the number calls the function at least once, the resulting term
+ignores the previous value and returns stem:[\tt].
+
+The Church numerals are a prominent example of a more general
+procedure called
+link:https://en.wikipedia.org/wiki/Church_encoding[Church encoding],
+in which data types can be encoded and manipulated as their _recursor_
+(the function that computes on the data type).
+
+=== A brief aside: imperative programming
+
+While the λ-calculus is often associated with functional programming,
+it can represent imperative languages just as well by a
+straightforward transformation: an imperative program such as `X();
+Y();` can be represented by a term like:
+
+[stem]
+++++
+(λy. Y y) ((λx. X x) z)
+++++
+
+where the stem:[x], stem:[y], and stem:[z] terms represent the state
+of the imperative program that is updated by the `X()` and `Y()`
+functions.  Alternatively, link:#evaluation-order[alternative
+evaluation orders] can be used to control exactly when evaluation
+occurs, making it possible to reason about arbitrary imperative side
+effects that happen in the course of evaluation.
+
+== Type systems
+
+=== Simply-typed λ-calculus and the lambda cube
+
+Depending on whether we are interested in _syntax_ or _semantics_,
+extensions to the λ-calculus generally involve adding or changing
+_types_ or _terms_ respectively.  In a real-world programming
+language, usually the λ-calculus is extended both ways, and often a
+new term will be presented with a type system that ensures correctness
+of use.
+
+The simplest type system extension given to the λ-calculus is the
+aptly-named _simply-typed λ-calculus_.  In the simply-typed
+λ-calculus, we demand that every expression stem:[e] has a _type_
+stem:[τ], written stem:[e : τ].  Types stem:[τ] are either:
+
+- a base type stem:[A] drawn from some (usually unspecified) set of
+  base types (e.g. `string`, `int`); or
+- a function type stem:[σ ⇒ τ] from values of type stem:[σ] to values
+  of type stem:[τ].
+
+Along with the types we associate a _typing rule_:
+
+- if stem:[e] has type stem:[τ] when stem:[x] has type stem:[σ], then
+  stem:[λx. e] has type stem:[σ ⇒ τ].
+
+Notably the λ-calculus extended with (only) this type system is no
+longer Turing-complete, because in order to type something like the Y
+combinator discussed earlier, we would have to give it an infinitely
+long type.  footnote:[In practice, Turing-completeness is often
+recovered in typed λ-calculi by adding explicit terms for recursion as
+primitive, such as the Y combinator or recursive `let rec` bindings
+that may refer to themselves by name.]  This kind of type system is
+the basis of type systems in modern programming languages, and
+link:/drafts/for-programmers/curry-howard/[corresponds to] _minimal
+logic_, a very simple logic with only (conjunction and) implication.
+
+Other type systems of interest include those extended with the ability
+to parameterize things over other things; these are categorized by
+Barendregt's famous
+link:https://en.wikipedia.org/wiki/Lambda_cube[lambda cube].  Of
+these, each enables some practical feature that has since made its way
+into ‘real’ programming languages:
+
+- _System F_ allows writing polymorphic functions, a.k.a. _generic
+  functions_ in languages like Rust or Java.
+- _System F[.underline]##ω##_ allows writing polymorphic _types_, such
+  as trees or lists, a.k.a. _generic types_ in languages like Rust or
+  Java.
+- _ΛΠ_ allows writing
+  link:/drafts/for-programmers/dependent-types/[_dependent types_],
+  wherein types depend on terms, allowing the expression of types like
+  ‘arrays of length 3’ or ‘integers that are multiples of _k_’ for
+  some variable _k_.
+
+[WARNING]
+.‘generic’ programming
+====
+In (typed) functional programming circles, the ability to parameterize
+types on other types is often taken for granted, and the term ‘generic
+type’ can be used to mean a type that is available for inspection —
+something like Java reflection.
+====
+
+Of the points on the lambda cube, all but dependent types have been
+ widely adopted by most modern mainstream typed programming languages,
+ with, until quite recently, the notable exception of Go.
+
+//=== Type systems for complexity
+// intersection types
+
+//=== Type systems for termination
+
+//=== Type systems for controlling resource usage
+// tie-in to linear types
+
+//== Term extensions
+
+//=== Sums
+//=== Control flow
+// tie-in to algebraic effects
+//=== Explicit substitution
+//=== Explicit sharing
+
+//== Evaluation order
+
+//=== Call-by-value
+//=== Call-by-name
+//=== Call-by-push-value
+// the functional machine calculus
+//=== Optimal evaluation
+// tie-in to interaction nets
