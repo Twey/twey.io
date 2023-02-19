@@ -4,48 +4,56 @@ subtitle: reasoning about resources
 date: 2023-01-16
 tags: Types, Syntax, Semantics, Formal Verification, Programming Languages
 ---
-:source-language: rust
+:mll: pass:[<abbr title="Multiplicative Linear Logic">MLL</abbr>]
 
 == Introduction
-
-[quote, not Albert Einstein]
-You do not really understand something unless you can explain it to
-your grandmother.
-
-In this ‘_X_ for programmers’ series I aim to provide quick
-introductions — and, more importantly, motivations — for a variety of
-technologies and concepts that are well-known in the literature, but
-maybe not so familiar to the lay programmer.
-
-I also hope this will serve as a good on-ramp for me to start writing
-more.
-
-In this article, I hope to explain how linear logic can be applied to
-programming, why it's worthwhile, and give computational
-interpretations of the linear logic connectives using Rust.
-
-== What are linear types?
 
 Linear types are an application to type theory of the discipline of
 _linear logic_, first described by Jean-Yves Girard
 (link:http://girard.perso.math.cnrs.fr/linear.pdf[Girard, 1987]).
-Linear types are a refinement of standard type theory in which each
-value can be used, and must be used, exactly once, and popularized by
-Henry Baker in a series of articles about applying them to remove
-garbage collection from Lisp. footnote:[Henry Baker is a prominent
-Lisp hacker and one of the original creators of the Lisp Machine,
-which is sometimes considered to have lost to the C-based UNIX
-machines due to the long and unpredictable ‘pause’ required for
-garbage collection on the relatively slow hardware of the time.]
+Since its inception it has led to many fruitful discoveries in
+computer science.  In this article I hope to explain why it is so
+interesting, as well as relate it to concrete tools and practices
+available to programmers today.
 
-== Why are linear types interesting?
+There are four main operators in linear logic:
 
-Linear types allow the programmer to model systems in which using
-something changes its type.  A common example involves a ‘cost’: if I
-have a vending machine that will give me either a chocolate bar or a
-packet of crisps for a dollar, I cannot simply put the dollar in twice
-and get both.  Using the dollar for one item _consumes_ the dollar,
-and it is no longer available to get the other item.
+- stem:[A ⊗ B], read _A times B_, represents an independent pair of
+  values that may be used in any order, similar to the `struct` in a
+  language like Rust;
+- stem:[A ⊕ B], read _A plus B_, represents either an _A_ or a _B_,
+  and the consumer must be prepared for either possibility, similar to
+  the `enum` in a language like Rust;
+- stem:[A \operatorname{\&} B], read _A with B_, is either an _A_ or a
+  _B_, and the consumer gets to choose which one;
+- stem:[A \operatorname{⅋} B], read _A par B_, is an interdependent
+  pair of values presented in an order chosen by the producer, and the
+  consumer must be prepared to respond to them in any order.
+
+A simple form of linear types (specifically {mll}, the fragment of
+linear logic without the additive/‘choice’ operators ⊕ and &) can be
+encoded as a programming language in which each value can be used, and
+must be used, exactly once, and popularized by Henry Baker in a series
+of articles about applying them to remove garbage collection from
+Lisp. footnote:[Henry Baker is a prominent Lisp hacker and one of the
+original creators of the Lisp Machine, which is sometimes considered
+to have lost to the C-based UNIX machines due to the long and
+unpredictable ‘pause’ required for garbage collection on the
+relatively slow hardware of the time.]  This is the form usually seen
+in programming languages.  For example, a
+link:../lambda-calculus[λ-calculus] term of type stem:[A \multimap B] is
+a function that exactly consumes one stem:[A] and produces one
+stem:[B] — encoding a proof of the linear logic proposition
+stem:[A^\bot \operatorname{⅋} B].
+
+== Applications
+
+By employing linear types, the programmer can model systems in which
+using something changes its type.  A common example involves a ‘cost’:
+if I have a vending machine that will give me either a chocolate bar
+or a packet of crisps for a dollar, I cannot simply put the dollar in
+twice and get both.  Using the dollar for one item _consumes_ the
+dollar, and it is no longer available to get the other item.
 
 A more usual example in everyday programming involves objects that
 have certain protocols (a sequencing of the available operations) that
@@ -69,289 +77,102 @@ Any misordering of these operations, for example writing the request
 body before the headers, constitutes an error on the part of the
 client programmer.
 
+.An HTTP request protocol.
+[mermaid,theme=neutral,format=svg]
+....
+sequenceDiagram
+  Client->>Server: request headers
+  Client->>Server: request body
+  Server->>Client: response headers
+  Server->>Client: response body
+....
+
+
 Another very important example is that of memory management.  Because
 arbitrary duplication of values is disallowed, it is inherent in the
 structure of the code exactly how long a value must stay around, and
 therefore when it is safe to reuse its memory.  This allows linear
 languages, in general, to be safely executed without recourse to a
 garbage collector, reference counter, or other means of tracking
-memory references.
+memory references — an important quality in systems languages, where
+unexpected garbage collection pauses are often not an option.  More
+generally, linear types can be used to bridge the gap between
+functional and imperative languages.  A functional program with linear
+types can be realized as an imperative program; since there is no way
+to observe a value twice, the memory area backing that value can be
+safely reüsed, in effect mutably updating the value, without the
+possibility of the program observing the change (breaking
+link:https://en.wikipedia.org/wiki/Referential_transparency[referential
+transparency]).
 
-== How are linear types used when programming?
+Linear types also turn out to be very useful in concurrent
+programming, for two reasons:
 
-In its most basic form, linear logic replaces the standard conjunction
-and disjunction connectives of intuitionistic or classical logic
-(∧/_and_ and ∨/_or_) each with an _additive_ and _multiplicative_
-version.
+- by requiring (through a sequence of consumptions and productions)
+  values to be used in a certain order, they allow the specification
+  of protocols between concurrent components;
+- and, even more importantly, the separation/joining of resources in ⊗
+  and ⅋ allows the programmer to specify when sequencing _doesn't_
+  need to be respected, while ensuring freedom from deadlocks.
 
-- _A_ ⊗ _B_, read _A times B_, is the multiplicative conjunction;
-- _A_ ⅋ _B_, read _A par B_, is the multiplicative disjunction;
-- _A_ ⊕ _B_, read _A plus B_, is the additive disjunction;
-- _A_ & _B_, read _A with B_, is the additive conjunction.
+To see the benefits in concurrency, we can stop thinking of the types
+as typing values, and instead see them as typing processes.  In this
+view, a function type like stem:[A ⊸ B] is a process that expects an
+stem:[A] and produces a stem:[B] _at the same time_ (in the sense that
+the process chooses the order in which to interact with these things),
+while a tensor type like stem:[A ⊗ B] represents a pair of processes
+footnote:[A pair of processes in interface only: the computation may
+be done by a single process, so long as it can behave as if it were
+two processes, i.e. not have a dependency on being accessed in any
+particular order.] that will produce an stem:[A] and a stem:[B] in
+any order the consumer desires.
 
-I find the semantics of these connectives easiest to describe in terms
-of computational interpretation.  Additive connectives indicate that
-the computation branches: we take _either_ the right path _or_ the
-left path, as decided by either the constructor of the value or the
-consumer.  Multiplicatives, however, indicate that _both_ branches of
-the computation proceed.
+== Linear types in use
 
-== The _times_ and _plus_
+No mainstream programming language implements full linear types, but
+various languages have different weakenings of them.  Related
+substructural types are not uncommon in various more- or
+less-mainstream programming systems.
 
-The times and the plus are familiar to programmers used to a modern
-programming language.  In Rust, for example, the times _A_ ⊗ _B_
-corresponds to the familiar `struct` type former:
+- Linear types
+  link:https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/linear_types.html[are
+  (experimentally) available] in recent GHC Haskell, where
+  link:https://www.tweag.io/blog/2017-03-13-linear-types/[they are
+  used to help reason about the performance characteristics of
+  programs].
+- The C++ `unique_ptr` type and more generally _move semantics_ can be
+  seen as a form of {mll} in which the consumed values can still be
+  accidentally accessed at runtime.
 
-----
-struct Times<A, B> {
-  left:  A,
-  right: B,
-}
-----
+=== Affine types
 
-while the plus _A_ ⊕ _B_ corresponds to the `enum` type former:
+An affine type system is one in which any value can be deleted, but
+not all values can be copied.  Affine types have been made mainstream
+by link:https://rust-lang.org/[Rust], a language with an inherently
+affine type system.  Rust is also interesting for having an _ordered_
+type system, one in which certain values must be used before other
+values.
 
-----
-enum Plus<A, B> {
-  Left (A),
-  Right(B),
-}
-----
+=== Uniqueness types
 
-Before we get onto the less comfortable examples, it's instructive to
-pause here and look at what this means for the code _consuming_ the
-value.  If some code has some `Times<A, B>` in scope,
+Uniqueness types provide a stronger form of {mll}, one in which not
+only are values not allowed to be used more than once, but guarantees
+are made that only one reference can exist to the value at a time.
+Rust again encodes this in its unique-reference types (spelt `mut`,
+for historical reasons) where they are used to restrict the scope of
+mutation of state and prevent data races.  The
+link:https://wiki.clean.cs.ru.nl/Clean[Clean] programming language
+uses uniqueness types to control side effects while maintaining a
+purely functional semantics.
 
-----
-let atimesb: Times<A, B>
-  = make_ATimesB();
-…
-----
+=== Session types
 
-it can access _both_ an `A` (called `atimesb.left`) _and_ a `B`
-(called `atimesb.right`); and, conversely, `make_ATimesB` has the
-responsibility to create both an `A` _and_ a `B`.
-
-On the other hand, if it has some `Plus<A, B>` in scope,
-
-----
-let aplusb: Plus<A, B> = make_APlusB();
-…
-----
-
-it can access _either_ an `A` _or_ a `B` (by ``match``ing on
-`aplusb`), depending on what `make_APlusB` decided to give back:
-`make_APlusB` only has the responsibility to create _one of_ an `A` or
-a `B`.
-
-== The _with_ and _par_
-
-A less familiar construction is the additive conjunction, _with_ or &.
-This operation has no direct counterpart in most programming
-languages.  Like the plus, the with connective _A_ & _B_ presents only
-one of _A_ or _B_ (it is additive), but now it is the consumer who
-gets to choose which one is produced.
-
-In Rust, we might encode this as a type with two functions:
-
-----
-impl<A, B> With<A, B> {
-  fn left(self) -> A { … }
-  fn right(self) -> B { … }
-}
-----
-
-but there is a subtlety here.
-
-In these examples, we've been working with Rust.  Rust is an _affine_
-language by its nature.  An affine language, like a linear language,
-forbids arbitrary duplication of values. footnote:affinity[The
-difference is that in an affine language we are allowed to _drop_ any
-value whenever we please.  In a truly linear language, values are not
-only _resources_ that may be consumed by the program to help it
-perform its goal, but also _obligations_ that must be discharged: if a
-program has a value of type `A` in scope, it _must_ perform an
-operation that disposes of the `A`.  This can be used to ensure that,
-for example, the program always correctly cleans up any memory it owns
-or files it has created, or that it always executes a protocol
-correctly through to its end.]  If this were not the case, our `With`
-above would be essentially the same as `Times`: we could obtain both
-an `A` by calling `awithb.left()` as well as a `B` by calling
-`awithb.right()` and thereby write the function:
-
-----
-fn with_to_times<A, B>(
-  awithb: With<A, B>,
-) -> Times<A, B> {
-  Times {
-    left:  awithb.left(),
-    right: awithb.right(),
-  }
-}
-----
-
-In fact, though, we can't necessarily make a copy of `With<A, B>`!
-The consumer must _choose_ which of `A` and `B` it wants to proceed
-with… which, dually, means that the producer is free to use any
-resources available to it to construct the `With<A, B>` in _both_
-`left()` _and_ `right()`, since it knows that only one of them will
-ever be called and therefore the resources will be used only once.  We
-can encode this conveniently in Rust by having both functions consume
-`self` — if `self` can't be copied, we are guaranteed that only one of
-the two functions can be called for each `With<A, B>`.
-
-'''
-
-Probably the most exotic beast we'll talk about here, but perhaps also
-the most interesting, the _par_ operation _A_ ⅋ _B_ is a value that
-will produce both an _A_ and a _B_, but gets to decide in what order
-they are produced.  Note the duality with the times: whereas the
-consumer of a times may consume the values in either order, and the
-producer must account for that, with a par the producer may produce
-the values in either order, and the consumer must account for that.
-
-One of the most common uses of the par is to express a function: the
-function type _A_ ⊸ _B_ is defined as _A_^⊥^ ⅋ _B_, where the notation
-_A_^⊥^ indicates the formula that is the negation or opposite of _A_ —
-or, equivalently, a continuation that consumes an _A_.  footnote:[The
-notation used here, rather than the usual function arrow →, is
-actually that of the ‘lollipop,’ a symbol used to indicate the type of
-_linear_ functions that consume their argument exactly once.]  This
-makes use of a rather fundamental equivalence between _scheduling_ and
-_causality_.  A function cannot be expressed by use of the times
-because the consumer of the times may access its components in any
-order, and therefore the caller can't know that the ‘result’ of the
-function won't be expected before its argument has been provided.
-However, in the case of the par, because the producer of the par gets
-to schedule the execution of both components, it can choose to ensure
-that the argument is evaluated before producing a result, and
-therefore vary the result it produces based on the behaviour of the
-argument.  The easiest way to use this information, and a key example
-of a function, is the identity function _A_ ⊸ _A_ ≝ _A_^⊥^ ⅋ _A_,
-which can be implemented simply by passing the _A_ provided to the
-_A_^⊥^ directly out of the other component.
-
-This one is quite tricky to express in Rust, because it requires us to
-think a bit harder about what we mean by a ‘value’.  Notionally, we
-would like to be able to write the par as a ‘function’ that can return
-multiple results (using the keywords `return_left` and `return_right`
-here):
-
-[subs=+quotes]
-----
-impl<A, B> Par<A, B> {
-  fn par(self) -> (A ⅋ B) {
-    let a: ⊥<A> = return_left mkA();
-    return_right mkB(a);
-  }
-}
-----
-
-Unfortunately, this operation doesn't exist in Rust. footnote:[Indeed,
-it can't exist: due to Rust's stack-based semantics, as soon as we
-return one result, the stack frame is destroyed, meaning we can no
-longer continue running the code to produce the other.  In `async`
-functions, this doesn't have to be true – one could return a pair of
-`oneshot::Receiver` objects and then fulfil them both in any order
-from a newly ``spawn``ed task — but Rust provides no way to guarantee
-the order of their consumption matches the order of production, which
-may lead to deadlocks.]  Instead, we must use a bit of a trick.
-_Continuation-passing style_ is a way of writing programs such that
-instead of producing return values from our functions, we take as a
-function argument a callback, or continuation, indicating how the
-function should proceed.  That is, instead of writing
-
-----
-fn foo(arg: A) -> B { … }
-----
-
-we can instead write
-
-----
-fn foo(
-  arg:  A,
-  cont: impl FnOnce(result: B) -> !,
-) -> ! { … }
-----
-
-with much the same meaning, passing the ‘continuation’ of the program
-(i.e. what is to be done after the value is successfully produced) as
-a callback that will be called after the computation is
-complete.
-
-[NOTE]
-.return values
-====
-
-The `!` type in Rust is the empty type, or ‘never type’, which has no
-values.  Since it is impossible to construct, its use here means that
-we will never return a value.  An equivalent construction would be to
-allow these functions to notionally produce a value of _any_ type,
-
-----
-fn foo<R>(
-  arg:  A,
-  cont: impl FnOnce(result: B) -> R,
-) -> R { … }
-----
-
-since we will never actually be required to construct it.
-====
-
-Continuation-passing style can simplify reasoning about control flow,
-and is key to some crucial compiler translations — for example, it is
-often used to implement non-local control (such as
-link:https://en.wikipedia.org/wiki/Exception_handling[exceptions],
-link:https://en.wikipedia.org/wiki/Async/await[async/await], or
-link:https://en.wikipedia.org/wiki/Effect_system[effects]
-a.k.a. link:https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html[restarts]).
-
-Armed with this tool, we can define:
-
-----
-impl Par<A, B> {
-  fn par(
-    self,
-    left:  impl FnOnce(A) -> !,
-    right: impl FnOnce(B) -> !,
-  ) -> ! { … }
-}
-----
-
-Note that, because we must provide _both_ `left` and `right`
-continuations, the contexts must be disjoint!  In fact, this yields an
-interesting insight into our boring times: notice that this signature
-is basically equivalent to
-
-----
-impl<A, B> Par<A, B> {
-  fn par(
-    self,
-    continuations: Times<
-      impl FnOnce(A) -> !,
-      impl FnOnce(B) -> !,
-    >,
-  ) -> ! { … }
-}
-----
-
-In fact, _A_ ⊗ _B_ must be interpreted as both _A_ and _B_, but
-defined _independently_, i.e. using disjoint contexts and, crucially,
-without relying on _A_ and _B_ being executed in a particular order.
-
-== Conclusion and retrospective
-
-Hopefully this has provided an accessible introduction to linear logic
-and its interpretation into programming languages in the form of
-linear types.
-
-I had hoped for this article to motivate the concepts rather than
-explain them, but I fear I have ended up producing more of a technical
-explanation of what the connectives of linear logic _are_ in a
-computational sense.  I'm not totally dissatisfied with this outcome,
-but I hope it will improve in future articles.
-
-Things I'd like to try next:
-
-- more pictures/diagrams
-- more focus on motivation and less on explanation
+Session types are a variant of linear types geared explicitly towards
+expressing a protocol to be enacted by two or more parties over a
+shared communication channel, and are distinct from linear types in
+that they make the precise ordering of messages to be sent explicit in
+the type.  Session types are available for use in
+link:https://nickng.io/projects/sessionc/[C],
+link:https://docs.rs/session_types/latest/session_types/[Rust], and
+link:https://www.doc.ic.ac.uk/~rhu/sessionj.html[Java], amongst other
+languages.
