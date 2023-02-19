@@ -1,7 +1,7 @@
 ---
 title: Dependent types for programmers
 subtitle: programming the type system
-tags: Logic, Syntax, Programming Languages
+tags: Logic, Syntax, Programming languages
 ---
 
 == Coming soon.

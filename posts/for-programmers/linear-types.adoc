@@ -2,7 +2,7 @@
 title: Linear types for programmers
 subtitle: reasoning about resources
 date: 2023-01-16
-tags: Types, Syntax, Semantics, Formal Verification, Programming Languages
+tags: Types, Syntax, Semantics, Formal verification, Programming languages
 ---
 :mll: pass:[<abbr title="Multiplicative Linear Logic">MLL</abbr>]
 

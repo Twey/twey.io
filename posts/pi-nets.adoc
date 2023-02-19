@@ -1,7 +1,7 @@
 ---
 title: π-calculus and Interaction Nets
 subtitle: there and back again
-tags: Programming Languages, Concurrency, Asynchrony, Interaction Nets
+tags: Programming languages, Concurrency, Asynchrony, Interaction nets
 ---
 
 == Recursion vs Replication

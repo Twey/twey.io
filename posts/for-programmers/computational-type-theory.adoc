@@ -1,7 +1,7 @@
 ---
 title: Computational type theory
 subtitle: function over form
-tags: Syntax, Semantics, Programming Languages
+tags: Syntax, Semantics, Programming languages
 ---
 
 == Coming soon.

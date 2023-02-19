@@ -2,7 +2,7 @@
 title: Lorem ipsum dolor sit amet — consectetuer asciidoc elit
 subtitle: donec hendrerit tempor tellus
 date: 2021-10-06
-tags: Lorem Ipsum, Dolor Sit Amet, Natural Languages
+tags: Lorem ipsum, Dolor sit amet, Natural languages
 ---
 :source-language: rust
 

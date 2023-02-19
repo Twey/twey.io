@@ -1,7 +1,7 @@
 ---
 title: The Curry–Howard correspondence for programmers
 subtitle: the logic of programming languages
-tags: Logic, Syntax, Programming Languages
+tags: Logic, Syntax, Programming languages
 ---
 
 == Coming soon.

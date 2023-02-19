@@ -1,7 +1,7 @@
 ---
 title: Initials test
 subtitle: an example page for me to play with initials on
-tags: Natural Language, Typography, Example, Test
+tags: Natural language, Typography, Example, Test
 ---
 
 == A
