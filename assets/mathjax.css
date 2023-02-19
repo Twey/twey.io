@@ -1,0 +1,8 @@
+mjx-math {
+  padding: 0.1em !important;
+  background-color: var(--colour-slight-highlight-bg);
+}
+
+mjx-container[jax="CHTML"][display="true"] mjx-math {
+  padding: 0.3em !important;
+}

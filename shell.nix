@@ -7,6 +7,7 @@ mkShell {
   buildInputs = [
     gnumake ghc haskellPackages.hakyll asciidoctor graphviz-nox
     (python3.withPackages (ps: [ps.fontforge])) ttfautohint-nox imagemagick
+    nodePackages.mermaid-cli
     bashInteractive
   ];
 }

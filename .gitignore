@@ -3,4 +3,6 @@
 .shake
 /_*
 /dist-newstyle
-**/*.woff
+*.woff
+.asciidoctor
+.direnv

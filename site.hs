@@ -36,6 +36,7 @@ asciiDoctorOptions out =
   , "--attribute", "source-highlighter=rouge"
   , "--attribute", "imagesoutdir=_site/" ++ takeDirectory out
   , "--attribute", "icons=font"
+  , "--attribute", "stem=latexmath"
   , "-"
   ]
 

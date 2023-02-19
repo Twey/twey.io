@@ -6,7 +6,7 @@
     --font-footer: var(--font-code);
 }
 :root {
-    --colour-highlight-fg: #603000;
+    --colour-highlight-fg: #907040;
     --colour-highlight-bg: #ccc;
     --colour-slight-highlight-bg: #e5e5e5;
     --colour-bg: #eee;
@@ -50,8 +50,12 @@ h1, h2, h3 {
 }
 h3 { font-size: 1.4rem; }
 
+article {
+    margin-top: 1em;
+}
+
 article>section:first-child h2 {
-    margin-top: 0.4em;
+    margin-top: 0;
 }
 
 code {
@@ -122,15 +126,24 @@ main article a:link, main article a:visited {
     font-family: var(--font-around);
 }
 
+main .underline {
+    text-decoration: underline;
+}
+
 main pre {
     margin: 0;
     font-family: var(--font-code);
+}
+
+main abbr {
+    text-transform: small-caps;
 }
 
 main ul, main ol {
     margin-left: 1.5em;
     padding-left: 0;
     list-style-position: outside;
+    clear: both;
 }
 
 main li {
@@ -156,6 +169,24 @@ main li::marker {
 
 main ol {
     list-style-type: lower-roman;
+}
+
+main .imageblock {
+    text-align: center;
+    margin: 2em 0;
+}
+
+main .imageblock {
+    border: 3px double var(--colour-highlight-bg);
+    padding: 1em;
+}
+
+main .imageblock img {
+    border: 1px solid var(--colour-faded);
+}
+
+main .imageblock .title {
+  font-family: var(--font-header);
 }
 
 hr, hr:not([size]) {
@@ -310,6 +341,10 @@ footer ul li:not(:first-child):before {
     padding: 0.5em 0.75em;
     padding-top: 0.5em;
     border: 3px double var(--colour-slight-highlight-bg);
+}
+
+.admonitionblock :last-child {
+  margin-bottom: 0;
 }
 
 .admonitionblock .title {
