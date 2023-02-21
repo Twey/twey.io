@@ -170,7 +170,9 @@ on an argument and do something different.
 For example, given (arbitrary) terms stem:[\def\tt{{\mathrm{\bf
 t\!t}}}\tt] and stem:[\def\ff{{\mathrm{\bf f\!f}}}\ff] representing
 the Booleans `true` and `false`, we can write a predicate
-stem:[\operatorname{isZero}]:
+stem:[\operatorname{isZero}]: footnote:[There's a Church encoding of
+the Booleans too, that looks like stem:[\tt = λtf.t]; stem:[\ff =
+λtf.f].  Can you see how to write an `if`?]
 
 [stem]
 ++++
@@ -208,14 +210,14 @@ effects that happen in the course of evaluation.
 
 == Type systems
 
-=== Simply-typed λ-calculus and the lambda cube
-
 Depending on whether we are interested in _syntax_ or _semantics_,
 extensions to the λ-calculus generally involve adding or changing
 _types_ or _terms_ respectively.  In a real-world programming
 language, usually the λ-calculus is extended both ways, and often a
 new term will be presented with a type system that ensures correctness
 of use.
+
+=== Simply-typed λ-calculus and the lambda cube
 
 The simplest type system extension given to the λ-calculus is the
 aptly-named _simply-typed λ-calculus_.  In the simply-typed
@@ -227,10 +229,16 @@ stem:[τ], written stem:[e : τ].  Types stem:[τ] are either:
 - a function type stem:[σ → τ] from values of type stem:[σ] to values
   of type stem:[τ].
 
-Along with the types we associate a _typing rule_:
+Along with the types we associate _typing contexts_ (lists of variable
+types) and _typing rules_:
 
-- if stem:[e] has type stem:[τ] when stem:[x] has type stem:[σ], then
-  stem:[λx. e] has type stem:[σ → τ].
+- if a variable stem:[x] has type stem:[τ] in a context stem:[Γ], then the
+  term stem:[x] has type stem:[τ] in context stem:[Γ].
+- if stem:[e] has type stem:[τ] in a context stem:[Γ, x: σ] in which
+  stem:[x] has type stem:[σ], then stem:[λx. e] has type stem:[σ → τ]
+  in context stem:[Γ].
+- if, in context stem:[Γ], stem:[f] has type stem:[σ → τ] and stem:[e]
+  has type stem:[σ], then stem:[f e] has type stem:[τ].
 
 Notably the λ-calculus extended with (only) this type system is no
 longer Turing-complete, because in order to type something like the Y
