@@ -66,7 +66,7 @@ code {
 
 /* index */
 .index .about {
-    padding: 5rem 1rem 0;
+    padding: 2rem 1rem 0;
     text-align: right;
 }
 .index .about>* {
@@ -74,9 +74,9 @@ code {
     flex-direction: column;
     justify-content: center;
     font-size: 1.3em;
-    margin-bottom: 5rem;
+    margin-bottom: 2rem;
 }
-.index img.logo { height: 15rem; }
+.index img.logo { height: 15rem; margin-bottom: 2rem; }
 .index .about a {
     white-space: nowrap;
 }
