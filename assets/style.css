@@ -1,5 +1,5 @@
 :root {
-    --font-text: "Liberation Serif", "Times New Roman", serif;
+    --font-text: "Cormorant Garamond", "Liberation Serif", "Times New Roman", serif;
     --font-header: "EB Garamond", "Times New Roman", serif;
     --font-around: var(--font-header);
     --font-code: "DM Mono", monospace;
