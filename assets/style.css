@@ -192,7 +192,7 @@ main .imageblock .title {
     margin-top: 0.5rem;
 }
 
-hr, hr:not([size]) {
+hr {
     border: 0;
     height: 4rem;
     margin-bottom: 1em;
@@ -200,9 +200,16 @@ hr, hr:not([size]) {
     background: center/contain url(divider.svg) transparent no-repeat;
 }
 
+/* .mono is for black-on-transparent images that should change in dark
+   mode */
+
+.imageblock.mono .content>*, img.mono, hr {
+    filter: opacity(50%);
+}
+
 @media (prefers-color-scheme: dark) {
-    hr, hr:not([size]) {
-        filter: invert(100%);
+    .imageblock.mono .content>*, img.mono, hr {
+        filter: invert(50%);
     }
 }
 
