@@ -124,6 +124,7 @@ main article a:link, main article a:visited {
 
 #docnav {
     font-family: var(--font-around);
+    margin-bottom: 2rem;
 }
 
 main .underline {
