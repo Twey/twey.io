@@ -144,7 +144,7 @@ cleanUrlField key = field key $ \i -> do
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
-  let postsPath = "posts/**.adoc" <> "posts/**.html"
+  let postsPattern = "posts/**.adoc" .||. "posts/**.html"
 
   match "static/**" $ do
     route $ gsubRoute "^static/" (const "")
@@ -154,7 +154,7 @@ main = hakyll $ do
     route   idRoute
     compile compressCssCompiler
 
-  tags <- buildTags postsPath $ fromCapture "tags/*"
+  tags <- buildTags postsPattern $ fromCapture "tags/*"
 
   tagsRules tags $ \tag pat -> do
     route tagRoute
@@ -194,7 +194,7 @@ main = hakyll $ do
   create ["index.html"] $ do
     route idRoute
     compile $ do
-      posts <- recentFirst =<< published =<< loadAll postsPath
+      posts <- recentFirst =<< published =<< loadAll postsPattern
       let ctx = indexContext posts
       makeItem ""
         >>= loadAndApplyTemplate "templates/archive.html" ctx
