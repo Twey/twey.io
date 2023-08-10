@@ -182,16 +182,14 @@ main .imageblock .content {
     padding: 1rem;
 }
 
-main .imageblock img {
+main .imageblock .content>* {
+    max-width: 100%;
+    height: auto;
 }
 
 main .imageblock .title {
     font-family: var(--font-header);
     margin-top: 0.5rem;
-}
-
-main .imageblock svg {
-    max-width: 100%;
 }
 
 hr, hr:not([size]) {

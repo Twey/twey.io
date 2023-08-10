@@ -29,7 +29,7 @@ define agent {
   text at 0.10*$2 above A.c $3 big big
 }
 
-Arrow: move right 3cm
+Arrow: move right 1.5cm
 line from 0.2cm above Arrow.start to 0.2cm left of 0.2cm above Arrow.end
 line from 0.2cm below Arrow.start to 0.2cm left of 0.2cm below Arrow.end
 line from 0.4cm above 0.4cm left of Arrow.end to Arrow.end
@@ -51,7 +51,7 @@ line down 1cm
 
 line from G1.s to Z1.n
 
-Centre: dot at 3cm right of Arrow.end
+Centre: dot at 3cm right of Arrow.end invis
 
 move from Centre left 1.5cm up 1.5cm
 Z2: [agent(2cm, -1.5cm, "ζ")]
@@ -72,9 +72,6 @@ move from Centre right 1.5cm down 1.5cm
 G3: [agent(2cm, 1.5cm, "γ")]
 G3pax1: dot at 0.4cm left of G3.n
 G3pax2: dot at 0.4cm right of G3.n
-
-text at 0.10*G2.height above G2.c "γ" big big
-text at 0.10*G3.height above G3.c "γ" big big
 
 spline from Z2pax2 to G2pax1
 spline from Z2pax1 down 1cm then to 1cm above G3pax1 then to G3pax1
