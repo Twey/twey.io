@@ -46,7 +46,7 @@ header.doctitle {
 h1, h2, h3 {
     font-family: var(--font-header);
 }
-h3 { font-size: 1.4rem; margin-top: 1em; }
+article h3 { font-size: 1.4rem; margin-top: 1em; }
 
 article>section {
     margin-bottom: 2em;
