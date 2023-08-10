@@ -1,12 +1,17 @@
-$for(months)$
-<section id="$month$">
-  <h2>$englishMonth$</h2>
-  $for(posts)$
-  <section class="post">
-    <time datetime="$date$">$englishDate$</time>
-    <h3><a href="$url$">$title$</a></h3>
-    <div class="teaser">$teaser$</div>
-  </section>
-  $endfor$
-</section>
-$endfor$
+<div class="archive">
+    $for(months)$
+    <section id="$month$">
+        <h2>$englishMonth$</h2>
+        $for(posts)$
+        <section class="post">
+            <time datetime="$date$">$englishDate$</time>
+            <a href="$url$">
+                <h3>$title$</h3>
+                $if(subtitle)$<h4>$subtitle$</h4>$endif$
+            </a>
+            <div class="teaser">$teaser$</div>
+        </section>
+        $endfor$
+    </section>
+    $endfor$
+</div>
