@@ -1,0 +1,260 @@
+---
+title: The art of binding
+subtitle: variables made complicated
+tags: Semantics, Distributed programming, Logic programming
+date: 2023-08-07
+---
+
+== Introduction and pedantry ==
+
+In programming, we typically think of a variable as a location to
+store a value.  It turns out this is mostly an implementation detail;
+if we generalize them into their interface, we find a rich space of
+languages that captures the distinctions between several different
+types of programming language that seem very different at first
+glance.
+
+In order to fix some terminology that will be useful in the rest of
+this page, let's look at variables as they're used in everyday
+programming languages such as Java, C, or Haskell.  I will blithely
+refer to all of these as ‘functional languages’: the imperative nature
+of those functions in some of them, i.e. that they may perform
+effects, is not relevant here.  Similarly, I will for the most part
+ignore the distinction between parameters and variables, accepting
+that a sequential variable binding
+
+[source,java]
+bool x = true;
+if (x) …
+
+can just as easily be written as a function application
+
+[source,java]
+((bool x) -> { if (x) … })(true)
+
+Syntactically, variables come in
+three parts: declaration, definition, and usage.
+
+=== Declaration
+
+The _declaration_ of a variable involves announcing the existence of
+the variable, giving it a name and a type.  Note that when we say
+_type_ here we include all elements that affect how the variable may
+be used: type definitions like `int`, as well as things like
+mutability or sharing modifiers.
+
+[source,java]
+bool x;
+
+=== Definition
+
+The _definition_ of a variable is where the variable is given a value;
+the definition specifies the runtime behaviour of code that interacts
+with the variable.  Sometimes mutation (a.k.a. redefinition) takes the
+same syntactic form as definition, but these operations should not be
+confused.
+
+[source,java]
+x = true;
+
+=== Usage
+
+Finally, the _usage_ of a variable is the code over which the variable
+is scoped, within which the name can be used to interact with the
+definition.  The usage can be either _multiplicative_, such as
+
+[source,java]
+f(x)
+
+wherein the variable is merely passed from place to place and its
+contents are irrelevant; or it can be _additive_, wherein its value is
+inspected and some number of code paths may be followed or not
+depending on the definition, such as
+
+[source,java]
+if (x)
+  foo();
+else
+  bar();
+
+[NOTE]
+.declaration vs definition
+Declaration can be merged with definition in some languages,
+especially dynamically typed languages in which specifying a type is
+not required, but we'll keep it notionally separate for reasons that I
+hope will become clear later.
+
+== Variables as channels ==
+
+If we take the concept above and strip it down to its barest
+essentials, it becomes obvious that a variable is really just a
+_communication channel_ between the definition and the usage.  The
+declaration of the variable establishes a new communication channel
+and gives it a name; the definition of the variable writes to the
+channel; and the usage reads from the channel.  The type of the
+channel, if present, indicates the _protocol_ between the definition
+and the usage. One way such a communication channel can be implemented
+is by evaluating the definition to a normal form and then writing it
+into a memory location that can be accessed by the usage, and this is
+what we're accustomed to from single-threaded call-by-value languages;
+but this implies certain semantic characteristics, such as the ability
+to serialize the result of the definition to memory at a well-known
+location non-interactively, that may not be ideal in all cases.
+
+For example, we can have the definition and usage evaluated
+concurrently.  This is standard practice in π-calculus, where the
+declaration of a variable (or _name_, in π-calculus parlance) is given
+by the `ν` binder, and the definition and usage live side-by-side as
+parallel symmetric processes communicating over that name:
+
+[source]
+νx. (define(x) | use(x))
+
+This is possible because the π-calculus allows for both sending and
+receiving on a name, i.e. names act as bidirectional channels.  The
+traditional case re-emerges if `def(x)` only calculates some answer
+and then writes it on `x`, and `use(x)` only reads the answer from `x`
+and then performs some further work on it; but it is easy to see that
+this mode of programming also supports more sophisticated computation
+patterns, such as swapping the reader/writer rôles of `def` and `use`
+based on a more elaborate protocol, or doing some work in between the
+reads and writes that is independent of `x`, and can therefore be done
+concurrently.  The correctness of these protocols can be established
+by splitting the name bound by `ν` into two complementary names, and
+checking them against two dual halves of a _session type_
+(link:https://www.sciencedirect.com/science/article/pii/S0890540112001022[Vasconcelos,
+2012]).
+
+== Non-linear variables ==
+
+This is all very simple if the variable is used linearly (i.e. defined
+exactly once and used exactly once), but begs the question: if we have
+multiple definitions or multiple usages, how do we evaluate them?
+There are several valid answers to this question, and which one we
+choose selects between large classes of languages.
+
+=== Multiple usages ===
+
+In the case in which the variable is defined only once and used
+multiple times, the usual semantics is of some kind of ‘copy’ of the
+variable.  This can take the form of a value copy in a strict language
+where the variable is necessarily bound to a value; but in a lazier
+language it could also involve a thunk copy.
+
+=== Multiple definitions ===
+
+The multiple-definition case is less intuitive, and different systems
+have different answers:
+
+- in process calculi, the ‘winner’ of two simultaneous reads or writes
+  is picked non-deterministically, and the other left pending a future
+  write or read (respectively);
+- in logic languages such as Prolog or Kanren, all possibilities are
+  tried ‘simultaneously’, footnote:[‘Simultaneously’ here usually
+  really means in some language-defined order; a major drawback
+  of Prolog is that even though in notation the code looks very
+  declarative, in order to write effective (efficient, terminating)
+  programs, the programmer must have a quite deep understanding of the
+  evaluation order of the Prolog interpreter.  Kanren's interleaving
+  semantics for disjunction alleviate this problem significantly, and
+  Lozov & Boulytchev address this issue for conjunction as well in
+  their work on ‘angelic semantics’, which is effectively a fair
+  process scheduling algorithm
+  (link:https://popl21.sigplan.org/details/pepm-2021-papers/9/Efficient-Fair-Conjunction-for-Structurally-Recursive-Relations[Lozov
+  & Boulytchev, 2021]).] by duplicating both definition clauses and
+  usage clauses as necessary, and failing possibilities eliminated;
+- in functional languages, typically each possibility is tried in
+  turn, with a limited ‘pattern’ language used to test, and the first
+  (by order of writing) succeeding definition is picked —
+  i.e. multiple definitions desugar to a `case` expression.
+
+An interesting observation is that while functional languages
+typically provide no way to duplicate definitions directly, a sort of
+definition duplication does occur as the programmer calls a function
+multiple times: multiple uses (i.e. calls) of the function each create
+a new copy of that function (stack frame, closure, et cetera) in which
+the argument variables are bound to different values.
+
+== Variables as effects ==
+
+Let's consider a language that unifies all these possibilities.  Take
+a continuation-passing λ-calculus, i.e. one in which all lambdas are
+constrained to return an element of a type stem:[⊥] with no
+constructors in the language.  Now, in order to depend on the value of
+an argument, we must pass it one or more continuations, in
+link:/for-programmers/lambda-calculus/[Church style].
+
+[stem]
+++++
+λbool. bool\ true\_branch\ false\_branch
+++++
+
+If this is a standard Church boolean, one of
+
+[stem]
+++++
+\begin{eqnarray}
+  \operatorname{true} &≝& λt f. t \\
+  \operatorname{false} &≝& λt f. f \\
+\end{eqnarray}
+++++
+
+then only one branch will be taken, and we have the normal `if`
+behaviour; however, we can also write _non-standard_ booleans such as
+
+[stem]
+++++
+\operatorname{both} ≝ λt f. \operatorname{concurrent} t f
+++++
+
+where stem:[\operatorname{concurrent}] is a term that combines the
+execution of stem:[t] and stem:[f] (as in logic languages), or
+
+[stem]
+++++
+\operatorname{coinflip} ≝ λt f. \operatorname{random} t f
+++++
+
+where stem:[\operatorname{random}] is a term that randomly selects a
+continuation from its two arguments (as in process calculi).
+
+There are a few interesting things to note here:
+
+- Even though there are no return values in our language, the
+  possibility of writing both stem:[\operatorname{parallel}] and
+  stem:[\operatorname{random}] depends on the structure of our
+  semantic return type stem:[⊥].  If it is a monoid we can implement
+  sequential non-determinism; if it is a commutative monoid we can
+  implement concurrent non-determinism; if it includes a randomness
+  effect we can implement random-choice non-determinism.
+- To be able to write effects like stem:[\operatorname{concurrent}]
+  that execute both branches, we have to require that both stem:[t]
+  and stem:[f] be executable at the same time.  This isn't necessarily
+  the case in general; if they share a value that isn't copyable, or a
+  reference to a value that may not safely be shared in the
+  concurrency model used, trying to execute both may fail.
+  footnote:[This leads Paul-André Melliès to
+  https://www.youtube.com/watch?v=XXAMOFlXtA0[style] non-linear types
+  (ones that may be copied or dropped) as ‘classical’ types, since
+  they enable execution models that defy intuitionistic logic, and
+  thus make intuitionistically unprovable formulae (such as the
+  Drinker's Paradox) provable.]
+- The standard booleans require the ability to drop the other branch —
+  this is usually achieved in linear logic with the additive
+  conjunction stem:[\&], viz. stem:[⊥ \& ⊥], but can also be simulated
+  in the multiplicative fragment by using weakening, viz. stem:[{?\!\!⊥} ⊗
+  {?\!\!⊥}].
+
+This encoding is essentially the result of compiling effect handlers
+in capability-passing style
+(https://dl.acm.org/doi/10.1145/3408975[Schuster et al., 2020]).
+
+'''
+
+== Conclusion ==
+
+The common or garden programming notion of variable generalizes
+naturally to a notion of channel between two communicating processes.
+This suggests further generalizations to effects, but also to
+e.g. multiparty sessions (multiparty effects?) for coördinating
+communication between multiple definitions and usages.

@@ -1,0 +1,10 @@
+----
+title: Interaction nets
+subtitle: a graphical notion of computation
+----
+
+== Notes
+
+Girard's stars can be seen as generalized inets in which the rules are
+encoded directly in the agents rather than indirected by a labelling
+symbol.  Coloured symbols correspond to wires correspond to variables.
