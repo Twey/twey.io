@@ -21,7 +21,9 @@ type MonthOfYear = Int
 type Year = Integer
 
 dirPath :: Identifier -> FilePath
-dirPath ident = replaceExtension (toFilePath ident) ""
+dirPath ident = case splitFileName . dropExtension $ toFilePath ident of
+  (dir, "index") -> dir
+  (dir, file)    -> dir </> file
 
 cleanRoute :: Routes
 cleanRoute = customRoute $ \ident -> dirPath ident </> "index.html"
@@ -68,6 +70,8 @@ postRoute = foldl composeRoutes idRoute
   [ gsubRoute "^posts/" $ const ""
   , cleanRoute
   ]
+
+postAssetRoute = gsubRoute "^posts/" $ const ""
 
 tagRoute = foldl composeRoutes idRoute
   [ gsubRoute "[^a-zA-Z0-9/]+" $ const "-"
@@ -140,6 +144,8 @@ cleanUrlField key = field key $ \i -> do
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
+  let postsPath = "posts/**.adoc" <> "posts/**.html"
+
   match "static/**" $ do
     route $ gsubRoute "^static/" (const "")
     compile copyFileCompiler
@@ -148,7 +154,7 @@ main = hakyll $ do
     route   idRoute
     compile compressCssCompiler
 
-  tags <- buildTags "posts/**" $ fromCapture "tags/*"
+  tags <- buildTags postsPath $ fromCapture "tags/*"
 
   tagsRules tags $ \tag pat -> do
     route tagRoute
@@ -182,13 +188,13 @@ main = hakyll $ do
     compile $ getResourceBody >>= compilePost
 
   match "posts/**" $ do
-    route     postRoute
-    compile $ pandocCompiler >>= compilePost
+    route   postAssetRoute
+    compile copyFileCompiler
 
   create ["index.html"] $ do
     route idRoute
     compile $ do
-      posts <- recentFirst =<< published =<< loadAll "posts/**"
+      posts <- recentFirst =<< published =<< loadAll postsPath
       let ctx = indexContext posts
       makeItem ""
         >>= loadAndApplyTemplate "templates/archive.html" ctx

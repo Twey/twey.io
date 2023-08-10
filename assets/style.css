@@ -174,20 +174,24 @@ main ol {
 
 main .imageblock {
     text-align: center;
-    margin: 2em 0;
+    margin: 2rem 0;
 }
 
-main .imageblock {
+main .imageblock .content {
     border: 3px double var(--colour-highlight-bg);
-    padding: 1em;
+    padding: 1rem;
 }
 
 main .imageblock img {
-    border: 1px solid var(--colour-faded);
 }
 
 main .imageblock .title {
-  font-family: var(--font-header);
+    font-family: var(--font-header);
+    margin-top: 0.5rem;
+}
+
+main .imageblock svg {
+    max-width: 100%;
 }
 
 hr, hr:not([size]) {

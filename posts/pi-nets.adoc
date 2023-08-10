@@ -17,7 +17,77 @@ suffice to reproduce recursion.
 There are many variants of the π-calculus.  The variant discussed here
 has replication and restriction.
 
-[subs="+quotes"]
+[pikchr,svg-type="inline"]
+.caption
+....
+define agent {
+  # width height label
+  A: line up $2 right $1/2 \
+    then left $1 rad 20px \
+    then down $2 right $1/2 \
+    close
+  text at 0.10*$2 above A.c $3 big big
+}
+
+Arrow: move right 3cm
+line from 0.2cm above Arrow.start to 0.2cm left of 0.2cm above Arrow.end
+line from 0.2cm below Arrow.start to 0.2cm left of 0.2cm below Arrow.end
+line from 0.4cm above 0.4cm left of Arrow.end to Arrow.end
+line from 0.4cm below 0.4cm left of Arrow.end to Arrow.end
+
+move from Arrow.start left 1.5cm up 0.5cm
+G1: [agent(2cm, 1.5cm, "γ")]
+dot at 0.4cm left of G1.n
+line up 1cm
+dot at 0.4cm right of G1.n
+line up 1cm
+
+move from Arrow.start left 1.5cm down 0.5cm
+Z1: [agent(2cm, -1.5cm, "ζ")]
+dot at 0.4cm left of Z1.s
+line down 1cm
+dot at 0.4cm right of Z1.s
+line down 1cm
+
+line from G1.s to Z1.n
+
+Centre: dot at 3cm right of Arrow.end
+
+move from Centre left 1.5cm up 1.5cm
+Z2: [agent(2cm, -1.5cm, "ζ")]
+Z2pax1: dot at 0.4cm right of Z2.s
+Z2pax2: dot at 0.4cm left of Z2.s
+
+move from Centre right 1.5cm up 1.5cm
+Z3: [agent(2cm, -1.5cm, "ζ")]
+Z3pax1: dot at 0.4cm right of Z3.s
+Z3pax2: dot at 0.4cm left of Z3.s
+
+move from Centre left 1.5cm down 1.5cm
+G2: [agent(2cm, 1.5cm, "γ")]
+G2pax1: dot at 0.4cm left of G2.n
+G2pax2: dot at 0.4cm right of G2.n
+
+move from Centre right 1.5cm down 1.5cm
+G3: [agent(2cm, 1.5cm, "γ")]
+G3pax1: dot at 0.4cm left of G3.n
+G3pax2: dot at 0.4cm right of G3.n
+
+text at 0.10*G2.height above G2.c "γ" big big
+text at 0.10*G3.height above G3.c "γ" big big
+
+spline from Z2pax2 to G2pax1
+spline from Z2pax1 down 1cm then to 1cm above G3pax1 then to G3pax1
+spline from Z3pax2 down 1cm then to 1cm above G2pax2 then to G2pax2
+spline from Z3pax1 to G3pax2
+
+line from Z2.n up 1cm
+line from Z3.n up 1cm
+line from G2.s down 1cm
+line from G3.s down 1cm
+....
+
+[source,subs="+quotes"]
 ----
 P *::=* 0          end
     *|* P | Q      parallel composition
