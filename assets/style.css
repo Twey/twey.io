@@ -188,8 +188,9 @@ main .imageblock .content>* {
 }
 
 main .imageblock .title {
-    font-family: var(--font-header);
-    margin-top: 0.5rem;
+    font-style: italic;
+    margin: 0 2rem;
+    text-align: justify;
 }
 
 hr {
