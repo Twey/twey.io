@@ -13,7 +13,7 @@ model espoused by Nix for package management is a leap ahead of other
 available tools.  However, the Nix language can be very unstructured,
 and knowing how to use it in an effective and composable way can
 involve a lot of searching and deep-diving through `nixpkgs`.  This
-page aims to collect patterns and good practices I encounter or
+series aims to collect patterns and good practices I encounter or
 devise, significantly for my own future benefit, but hopefully other
 people will find it helpful too.
 
@@ -149,7 +149,7 @@ in
 This helps the first problem, but it's still unpleasant to manually
 have to plumb around `"address1"` and `"address2"`, when we really
 don't care about it.  One can work around this problem by having
-`backend-service` understand nginx, and indeed this is a pattern used
+`backend-service` understand {NGINX}, and indeed this is a pattern used
 in several places in `nixpkgs`, but it's rather clumsy to push
 knowledge of the outer proxy into the backend service.
 

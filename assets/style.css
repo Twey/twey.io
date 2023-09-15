@@ -137,7 +137,7 @@ main pre {
 }
 
 main abbr {
-    text-transform: small-caps;
+    font-variant: all-small-caps;
 }
 
 main ul, main ol {
