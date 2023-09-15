@@ -5,12 +5,16 @@
 
 .highlight .hll{}
 .highlight .c {
+    /* comments */
     color: var(--colour-slightly-faded);
     font-family: var(--font-text);
 }
 .highlight .err{}
 .highlight .g{}
-.highlight .k{font-weight: bold}
+.highlight .k{
+    /* keywords */
+    font-weight: bold;
+}
 .highlight .l{}
 .highlight .n{}
 .highlight .o{}
@@ -19,7 +23,9 @@
 .highlight .cm{}
 .highlight .cp{}
 .highlight .c1{}
-.highlight .cs{font-weight:bold}
+.highlight .cs{
+    font-weight:bold;
+}
 .highlight .gd{}
 .highlight .ge{font-style:italic}
 .highlight .gr{}
@@ -38,12 +44,18 @@
 .highlight .kt{}
 .highlight .ld{}
 .highlight .m{}
-.highlight .s{color:var(--colour-highlight-fg)}
+.highlight .s{
+    /* string literals */
+    color:var(--colour-highlight-fg);
+}
 .highlight .na{}
 .highlight .nb{}
 .highlight .nc{}
 .highlight .no{}
-.highlight .nd{font-style: italic;}
+.highlight .nd{
+    /* macros? */
+    font-style: italic;
+}
 .highlight .ni{}
 .highlight .ne{font-weight:bold}
 .highlight .nf{}
@@ -62,10 +74,16 @@
 .highlight .sb{}
 .highlight .sc{}
 .highlight .sd{}
-.highlight .s2{}
+.highlight .s2{
+    /* another kind of string literal? */
+    color:var(--colour-highlight-fg)
+}
 .highlight .se{}
 .highlight .sh{}
-.highlight .si{}
+.highlight .si{
+    /* string interpolation characters? */
+    font-weight:bold;
+}
 .highlight .sx{}
 .highlight .sr{}
 .highlight .s1{}

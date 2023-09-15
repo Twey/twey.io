@@ -17,6 +17,8 @@ suffice to reproduce recursion.
 There are many variants of the π-calculus.  The variant discussed here
 has replication and restriction.
 
+
+
 [pikchr,svg-type="inline",role="mono"]
 .The interaction rule for duplication in the interaction combinators, where stem:[δ] is the duplicating agent and stem:[ζ] is an agent to be duplicated.
 ....
@@ -32,8 +34,8 @@ define agent {
 Arrow: move right 1.5cm
 line from 0.2cm above Arrow.start to 0.2cm left of 0.2cm above Arrow.end
 line from 0.2cm below Arrow.start to 0.2cm left of 0.2cm below Arrow.end
-line from 0.4cm above 0.4cm left of Arrow.end to Arrow.end
-line from 0.4cm below 0.4cm left of Arrow.end to Arrow.end
+line from 0.4cm above 0.4cm left of Arrow.end to Arrow.end \
+  then to 0.4cm below 0.4cm left of Arrow.end
 
 move from Arrow.start left 1.5cm up 0.5cm
 G1: [agent(2cm, 1.5cm, "δ")]
@@ -84,8 +86,27 @@ line from G2.s down 1cm
 line from G3.s down 1cm
 ....
 
+// Unfortunately KaTeX doesn't support setting \arraycolsep so we must
+// remove spacing manually here with \hspace.
+
+[stem]
+++++
+\def\arrayop#1{\hspace{-0.5em}&\mathbf{#1}&\hspace{-0.5em}}
+\def\defeq{\arrayop{::=}}
+\def\alt{\arrayop{|}}
+\begin{array}{rrl}
+  P \defeq 0\\
+    \alt P \mid Q\\
+    \alt x(y). P\\
+    \alt \bar{x}\\
+    \alt (νx). P\\
+    \alt !P
+\end{array}
+++++
+
 [source,subs="+quotes"]
 ----
+P ::=
 P *::=* 0          end
     *|* P | Q      parallel composition
     *|* x(y). P    read y from x, then continue as P
@@ -99,3 +120,21 @@ P *::=* 0          end
 One simplification we can make is to remove the notion of output prefixing.  This
 
 == Fusion Calculus
+
+== Notes
+
+Introduction to π calculus.  Difference from λ-calculus:
+- return values → ⊥
+- λ → ν + reading
+- semantics of multiple writes: copy closure → multiple reads within closure
+
+Imagine encoding of λ-calculus into π-calculus by reversing these:
+- λ → ν + !(read + body)
+- @ → write
+
+Synchronous π-calculus → asynchronous π-calculus: remove output prefixing
+Asynchronous π-calculus → fusion calculus: input prefixing → fusion
+? fusion contains sync or async π?
+
+Fusion calculus → solos calculus
+Solos calculus is asynchronous fusion calculus
