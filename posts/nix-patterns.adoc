@@ -196,6 +196,7 @@ in
       options = {
         enable = lib.mkEnableOption { … };
         package = lib.mkOption { … };
+        address = lib.mkOption { … };
       };
     });
   };
@@ -205,6 +206,45 @@ in
       instance
       config.services.backend-service);
 }
+----
+
+… at least, that's what we'd like to write.  Unfortunately, since
+attrset keys in Nix are strict, this will cause an infinite recursion
+when Nix attempts to evaluate the keys of `config`.
+
+Instead, we need to expressly restrict the keys that can appear in the output:
+
+[source,nix]
+config = let
+  c = lib.mapAttrsToList
+    instance
+    config.services.gunicorn;
+in {
+  systemd = lib.mkMerge (lib.catAttrs "systemd" c);
+};
+
+and use the
+https://nixos.org/manual/nixos/stable/#sec-option-types-submodule[parameterized
+submodule functionality] to generate the `socket` attribute locally,
+guaranteeing that the keys of our submodules can only depend on their
+names, not other keys:
+
+[source,nix]
+----
+type = types.attrsOf (types.submodule ({ name, ... }: {
+  options = {
+    enable = lib.mkEnableOption { … };
+    package = lib.mkOption { … };
+    address = lib.mkOption {
+      description = "Read-only attribute!";
+      …
+    };
+  };
+
+  config = {
+    address = "/var/lib/backend-service/${name}.sock";
+  };
+}));
 ----
 
 With this, our end-user can use
