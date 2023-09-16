@@ -8,6 +8,8 @@
     /* comments */
     color: var(--colour-slightly-faded);
     font-family: var(--font-text);
+    font-size: 1.2em; /* alas, my body font has a rather small x-height */
+    line-height: 1em; /* but we must compensate for it in the line height or line numbers get all akimbo */
 }
 .highlight .err{}
 .highlight .g{}
@@ -98,8 +100,9 @@
     padding: 0.5rem 1rem;
 }
 
-.highlight .linenos {
+.highlight .linenos pre {
     padding-right: 0.5rem;
     font-family: var(--font-text);
+    font-variant-numeric: lining-nums;
     color: var(--colour-faded);
 }

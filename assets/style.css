@@ -86,7 +86,6 @@ a:link img.logo, a:visited img.logo {
     text-decoration: none;
 }
 .index h3 { font-size: 1.3em; }
-.index .sidebar { margin-top: 1em; }
 .archive time {
     font-style: italic;
     float: right;
