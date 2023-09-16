@@ -195,8 +195,8 @@ main .imageblock .title {
 hr {
     border: 0;
     height: 4rem;
-    margin-bottom: 1em;
-    margin-top: -0.5em;
+    margin-bottom: 2em;
+    margin-top: 2em;
     background: center/contain url(divider.svg) transparent no-repeat;
 }
 
