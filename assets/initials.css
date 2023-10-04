@@ -17,5 +17,5 @@ main h2 + p .initial::before {
   display: block;
   /* uncomment this to bring the background over the foreground,
      intertwining the vines with the letters */
-  /* position: relative; */
+  position: relative;
 }
