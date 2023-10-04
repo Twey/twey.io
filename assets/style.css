@@ -393,7 +393,7 @@ footer ul li:not(:first-child):before {
 }
 
 @media (max-width: 991px) {
-    .sidenote { display: block; margin: 1em; }
+    .sidenote { display: block; margin: 1em; margin-top: 0; }
     label.sidenote-toggle {
         display: inline-block;
         cursor: pointer;
