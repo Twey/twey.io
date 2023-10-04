@@ -1,6 +1,13 @@
 .highlight {
     color: var(--colour-text);
     background-color: var(--colour-slight-highlight-bg);
+    font-size: 0.7em;
+}
+
+@media (max-width: 991px) {
+    .highlight {
+        font-size: 2.4vw;
+    }
 }
 
 .highlight .hll{}

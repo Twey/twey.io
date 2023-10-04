@@ -35,6 +35,7 @@
 body {
     color: var(--colour-fg);
     background-color: var(--colour-bg);
+    font-size: 1.2em;
     font-family: var(--font-text);
     margin: 0;
 }
