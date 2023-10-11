@@ -134,6 +134,8 @@ main .underline {
 main pre {
     margin: 0;
     font-family: var(--font-code);
+    color: var(--colour-fg);
+    font-size: 100%; /* undo a Bootstrap directive that shrinks <pre> */
 }
 
 main abbr {
