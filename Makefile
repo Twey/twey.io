@@ -16,8 +16,8 @@ clean-fonts:
 	make -C fonts/EB-Garamond clean
 	make -C fonts/EB-Garamond-Initials clean
 
-clean-logo:
-	rm assets/logo.svg
+#clean-logo:
+#	rm assets/logo.svg
 
 clean-assets: clean-fonts clean-logo
 
@@ -30,15 +30,16 @@ fonts:
 	make -C fonts/EB-Garamond WEB=../../assets/fonts/eb-garamond webfonts
 	make -C fonts/EB-Garamond-Initials WEB=../../assets/fonts/eb-garamond webfonts
 
-logo:
-	convert \
-	  -pointsize 144 \
-	  -font fonts/EuphoriaScript/EuphoriaScript-Regular.otf \
-	  -rotate 180 \
-	  -trim \
-	  label:'&' \
-	  assets/logo.svg
+# This no longer works with recent ImageMagick
+# logo:
+# 	convert \
+# 	  -pointsize 144 \
+# 	  -font fonts/EuphoriaScript/EuphoriaScript-Regular.otf \
+# 	  -rotate 180 \
+# 	  -trim \
+# 	  label:'&' \
+# 	  assets/logo.svg
 
-assets: logo fonts
+assets: fonts
 
-.PHONY: build rebuild watch clean-site clean-fonts clean-logo clean-assets clean push fonts logo assets
+.PHONY: build rebuild watch clean-site clean-fonts clean-logo clean-assets clean push fonts assets
