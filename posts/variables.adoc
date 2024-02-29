@@ -112,16 +112,17 @@ parallel symmetric processes communicating over that name:
 
 This is possible because the π-calculus allows for both sending and
 receiving on a name, i.e. names act as bidirectional channels.  The
-traditional case re-emerges if `def(x)` only calculates some answer
+traditional case re-emerges if `define(x)` only calculates some answer
 and then writes it on `x`, and `use(x)` only reads the answer from `x`
 and then performs some further work on it; but it is easy to see that
 this mode of programming also supports more sophisticated computation
-patterns, such as swapping the reader/writer rôles of `def` and `use`
-based on a more elaborate protocol, or doing some work in between the
-reads and writes that is independent of `x`, and can therefore be done
-concurrently.  The correctness of these protocols can be established
-by splitting the name bound by `ν` into two complementary names, and
-checking them against two dual halves of a _session type_
+patterns, such as swapping the reader/writer rôles of `define` and
+`use` based on a more elaborate protocol, or doing some work in
+between the reads and writes that is independent of `x`, and can
+therefore be done concurrently.  The correctness of these protocols
+can be established by splitting the name bound by `ν` into two
+complementary names, and checking them against two dual halves of a
+_session type_
 (link:https://www.sciencedirect.com/science/article/pii/S0890540112001022[Vasconcelos,
 2012]).
 
@@ -173,7 +174,19 @@ typically provide no way to duplicate definitions directly, a sort of
 definition duplication does occur as the programmer calls a function
 multiple times: multiple uses (i.e. calls) of the function each create
 a new copy of that function (stack frame, closure, et cetera) in which
-the argument variables are bound to different values.
+the argument variables are bound to different values.  This leads to
+the consideration of ‘optimal evaluation’
+(http://pauillac.inria.fr/~levy/pubs/80curry.pdf[Lévy, 1980]) of
+functions, in which different function invocations nevertheless can
+share evaluation, if that evaluation doesn't depend on the function
+arguments.  To achieve the required sharing, these implementations
+introduce ‘cosharing’ primitives: the result of evaluating a function
+call is shared by default, and parts of the computatation that differ
+based on the arguments are ‘unshared’ using a cosharing operation.
+These primitives are often found in graph-based computational models
+based on https://en.wikipedia.org/wiki/Interaction_nets[interaction
+nets].
+
 
 == Variables as effects ==
 
@@ -223,10 +236,11 @@ There are a few interesting things to note here:
 - Even though there are no return values in our language, the
   possibility of writing both stem:[\operatorname{parallel}] and
   stem:[\operatorname{random}] depends on the structure of our
-  semantic return type stem:[⊥].  If it is a monoid we can implement
-  sequential non-determinism; if it is a commutative monoid we can
-  implement concurrent non-determinism; if it includes a randomness
-  effect we can implement random-choice non-determinism.
+  semantic return type stem:[⊥].  If it is a monoid (e.g. a list
+  stem:[[⊥]]) we can implement sequential non-determinism; if it is a
+  commutative monoid (e.g. a set stem:[\{⊥\}]) we can implement
+  concurrent non-determinism; if it includes a randomness effect we
+  can implement random-choice non-determinism.
 - To be able to write effects like stem:[\operatorname{concurrent}]
   that execute both branches, we have to require that both stem:[t]
   and stem:[f] be executable at the same time.  This isn't necessarily
