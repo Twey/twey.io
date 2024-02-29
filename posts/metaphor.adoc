@@ -1,0 +1,7 @@
+---
+title: The rôle of metaphor in programming
+subtitle: where LLMs can shine
+tags: Programming languages, Natural languages
+---
+
+== Introduction ==
