@@ -10,4 +10,5 @@ mjx-container[jax="CHTML"][display="true"] mjx-math {
 mjx-container[jax="CHTML"]:not([display="true"]) {
   padding: 0.1em !important;
   padding-top: 0 !important;
+  display: inline-block;
 }
