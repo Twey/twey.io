@@ -1,0 +1,31 @@
+---
+title: Internal data structures
+subtitle: how data structures dictate programming languages
+tags: Programming languages, Concurrency, Data structures
+---
+
+== Introduction ==
+
+As programmers, we're very used to thinking about ‘the stack’ and ‘the
+heap’.  But what does it really mean to have a programming language
+with a stack or a heap?  What other data structures can we use as the
+basis for a language, and what kind of languages do we get when we
+replace these familiar structures with others?
+
+== Abstract machines ==
+
+To make this structure formal, we should introduce the notion of an
+_abstract machine_.  An abstract machine is just a mathematical
+representation… TODO
+
+== Stack languages ==
+
+FORTH?  No.  C!
+
+== Tree languages ==
+
+== Set languages ==
+
+== Graph languages ==
+
+== Notes ==
