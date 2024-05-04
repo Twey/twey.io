@@ -1,7 +1,7 @@
 ---
 title: Homotopy type theory
 subtitle: drawing parallels between programs
-tags: Syntax, Programming Languages
+tags: Syntax, Programming languages
 ---
 
 == Coming soon.
