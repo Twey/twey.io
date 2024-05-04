@@ -8,7 +8,7 @@ executable site
   build-depends:    base == 4.*
                   , containers == 0.6.*
                   , filepath == 1.4.*
-                  , hakyll == 4.15.*
+                  , hakyll == 4.16.*
                   , tagsoup == 0.14.*
                   , time >= 1.9.3
                   , multimap >= 1.2.1
