@@ -8,6 +8,10 @@
     --font-around: var(--font-header);
     --font-code: "DM Mono", monospace;
     --font-footer: var(--font-code);
+
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 :root {
     --colour-highlight-fg: #907040;
@@ -39,7 +43,6 @@
 body {
     color: var(--colour-fg);
     background-color: var(--colour-bg);
-    font-size: 1.2em;
     font-family: var(--font-text);
     margin: 0;
 }
@@ -127,7 +130,7 @@ a:link, a:visited {
 }
 
 main article a:link, main article a:visited {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 #docnav {
@@ -378,7 +381,7 @@ footer ul li:not(:first-child):before {
 }
 
 .admonitionblock :last-child {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .admonitionblock .title {
