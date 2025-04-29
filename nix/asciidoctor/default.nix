@@ -1,10 +1,14 @@
-{ lib, bundlerApp, makeWrapper,
+{ lib, bundlerApp, makeWrapper, cmake, pkg-config, bison, flex, glib, cairo, pango, gdk-pixbuf, libxml2,
   # Optional dependencies, can be null
   epubcheck,
-  bundlerUpdateScript
+  bundlerUpdateScript,
+  graphviz-nox,
+  pikchr,
+  nodePackages,
 }:
 
 let
+  binPath = lib.makeBinPath [ epubcheck graphviz-nox pikchr nodePackages.mermaid-cli ];
   app = bundlerApp {
     pname = "asciidoctor";
     gemdir = ./.;
@@ -16,12 +20,17 @@ let
       "asciidoctor-revealjs"
     ];
 
-    buildInputs = [ makeWrapper ];
+    nativeBuildInputs = [ makeWrapper cmake pkg-config ];
+
+    buildInputs = [ bison flex glib cairo pango gdk-pixbuf libxml2 ];
 
     postBuild = ''
-        wrapProgram "$out/bin/asciidoctor-epub3" \
-          ${lib.optionalString (epubcheck != null) "--set EPUBCHECK ${epubcheck}/bin/epubcheck"}
-      '';
+      wrapProgram "$out/bin/asciidoctor-epub3" \
+        ${lib.optionalString (epubcheck != null) "--set EPUBCHECK ${epubcheck}/bin/epubcheck"} \
+        --set PATH ${binPath}
+      wrapProgram "$out/bin/asciidoctor" \
+        --set PATH ${binPath}
+    '';
 
     passthru = {
       updateScript = bundlerUpdateScript "asciidoctor";
