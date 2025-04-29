@@ -1,8 +1,4 @@
-with import <nixpkgs> { };
-let
-  ghc = haskellPackages.ghc.withPackages (p: [p.cabal-install p.hakyll]);
-  asciidoctor = callPackage nix/asciidoctor { };
-in
+(builtins.getFlake ("git+file://" + toString ./.)).devShells.${builtins.currentSystem}.default
 mkShell {
   buildInputs = [
     gnumake ghc haskellPackages.hakyll asciidoctor graphviz-nox
