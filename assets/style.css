@@ -68,6 +68,16 @@ code {
     padding: 0 0.3em;
 }
 
+kbd {
+    color: var(--colour-fg);
+    background-color: var(--colour-highlight-bg);
+    border: 1px var(--colour-fg) outset;
+    white-space: nowrap;
+    word-spacing: -0.2em;
+    display: inline-block;
+    padding: 0.1rem 0.4rem;
+}
+
 .highlight code {
     padding: 0;
 }
@@ -195,9 +205,10 @@ main .imageblock .content {
     padding: 1rem;
 }
 
-main .imageblock .content>* {
+main .imageblock .content>*, main .imageblock .content a>* {
     max-width: 100%;
     height: auto;
+    display: block;
 }
 
 main .imageblock .title {
