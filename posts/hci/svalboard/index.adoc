@@ -59,7 +59,8 @@ dedicated cluster of keys, perfect for things like modifiers, since
 the opposable thumbs don't limit the motion of the rest of the hand at
 all, no matter how it's engaged.
 
-.The Kinesis Advantage.
+.The Kinesis Advantage.  This one is wireless, while mine, the original model, was connected by PS/2 cable.  But the layout hasn't changed.
+[link=https://kinesis-ergo.com/shop/advantage2/]
 image::kinesis-advantage.jpeg["Picture of a Kinesis Advantage, a keyboard with thumb clusters and two separated bowls of matrix-style keys."]
 
 *Programmability*. My customization is light compared to some
@@ -150,7 +151,7 @@ favour of something at once simpler and more high-tech: an infrared
 source fires a beam at the stem of the key, initially blocked by a
 ‘flag’ on the keystem, and triggers a keypress when the key is moved
 out of the way to allow the beam to hit a detector.  Magnets — actual,
-permanent bits of magnetic neodymium, are used to replace the
+permanent bits of magnetic neodymium — are used to replace the
 tactility of traditional switch springs, with pressing the key
 requiring breaking the magnets' hold in a rather satisfying way that
 feels similar to a traditional buckling spring but requires much less
@@ -165,13 +166,14 @@ to the DataHand).
 === The excellent
 
 The Svalboard runs link:https://qmk.fm/[QMK], a de-facto standard for
-customizability that I was already used to from the Ergodox.
-Something that was new to me, though, footnote:[ZSA do now provide
-link:https://www.zsa.io/oryx[Oryx], configuration software with a similar purpose; I'd just never
-tried it!] was that the variant of QMK it uses (by default) is a
-custom spin of link:https://get.vial.today/[Vial], a fork of QMK enriched
-with dynamic layout editing via a GUI editor, or (for the Svalboard)
-the excellent link:https://captdeaf.github.io/keybard/[Keybard], which
+customizable keyboard firmware that I was already used to from the
+Ergodox.  Something that was new to me, though, footnote:[ZSA do now
+provide link:https://www.zsa.io/oryx[Oryx], configuration software
+with a similar purpose; I'd just never tried it!] was that the variant
+of QMK it uses (by default) is a custom spin of
+link:https://get.vial.today/[Vial], a fork of QMK enriched with
+dynamic layout editing via a GUI editor, or (for the Svalboard) the
+excellent link:https://captdeaf.github.io/keybard/[Keybard], which
 replaces the Vial frontend with a much lighter-weight Web-based
 alternative.
 
@@ -207,36 +209,40 @@ keyboard.  That said, there are a couple of things that, while far
 from deal-breakers for me, definitely bear thinking about, and if you
 have the chance to test-drive a Svalboard you should pay attention to.
 
-Firstly, and most definitely least, I've had a couple of minor
+First, and most definitely least, I've had a couple of minor
 build-quality incidents.  Notably, the magnets that hold the keys in
 place have escaped from their plastic housing three or four times
 during my ownership of my Sval.  Thankfully, in sharp contrast to the
 CharaChorder, the hackable nature of the Svalboard makes this pretty
 easy to fix: some superglue and a steady hand has them better than new
 in a couple of minutes.  But it's never nice to have to stop work to
-re-glue my keyboard.
+re-glue my keyboard.  Of course the Svalboard is also available as a
+kit for 3D printing around, so potentially I should have built it
+myself and then I wouldn't have anyone else to blame!
 
 Then, there's the matter of the price.  A premium mechanical keyboard
 like the ZSA Moonlander will typically set you back up to around
 USD$400.  But the Svalboard comes in at easily twice that and even
 higher depending on respective configurations.  For me, so far, the
-device is well worth the investment, but your mileage may vary.
+device is well worth the investment, but your mileage may vary.  If
+you have some spare time and access to a 3D printer, the kit option is
+significantly cheaper, and seems like it could be fun.
 
 The Svalboard demands correct configuration, and can be very
 uncomfortable to use until arranged right.  Being able to comfortably
 and consistently press the keys is, in my experience, very much a
-factor of how well set up the keyboard is, and so if you have a setup
-where it or you will be moving around a lot, you'll find yourself
-spending a lot of time repositioning and reconfiguring the keyboard.
-I strongly suggest looking into a chair-mounted solution, which lets
-the keyboard remain statically positioned with respect to your body
-and arms.  Relatedly, its many moving parts make it infeasible to
-transport around easily; Morgan sells a blessed travel case, but it's
-a chunky thing, and doesn't lend itself to throwing in a backpack, nor
-(due to its positioning sensitivity) would I really want to use a
-Svalboard on the go on a train or aeroplane.  Likewise, the optical
-keypress sensors require active infraread beams, meaning they're too
-power-hungry for cable-free usage.
+function of how well set up the keyboard is, and so if you have a
+setup where it or you will be moving around a lot, you'll find
+yourself spending a lot of time repositioning and reconfiguring the
+keyboard.  I strongly suggest looking into a chair-mounted solution,
+which lets the keyboard remain statically positioned with respect to
+your body and arms.  Relatedly, its many moving parts make it
+infeasible to transport around easily; Morgan sells a blessed travel
+case, but it's a chunky thing, and doesn't lend itself to throwing in
+a backpack, nor (due to its positioning sensitivity) would I really
+want to use a Svalboard on the go on a train or aeroplane.  Likewise,
+the optical keypress sensors require active infrared beams, meaning
+they're too power-hungry for cable-free usage.
 
 It's punishing to sloppy typing too.  For those of us used to
 hammering away at slab keyboards all day, the lightness of the keys
@@ -264,7 +270,7 @@ particular key several times in quick succession, but can also be seen
 when typing words with certain double letters.  There are workarounds
 available for this, though:
 
-- Firstly, not all keys suffer from this problem: at least the centre
+- First, not all keys suffer from this problem: at least the centre
   keys of each cluster are at least as easy to hammer as on a
   traditional keyboard, if not even easier due to their super-light
   switches.  I also find the inward and downward presses easy enough
@@ -288,19 +294,21 @@ how I use it day-to-day.
 
 === Mounting
 
-I have my Svalboard on a chair mount.  I experimented with on-desk and
-under-desk mounting, but I found I tend to move my chair too much with
-respect to the keyboard, which puts me into poor typing position and
-messes up my typing for a bit before I figure out what the problem is
-and adjust back.  By contrast, having the Svalboard mounted to a chair
-means my arms, so long as I keep them on the arm rests, are always
-positioned the same way on the Svalboard, and the only thing I have to
-worry about is my cats using the cables as
-chew-toys. footnote:[Magnetic cable attachments mean that if a cat
-decides to dangle from your cables the cable detaches, resulting in
-minor inconvenience and maybe a damaged cable rather than a
-thousand-dollar keyboard being forcibly ripped from its housing and
-dropped onto the floor.  I settled on
+I have my Svalboard on a chair mount, simply attached to my chair arms
+with some link:https://www.smallrig.com/list/Magic-Arm.html[SmallRig
+Magic Arms].  I experimented with on-desk and under-desk mounting, but
+I found I tend to move my chair too much with respect to the keyboard,
+which puts me into poor typing position and messes up my typing for a
+bit before I figure out what the problem is and adjust back.  By
+contrast, having the Svalboard mounted to a chair means my arms, so
+long as I keep them on the arm rests, are always positioned the same
+way on the Svalboard, and the only thing I have to worry about is my
+cats using the cables as chew-toys. footnote:[Magnetic cable
+attachments mean that if a cat decides to dangle from your cables by
+the teeth the cable detaches, resulting in minor inconvenience and
+maybe a damaged cable rather than a thousand-dollar keyboard being
+forcibly ripped from its housing and dropped onto the floor.  I
+settled on
 link:https://www.amazon.co.uk/leizhan-magnetic-connection-charging-transfer-Dark-Gray/dp/B0DRVD9Y3W[these
 units] because they swivel vertically, but they're all pretty
 interchangeable.]
@@ -330,7 +338,7 @@ link:https://www.reddit.com/r/KeyboardLayouts/comments/1g66ivi/hands_down_promet
 Down Promethium], which was recommended to me for split keyboards,
 adapted to the Svalboard by link:https://github.com/ilc[Ira Cooper].
 
-This was an error.
+This was a mistake.
 
 In fact, HDPm and Dvorak interfere with each other constantly, and I
 find myself making typos from one whenever I'm using the other.  Six
@@ -358,6 +366,44 @@ introspection to determine what typos are due to keyboard
 misconfigurations vs brain slips vs physical mishaps (which
 occasionally happen randomly!).  It's an almost meditative state.
 
+The main adaptation from HDPm is a vertical mirroring.  This is
+because, at least for me, the Svalboard's north keys are much harder
+to hit than its south keys, even though on slab keyboards conventional
+wisdom considers the top row to be lower-cost than the bottom row.
+Something I didn't realize at the time is that I also find the inward
+lateral keys much easier to hit than the north keys, so I'd have liked
+to try mapping the bottom row of HDPm to the inward laterals of the
+Svalboard rather than the top row.  Nevertheless, I find this layout
+to be pretty good overall, and I don't think it would be worth the
+switch now I'm starting to get used to it.
+
+On the fingers, after a long adjustment period, I've found that the
+easiest keys to hit are, in order:
+
+- the centre keys,
+- followed by the south keys,
+- then the inward keys,
+- then the north keys.
+
+The outward keys are relatively uncomfortable, especially on the
+weaker fingers, and I reserve them for infrequently-used
+keys. footnote:[The astute reader might have noticed a lack of an
+escape key: I actually type escape by pressing kbd:[⌦ Delete] and
+kbd:[⌫ Backspace] in unison.  This took me a bit to get used to but
+now I really like it, and would consider a similar approach for other
+infrequently-used keys like kbd:[↵ Enter].  _Combos_ with the outward
+keys can use a slight roll of the wrist, and so are much more
+comfortable for these kinds of one-off actions than for typing
+letters.]
+
+On the thumbs, the easiest keys for me to hit are the inward ‘pad’
+keys and the bottom ‘knuckle’ key, followed by the downward key.  The
+lateral motions required to hit the ‘nail’ and ‘up’ keys are not
+difficult to do, but cause strain that makes my thumbs hurt at the end
+of the day if I assign them to anything that's used too heavily.  This
+is probably unique to my pathophysiology: you should experiment
+yourself.
+
 === Higher layers
 
 The Svalboard has only 60 keys, meaning that layering is inevitable to
@@ -377,34 +423,35 @@ load, while still providing plenty of key space (none of my layers,
 even the base layer, is fully utilized at the time of writing).
 
 I've settled on a hand-split setup in which software modifiers like
-kbd:[⇧ Shift], kbd:[⎈ Ctrl], and kbd:[⎇ Alt] live on the left thumb,
-while layer modifiers live on the right hand.  Having modifiers on the
-thumb allows me to have only one copy of each modifier, since the
-thumb can move independently of any other finger, while having the
-layer-switch keys (which are not detectable by software) on the right
-thumb allows me to bind the entirety of the left half of the keyboard
-when gaming. footnote:[The kbd:[❖ Super] key is on the right hand for
-the same reason: it isn't usually bindable in games.] The design of
-the individual clusters is subtle: on the Svalboard thumb cluster the
-pairings on the same side of the thumb cluster (e.g. kbd:[⎈ Ctrl + ⎇
-Alt] on my layout) can be easily hit together, while those on opposite
-sides (e.g. kbd:[⎈ Ctrl + R] can't be.  kbd:[⇧ Shift], therefore,
-lives in the middle of the cluster, where it can be easily hit with
-either side, while for the specific combinations of the modifiers on
-the right with kbd:[R] or kbd:[↵ Return] I have dedicated combinations
-with other layers: for example, kbd:[R] on the control layer produces
-kbd:[⎈ Ctrl + R].  On the right cluster I have my layout modifiers,
-and here I make use of a controversial feature of the Svalboard,
-inherited from the original DataHand: the middle key of the thumb
-cluster has a ‘deep press’ that is activated by pressing on it harder
-than usual.  Obviously this can only occur while the usual key is held
-down.  This is ideal for me, as I control my window manager using a
-combination of kbd:[❖ Super] with various control and function keys,
-so while the middle press usually enables my control/navigation layer,
-by pressing it more firmly I can activate kbd:[❖ Super] as well and
-control my window manager.  Unfortunately, I sometimes need to use
-kbd:[❖ Super] with keys from the base layout, so I also need a bare
-kbd:[❖ Super] key that doesn't involve switching to the control layer.
+kbd:[⇧ Shift], kbd:[⎈ Ctrl], and kbd:[⎇ Alt] (very important since I'm
+an emacs user!) live on the left thumb, while layer modifiers live on
+the right hand.  Having modifiers on the thumb allows me to have only
+one copy of each modifier, since the thumb can move independently of
+any other finger, while having the layer-switch keys (which are not
+detectable by software) on the right thumb allows me to bind the
+entirety of the left half of the keyboard when gaming. footnote:[The
+kbd:[❖ Super] key is on the right hand for the same reason: it isn't
+usually bindable in games.] The design of the individual clusters is
+subtle: on the Svalboard thumb cluster the pairings on the same side
+of the thumb cluster (e.g. kbd:[⎈ Ctrl + ⎇ Alt] on my layout) can be
+easily hit together, while those on opposite sides (e.g. kbd:[⎈ Ctrl +
+R] can't be).  kbd:[⇧ Shift], therefore, lives in the middle of the
+cluster, where it can be easily hit with either side, while for the
+specific combinations of the modifiers on the right with kbd:[R] or
+kbd:[↵ Return] I have dedicated combinations with other layers: for
+example, kbd:[R] on the control layer produces kbd:[⎈ Ctrl + R].  On
+the right cluster I have my layout modifiers, and here I make use of a
+controversial feature of the Svalboard, inherited from the original
+DataHand: the middle key of the thumb cluster has a ‘deep press’ that
+is activated by pressing on it harder than usual.  Obviously this can
+only occur while the usual key is held down.  This is ideal for me, as
+I control my window manager using a combination of kbd:[❖ Super] with
+various control and function keys, so while the middle press usually
+enables my control/navigation layer, by pressing it more firmly I can
+activate kbd:[❖ Super] as well and control my window manager.
+Unfortunately, I sometimes need to use kbd:[❖ Super] with keys from
+the base layout, so I also need a bare kbd:[❖ Super] key that doesn't
+involve switching to the control layer.
 
 The symbol layer has symmetric pairs of brackets as well as the
 standard numbers and symbols.  Worthy of note is that I have a
@@ -441,16 +488,17 @@ The control layer has, most importantly, two
 diamonds]’ for textual navigation: one on the left produces standard
 arrow keys, while one on the right produces ‘big-step’ versions of the
 same (kbd:[⇞ Page Up], kbd:[⇟ Page Down], kbd:[⇤ Home], and kbd:[⇥
-End]).  These diamonds differ from the standard {qwerty} WASD in that on
-the Svalboard (at least for me) the ‘south’ direction is much more
-comfortable than the ‘north’ direction, but both are trumped by the
-‘centre’ direction, so both kbd:[← Left] and kbd:[→ Right] are on the
-centre keys along with kbd:[↑ Up], and instead of kbd:[↑ Up] being on
-a row above kbd:[↓ Down] is on a ‘row’ below, with a southward
-keypress. Also on this layer I have function keys, matched in position
-to the number keys on the symbol layer, which I use with kbd:[❖ Super]
-to switch workspaces, and media control keys, as well as the key to
-switch to my steno layer.
+End]).  These diamonds differ from the standard {qwerty}
+kbd:[W]kbd:[A]kbd:[S]kbd:[D] in that on the Svalboard (at least for
+me) the ‘south’ direction is much more comfortable than the ‘north’
+direction, but both are trumped by the ‘centre’ direction, so both
+kbd:[← Left] and kbd:[→ Right] are on the centre keys along with
+kbd:[↑ Up], and instead of kbd:[↑ Up] being on a row above kbd:[↓
+Down] is on a ‘row’ below, with a southward keypress. Also on this
+layer I have function keys, matched in position to the number keys on
+the symbol layer, which I use with kbd:[❖ Super] to switch workspaces,
+and media control keys, as well as the key to switch to my steno
+layer.
 
 .My control layout, with two WordStar diamonds and function keys.
 [link=layout-control.png]
@@ -458,10 +506,6 @@ image::layout-control.png["A screenshot of my control layout in Keybard."]
 
 
 === Stenography
-
-.The standard American Stenotype layout, used by default by Plover.  Contrast with the Svalboard layout above.
-[link=https://en.wikipedia.org/wiki/Stenotype]
-image::stenotype-layout.png["A diagram of the American Stenotype stenotype layout"]
 
 I haven't focused too much on stenography yet, since I'm still getting
 up to speed with the base layout, but with help from
@@ -506,6 +550,10 @@ still comfortable.
   rightmost cluster would need 6 keys to represent it uniformly with
   combinations, but it has only five.
 
+.The standard American Stenotype layout, used by default by Plover.  Contrast with the Svalboard layout above.
+[link=https://en.wikipedia.org/wiki/Stenotype]
+image::stenotype-layout.png["A diagram of the American Stenotype stenotype layout"]
+
 Either way, it's clear to me that I at least need combo keys for the
 vowels: the only two thumb-cluster keys that can be combined
 comfortably enough for steno are the inward keys, and constantly
@@ -534,15 +582,52 @@ usually remove the left trackball altogether.
 
 '''
 
-== Conclusion
+== Retrospective
 
 Overall, I find the Svalboard ticks all my boxes for a keyboard, and
 if you can afford the money and the time investment I'd definitely
-recommend giving it a go!  I don't recommend switching keyboard
-layouts at the same time, unless you wanted to switch layout anyway.
-Even though it can be fun, it will likely only hinder your adoption of
-the keyboard, and doesn't come with any particular
-benefits. footnote:[Benefits, that is, over switching layouts before
-or after switching keyboards — the ergonomic advantages of modern
-layouts, especially if you're a {qwerty} user, are well-documented, and
-I won't repeat them here.]  Happy keyboarding!
+recommend giving it a go.  Typing is a lot more comfortable for me
+now, and there are no downsides big enough to make me want to switch
+back.
+
+It took me six months to achieve 80 WPM, but I think it would be a lot
+faster if adapting an existing layout that you're familiar with.  I
+don't recommend switching keyboard layouts at the same time, unless
+you wanted to switch layout anyway.  Even though it can be fun, it
+will likely only hinder your adoption of the keyboard, and doesn't
+come with any particular benefits. footnote:[Benefits, that is, over
+switching layouts before or after switching keyboards — the ergonomic
+advantages of modern layouts, especially if you're a {qwerty} user,
+are well-documented, and I won't repeat them here, though they are
+probably somewhat diminished for a keyboard that reduces _all_ finger
+motion anyway.]  I've noticed a logarithmic pattern to my speed
+improvements: I hit 20 WPM within the first week, and 40–50 WPM in the
+first month, which is a bit painful but good enough to get things done
+with.  By the second or third month I no longer felt like my keyboard
+was imposing a large additional mental load on me and instead I felt
+like it was just a bottleneck through which I have to squeeze my
+thoughts — which has been my experience with all keyboards, even when
+I was typing at 120 WPM.
+
+Though I'm still quite slow, and the Svalboard doesn't try to sell
+itself on improving typing speed, I see steady improvement in my
+typing speeds as I use it more, and I don't see any reason I shouldn't
+be able to match or exceed my typing speeds on slab keyboards while
+enjoying significantly better typing comfort.  My hands feel much less
+tired at the end of a day, though it's important to note that this is
+only the case after I'd spent quite some time adjusting the keyboard
+to my typing habits and my typing habits to the keyboard.
+Particularly, figuring out my typing posture and keyboard mounting
+setup made a world of difference.
+
+In addition to the practical aspects, and despite the earlier warning,
+it's been pretty fun getting back into the world of crazy keyboard
+layout optimizations, and I've discovered a lot about how I learn
+physical skills and learnt to pay attention to aspects of how I use
+computers that I would never have considered.
+
+Finally, this post wouldn't be complete without a shout-out to the
+Svalboard Discord community, who have helped me a lot on my journey
+both with hardware and software.
+
+Happy typing!
