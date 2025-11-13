@@ -53,6 +53,7 @@ header.doctitle {
 }
 h1, h2, h3 {
     font-family: var(--font-header);
+    text-wrap: balance;
 }
 article h3 { font-size: 1.4rem; margin-top: 1em; }
 
@@ -66,6 +67,10 @@ code {
     background-color: var(--colour-slight-highlight-bg);
     font-family: var(--font-code);
     padding: 0 0.3em;
+
+    /* even when in the first line */
+    font-variant: none;
+    letter-spacing: normal;
 }
 
 kbd {
