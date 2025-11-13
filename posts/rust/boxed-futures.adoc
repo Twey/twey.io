@@ -98,7 +98,7 @@ async fn run(future: impl Future<Output = Outcome>) {
   futures.push(future.boxed()); // <1>
 
   while let Some(result) = futures.next().await {
-    use self::Outcome::*;
+    use Outcome::*;
     match result {
       Foo => println!("foo!"),
       Bar => println!("bar!"),
@@ -188,8 +188,9 @@ where
   User: Future<Output = Foo::Output>,
 {
   type Output = Foo::Output;
-  fn poll(self: Pin<&mut Self>, context: &mut Context<'_>) -> Poll<Self::Output> {
-    use self::MyFuture::*;
+  fn poll(self: Pin<&mut Self>, context: &mut Context<'_>)
+  -> Poll<Self::Output> {
+    use MyFuture::*;
 
     match self.project() { // <1>
       Foo(foo) => foo.poll(context),
@@ -250,7 +251,7 @@ where
   User: Future<Output = Foo::Output>,
 {
   async fn into_future(self) -> Foo::Output { <1>
-    use self::MyFuture::*;
+    use MyFuture::*;
 
     match self {
       Foo(foo) => foo.await,

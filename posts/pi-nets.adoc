@@ -17,8 +17,6 @@ suffice to reproduce recursion.
 There are many variants of the π-calculus.  The variant discussed here
 has replication and restriction.
 
-
-
 [pikchr,svg-type="inline",role="mono"]
 .The interaction rule for duplication in the interaction combinators, where stem:[δ] is the duplicating agent and stem:[ζ] is an agent to be duplicated.
 ....

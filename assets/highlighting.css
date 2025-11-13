@@ -11,7 +11,7 @@
 }
 
 .highlight .hll{}
-.highlight .c {
+.highlight .c, .highlight .c1 {
     /* comments */
     color: var(--colour-slightly-faded);
     font-family: var(--font-text);
