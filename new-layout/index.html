@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Experiment</title>
+        <style>
+            body {
+                display: grid;
+                padding: 0;
+                margin: 0;
+                min-height: 100vh;
+            }
+
+            .logo {
+                background-color: #ffcccc;
+                grid-area: logo;
+            }
+
+            header {
+                background-color: #ccccff;
+                grid-area: header;
+                height: auto;
+            }
+
+            nav {
+                background-color: #ccffcc;
+                grid-area: nav;
+            }
+
+            main {
+                background-color: #ffffcc;
+                grid-area: main;
+                height: 1fr;
+            }
+
+            footer {
+                background-color: #ccffff;
+                grid-area: footer;
+                height: 2rem;
+            }
+
+            @media (width < 60rem) {
+                body {
+                    grid-template-columns: 1fr;
+                    grid-template-areas:
+                        "logo"
+                        "header"
+                        "nav"
+                        "main"
+                        "footer";
+                }
+            }
+
+            @media (60rem <= width < 80rem) {
+                body {
+                    grid-template-columns: 20rem 40rem;
+                }
+
+                body.post {
+                    grid-template-rows: auto auto 1fr auto;
+                    grid-template-areas:
+                        "logo   main"
+                        "header main"
+                        "nav    main"
+                        ".      footer";
+                }
+
+                body.index {
+                    grid-template-rows: auto 1fr auto;
+                    grid-template-areas:
+                        "logo header ."
+                        "nav  main   sidenotes"
+                        ".    footer .";
+                }
+            }
+
+            @media (min-width: 992px) {
+                body {
+                    grid-template-columns: 20rem 40rem 20rem;
+                }
+
+                body.post {
+                    grid-template-rows: auto auto 1fr auto;
+                    grid-template-areas:
+                        "logo   main   sidenotes"
+                        "header main   sidenotes"
+                        "nav    main   sidenotes"
+                        ".      footer .";
+                }
+
+                body.index {
+                    grid-template-rows: auto 1fr auto;
+                    grid-template-areas:
+                        "logo header ."
+                        "nav  main   sidenotes"
+                        ".    footer .";
+                }
+
+                aside {
+                    display: inline-block;
+                    float: right;
+                    margin-right: -20rem;
+                    max-width: 20rem;
+
+                    & > :first-child {
+                        margin-top: 0;
+                    }
+                }
+            }
+        </style>
+    </head>
+    <body class="post">
+        <div class="logo">&amp;</div>
+        <header>
+            <p>yadda yadda yadda blah blah blah</p>
+        </header>
+        <nav>
+            <ul>
+                <li>heading</li>
+                <li>other heading</li>
+                <li>more heading</li>
+            </ul>
+        </nav>
+        <main>
+            <section>
+                <h2>Lorem ipsum</h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                    efficitur, mi eu vulputate ultrices, nisi lorem auctor
+                    metus, a porttitor ex purus id tortor. Vivamus dictum mauris
+                    at tincidunt convallis. Nulla sapien lectus, cursus ac
+                    fermentum in, sagittis sed sem. Donec mauris eros, dictum
+                    quis massa vitae, semper tempor nibh. Aenean pulvinar quis
+                    nisi non vestibulum. Mauris sit amet dignissim nibh. Mauris
+                    sed eros condimentum, efficitur nunc sit amet, porttitor mi.
+                    Aenean a lectus est. Quisque maximus eros sed purus
+                    malesuada tincidunt. Donec condimentum et enim ut tempus.
+                </p>
+            </section>
+            <section>
+                <h2>Donec quam</h2>
+                <div>
+                    Donec quam orci, euismod sed neque in, suscipit aliquet
+                    nibh. Cras tempor elit at ex vulputate, sed eleifend magna
+                    dapibus. Curabitur tristique dignissim ex vitae vestibulum.
+                    Quisque rhoncus nibh sit amet lacus porta, in molestie eros
+                    laoreet. Curabitur imperdiet ac erat ut viverra. Suspendisse
+                    velit orci, facilisis nec ligula sed, fringilla laoreet
+                    augue. In auctor, neque eget tempus tristique, libero eros
+                    scelerisque odio, et egestas est nulla sed sem.
+
+                    <aside class="aside">
+                        <ul>
+                            <li>
+                                Nulla sapien lectus, cursus ac fermentum in,
+                                sagittis sed sem.
+                            </li>
+                            <li>
+                                Donec mauris eros, dictum quis massa vitae,
+                                semper tempor nibh.
+                            </li>
+                            <li>Aenean pulvinar quis nisi non vestibulum.</li>
+                            <li>Mauris sit amet dignissim nibh.</li>
+                            <li>
+                                Mauris sed eros condimentum, efficitur nunc sit
+                                amet, porttitor mi.
+                            </li>
+                            <li>Aenean a lectus est.</li>
+                            <li>
+                                Quisque maximus eros sed purus malesuada
+                                tincidunt.
+                            </li>
+                            <li>Donec condimentum et enim ut tempus.</li>
+                        </ul>
+                    </aside>
+
+                    Class aptent taciti sociosqu ad litora torquent per conubia
+                    nostra, per inceptos himenaeos. Suspendisse maximus elit
+                    metus, a fermentum risus feugiat ut. Class aptent taciti
+                    sociosqu ad litora torquent per conubia nostra, per inceptos
+                    himenaeos. Pellentesque habitant morbi tristique senectus et
+                    netus et malesuada fames ac turpis egestas. Morbi ultrices
+                    magna nunc, eu scelerisque mauris tincidunt dapibus. Proin
+                    commodo elit odio, a dapibus dolor tempus quis. Cras et
+                    mollis diam, condimentum pulvinar est. Nunc congue nisl ut
+                    enim molestie placerat. Vestibulum vitae nulla justo.
+                    Pellentesque felis risus, viverra ut ultrices interdum,
+                    dignissim semper purus. Proin scelerisque, quam at accumsan
+                    cursus, diam erat placerat massa, a consectetur tellus magna
+                    sit amet nisl. Etiam hendrerit nisl hendrerit tortor
+                    venenatis bibendum. Praesent luctus ullamcorper nulla, ut
+                    dignissim metus.
+                </div>
+            </section>
+            <section>
+                <h2>Suspendisse libero lorem</h2>
+                <p>
+                    Suspendisse libero lorem, mattis eu quam sed, fermentum
+                    varius tortor. Quisque vel enim turpis. Integer varius
+                    tempus feugiat. Sed ac fermentum orci. Curabitur eu neque
+                    auctor orci finibus bibendum. Nulla gravida justo vitae
+                    pellentesque luctus. Integer vehicula tellus eget risus
+                    viverra, vel porta est maximus. Praesent nunc velit,
+                    fermentum non iaculis quis, tincidunt non lorem. Suspendisse
+                    a tincidunt sem. Vivamus in leo rhoncus, luctus mi sed,
+                    vulputate ex. Nunc vel magna lacinia, imperdiet lacus vitae,
+                    eleifend eros. Aliquam ultricies massa eget libero laoreet,
+                    at auctor lorem vehicula. Nulla vel malesuada velit, sit
+                    amet feugiat dolor. Mauris id risus convallis eros viverra
+                    pulvinar. Fusce eget dolor pharetra, interdum neque eu,
+                    pulvinar sapien. Etiam eu elementum enim, at ornare magna.
+                    Etiam ullamcorper rutrum libero, vitae laoreet purus
+                    eleifend suscipit. Integer porta tincidunt ante, et
+                    efficitur risus volutpat ac. Cras pharetra turpis lectus, eu
+                    facilisis lorem aliquet eu. Quisque scelerisque mollis
+                    lectus vitae blandit. Proin ac lorem sapien. Nam eget cursus
+                    libero, sit amet eleifend tellus. Nullam fringilla urna a
+                    diam euismod, ut dictum justo tempus.
+                </p>
+            </section>
+        </main>
+        <footer>Footer footer footer</footer>
+    </body>
+</html>
