@@ -1,13 +1,18 @@
 <!doctype html>
 <html>
     <head>
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
         <title>Experiment</title>
         <style>
             body {
                 display: grid;
                 padding: 0;
-                margin: 0;
-                min-height: 100vh;
+                margin: 0 auto;
+                min-height: 100dvh;
+                max-width: 80rem;
+                justify-content: center;
             }
 
             .logo {
@@ -18,7 +23,6 @@
             header {
                 background-color: #ccccff;
                 grid-area: header;
-                height: auto;
             }
 
             nav {
@@ -29,74 +33,60 @@
             main {
                 background-color: #ffffcc;
                 grid-area: main;
-                height: 1fr;
             }
 
             footer {
                 background-color: #ccffff;
                 grid-area: footer;
-                height: 2rem;
             }
 
-            @media (width < 60rem) {
-                body {
-                    grid-template-columns: 1fr;
-                    grid-template-areas:
-                        "logo"
-                        "header"
-                        "nav"
-                        "main"
-                        "footer";
-                }
+            .sidenotes {
+                display: none;
+                border: 1px solid black;
+                grid-area: sidenotes;
             }
 
-            @media (60rem <= width < 80rem) {
+            body {
+                grid-template-rows: auto auto auto 1fr auto;
+                grid-template-areas:
+                    "logo"
+                    "header"
+                    "nav"
+                    "main"
+                    "footer";
+            }
+
+            @media (width >= 60rem) {
                 body {
+                    grid-template-rows: auto auto 1fr;
                     grid-template-columns: 20rem 40rem;
-                }
-
-                body.post {
-                    grid-template-rows: auto auto 1fr auto;
                     grid-template-areas:
-                        "logo   main"
-                        "header main"
-                        "nav    main"
-                        ".      footer";
-                }
+                        "logo  header"
+                        "title main  "
+                        "nav   main  "
+                        ".     footer";
 
-                body.index {
-                    grid-template-rows: auto 1fr auto;
-                    grid-template-areas:
-                        "logo header ."
-                        "nav  main   sidenotes"
-                        ".    footer .";
+                    &.post {
+                        grid-template-rows: auto auto 1fr auto;
+
+                        header {
+                            grid-area: title;
+                        }
+
+                        main {
+                            grid-row-start: header;
+                            grid-row-end: main;
+                        }
+                    }
                 }
             }
 
-            @media (min-width: 992px) {
+            @media (width >= 80rem) {
                 body {
                     grid-template-columns: 20rem 40rem 20rem;
                 }
 
-                body.post {
-                    grid-template-rows: auto auto 1fr auto;
-                    grid-template-areas:
-                        "logo   main   sidenotes"
-                        "header main   sidenotes"
-                        "nav    main   sidenotes"
-                        ".      footer .";
-                }
-
-                body.index {
-                    grid-template-rows: auto 1fr auto;
-                    grid-template-areas:
-                        "logo header ."
-                        "nav  main   sidenotes"
-                        ".    footer .";
-                }
-
                 aside {
-                    display: inline-block;
                     float: right;
                     margin-right: -20rem;
                     max-width: 20rem;
@@ -122,7 +112,7 @@
         </nav>
         <main>
             <section>
-                <h2>Lorem ipsum</h2>
+                <!--<h2>Lorem ipsum</h2>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                     efficitur, mi eu vulputate ultrices, nisi lorem auctor
@@ -135,7 +125,7 @@
                     Aenean a lectus est. Quisque maximus eros sed purus
                     malesuada tincidunt. Donec condimentum et enim ut tempus.
                 </p>
-            </section>
+            </section>-->
             <section>
                 <h2>Donec quam</h2>
                 <div>
@@ -191,7 +181,7 @@
                     dignissim metus.
                 </div>
             </section>
-            <section>
+            <!--<section>
                 <h2>Suspendisse libero lorem</h2>
                 <p>
                     Suspendisse libero lorem, mattis eu quam sed, fermentum
@@ -216,7 +206,7 @@
                     libero, sit amet eleifend tellus. Nullam fringilla urna a
                     diam euismod, ut dictum justo tempus.
                 </p>
-            </section>
+            </section>-->
         </main>
         <footer>Footer footer footer</footer>
     </body>
