@@ -276,6 +276,7 @@ kbd {
         text-align: right;
         width: 11em;
         font-size: 0.9em;
+        margin-bottom: 0.5rem;
     }
 
     h3 {
@@ -284,10 +285,10 @@ kbd {
     }
 
     h4 {
-        margin: 0;
-        margin-bottom: 0.4em;
         font-family: var(--font-header);
-
+        margin-top: 0;
+        margin-bottom: 0.5em;
+        line-height: 1em;
     }
 }
 
