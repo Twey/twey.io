@@ -1,9 +1,13 @@
-<div class="row">
-  <div class="col-lg-3">
-    $partial("templates/sidebar.html")$
-  </div>
+<header>
+  <h1>$title$</h1>
+  $if(subtitle)$
+    <p>$subtitle$</p>
+  $endif$
+  $if(englishDate)$
+    <time datetime="$date$">$englishDate$</time>
+  $endif$
+</header>
 
-  <main class="col-lg-6">
-    $body$
-  </main>
-</div>
+$partial("templates/toc.html")$
+
+<main>$body$</main>

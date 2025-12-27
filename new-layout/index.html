@@ -46,11 +46,25 @@
                 grid-area: sidenotes;
             }
 
+            body > hr {
+                display: none;
+            }
+
+            body.index > hr {
+                display: block;
+                grid-area: rule;
+                background-color: #ffccff;
+                height: 4rem;
+                width: 100%;
+                margin: 0;
+            }
+
             body {
-                grid-template-rows: auto auto auto 1fr auto;
+                grid-template-rows: auto auto auto auto 1fr auto;
                 grid-template-areas:
                     "logo"
                     "header"
+                    "rule"
                     "nav"
                     "main"
                     "footer";
@@ -58,10 +72,11 @@
 
             @media (width >= 60rem) {
                 body {
-                    grid-template-rows: auto auto 1fr;
+                    grid-template-rows: auto auto auto 1fr;
                     grid-template-columns: 20rem 40rem;
                     grid-template-areas:
                         "logo  header"
+                        ".     rule  "
                         "title main  "
                         "nav   main  "
                         ".     footer";
@@ -75,7 +90,6 @@
 
                         main {
                             grid-row-start: header;
-                            grid-row-end: main;
                         }
                     }
                 }
@@ -90,6 +104,7 @@
                     float: right;
                     margin-right: -20rem;
                     max-width: 20rem;
+                    clear: both;
 
                     & > :first-child {
                         margin-top: 0;
@@ -98,11 +113,12 @@
             }
         </style>
     </head>
-    <body class="post">
+    <body class="index">
         <div class="logo">&amp;</div>
         <header>
             <p>yadda yadda yadda blah blah blah</p>
         </header>
+        <hr>
         <nav>
             <ul>
                 <li>heading</li>

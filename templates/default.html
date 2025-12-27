@@ -7,21 +7,10 @@
 
     <title>$title$</title>
     <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon.png">
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/style.css">
     <link rel="stylesheet" type="text/css" href="/assets/initials.css">
     <link rel="stylesheet" type="text/css" href="/assets/highlighting.css">
 
-    <script
-      src="https://code.jquery.com/jquery-3.6.3.slim.min.js"
-      integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo="
-      crossorigin="anonymous"></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script
         id="MathJax-script"
@@ -31,37 +20,23 @@
   </head>
 
   <body
-    $if(toc)$
-    data-spy="scroll"
-    data-target="#docnav"
-    data-offset="0"
-    $endif$
-
     $if(pageClass)$
     class="$pageClass$"
-    $endif$>
+    $endif$
+  >
+    <a class="logo" href="/"><img src="/assets/logo.svg" alt="logo"></a>
 
-    <div class="container">
-      $body$
-    </div>
+    $body$
 
     <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-3">
-          </div>
-          <div class="col-lg-6">
-            <ul>
-              <li><a href="mailto:twey@twey.co.uk" title="e-mail me">@</a></li>
-              <li>
-                <a href="https://github.com/Twey/">
-                    <img class="mono" src="/assets/GitHub-Mark/PNG/GitHub-Mark-120px-plus.png" alt="find me on GitHub">
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      <ul>
+        <li><a href="mailto:twey@twey.co.uk" title="e-mail me">@</a></li>
+        <li>
+          <a href="https://github.com/Twey/">
+            <img class="mono" src="/assets/GitHub-Mark/PNG/GitHub-Mark-120px-plus.png" alt="find me on GitHub">
+          </a>
+        </li>
+      </ul>
     </footer>
   </body>
 </html>

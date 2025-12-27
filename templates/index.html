@@ -1,29 +1,18 @@
-<div class="about row">
-  <div class="logo col-lg-3">
-    $partial("templates/logo.html")$
-  </div>
-  <div class="text col-lg-6">
-    <p>
-      My name is James Kay.
-      I like
-      <a href="/tags/syntax/">syntax</a>,
-      <a href="/tags/semantics/">semantics</a>,
-      <a href="/tags/programming-languages/">programming languages</a>,
-      <a href="/tags/natural-languages/">natural languages</a>,
-      <a href="/tags/formal-verification/">formal verification</a>,
-      and other things, and I work in the tech industry.
-    </p>
-  </div>
-</div>
-<hr>
-<div class="row">
-  <div class="col-lg-3">
-    <div class="sidebar">
-      $partial("templates/toc.html")$
-    </div>
-  </div>
+<header>
+  <p>
+    My name is James Kay.
+    I like
+    <a href="/tags/syntax/">syntax</a>,
+    <a href="/tags/semantics/">semantics</a>,
+    <a href="/tags/programming-languages/">programming languages</a>,
+    <a href="/tags/natural-languages/">natural languages</a>,
+    <a href="/tags/formal-verification/">formal verification</a>,
+    and other things, and I work in the tech industry.
+  </p>
+</header>
 
-  <main class="col-lg-6">
-    $body$
-  </main>
-</div>
+<hr>
+
+$partial("templates/toc.html")$
+
+<main>$body$</main>
