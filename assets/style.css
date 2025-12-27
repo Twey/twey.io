@@ -503,7 +503,8 @@ nav {
         }
 
         &:hover,
-        &:active {
+        &:active,
+        &.active {
             color: var(--colour-fg);
         }
     }
