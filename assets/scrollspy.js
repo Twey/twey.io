@@ -26,6 +26,6 @@ const observer = new IntersectionObserver(
   },
 );
 
-for (const section of document.querySelectorAll("article > section")) {
+for (const section of document.querySelectorAll("main > * > section")) {
   if ("id" in section) observer.observe(section);
 }
