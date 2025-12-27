@@ -48,11 +48,12 @@
 
 body {
     display: grid;
+    gap: 1rem 2rem;
     margin: 0 auto;
     min-height: 100dvh;
     max-width: 80rem;
     justify-content: center;
-    padding: 1.5rem;
+    padding: 5rem;
     padding-bottom: 0;
 }
 
@@ -86,7 +87,7 @@ body {
         "footer";
 }
 
-@media (width < 60rem) {
+@media (width < 67rem) {
     article h2 {
         background-image: linear-gradient(
             to top,
@@ -99,18 +100,15 @@ body {
         z-index: 1;
     }
 
-    .index .logo {
-        text-align: center;
-    }
     .index nav {
         display: none;
     }
 }
 
-@media (width >= 60rem) {
+@media (width >= 67rem) {
     body {
         grid-template-rows: auto auto auto 1fr;
-        grid-template-columns: 20rem 40rem;
+        grid-template-columns: 20rem 35rem;
         grid-template-areas:
             "logo  header"
             ".     rule  "
@@ -118,7 +116,8 @@ body {
             "nav   main  "
             ".     footer";
 
-        &.post {
+        &.post,
+        &.archive {
             header {
                 grid-area: title;
             }
@@ -137,11 +136,16 @@ body {
             top: 1rem;
         }
     }
+
+    .index .logo {
+        align-items: end;
+        margin-right: -2rem;
+    }
 }
 
-@media (width >= 80rem) {
+@media (width >= 89rem) {
     body {
-        grid-template-columns: 20rem 40rem 20rem;
+        grid-template-columns: 20rem 35rem 20rem;
     }
 
     aside {
@@ -223,29 +227,17 @@ kbd {
     padding: 0;
 }
 
-@media (width < 40rem) {
-
-}
-
 .index {
-    padding-top: 4rem;
-
     grid-template-rows: auto auto auto 1fr;
 
     .logo {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: end;
 
         img {
             height: 15rem;
         }
-    }
-
-    header, .logo {
-        margin: 0;
-        padding: 0;
     }
 
     header {
@@ -268,22 +260,13 @@ kbd {
         }
     }
 
-    h3 {
-        font-size: 1.3em;
-        margin-top: 0;
-    }
-
-    h4 {
-        margin-top: 0;
+    nav {
+        grid-row-start: title;
     }
 }
 
 .logo img {
     height: 5rem;
-}
-
-a:link {
-    text-decoration: none;
 }
 
 .archive {
@@ -296,13 +279,15 @@ a:link {
     }
 
     h3 {
-        margin-bottom: 0;
+        font-size: 1.3em;
+        margin: 0;
     }
 
     h4 {
-        font-size: 100%;
-        font-family: var(--font-header);
+        margin: 0;
         margin-bottom: 0.4em;
+        font-family: var(--font-header);
+
     }
 }
 
@@ -315,24 +300,15 @@ a:link {
     }
 }
 
-.section-heading {
+:not(:hover) > .section-heading {
     visibility: hidden;
-}
-:hover > .section-heading {
-    visibility: visible;
-    border-bottom-style: none;
-}
-
-a:link,
-a:visited {
-    color: var(--colour-highlight-fg);
-}
-
-p {
-    margin-top: 0;
 }
 
 main {
+    p {
+        margin-top: 0;
+    }
+
     .underline {
         text-decoration: underline;
     }
@@ -409,8 +385,15 @@ main {
         }
     }
 
-    article a:link {
-        text-decoration: underline;
+    article a {
+        &:link {
+            color: var(--colour-highlight-fg);
+            text-decoration: underline;
+        }
+
+        &:visited {
+            color: var(--colour-slightly-faded);
+        }
     }
 }
 
@@ -438,6 +421,10 @@ hr {
     hr {
         filter: invert(50%);
     }
+
+    .logo img {
+        filter: invert(100%);
+    }
 }
 
 ul.posts time {
@@ -445,13 +432,20 @@ ul.posts time {
     margin-left: 2em;
 }
 
-a:hover,
-a:visited:hover {
-    color: var(--colour-bright-highlight);
-}
+a {
+    &:link {
+        text-decoration: none;
+        color: var(--colour-highlight-fg);
+    }
 
-main article a:visited {
-    color: var(--colour-slightly-faded);
+    &:visited {
+        color: var(--colour-slightly-faded);
+    }
+
+    &:hover,
+    &:visited:hover {
+        color: var(--colour-bright-highlight);
+    }
 }
 
 header {
@@ -502,7 +496,8 @@ nav {
     }
 
     a {
-        &:link {
+        &:link,
+        &:visited {
             color: var(--colour-faded);
             text-decoration: none;
         }
@@ -518,7 +513,6 @@ nav,
 header,
 .logo {
     text-align: right;
-    padding-right: 2rem;
 }
 
 main h2 + p:first-of-type {

@@ -4,12 +4,6 @@
     font-size: 0.7em;
 }
 
-@media (width < 60rem) {
-    .highlight {
-        font-size: 2.4vw;
-    }
-}
-
 .highlight .hll{}
 .highlight .c, .highlight .c1 {
     /* comments */
