@@ -1,7 +1,10 @@
 {
-  inputs.haskellNix.url = "github:input-output-hk/haskell.nix";
-  inputs.nixpkgs.follows = "haskellNix/nixpkgs-unstable";
-  inputs.flake-utils.url = "github:numtide/flake-utils";
+  inputs = {
+    haskellNix.url = "github:input-output-hk/haskell.nix";
+    nixpkgs.follows = "haskellNix/nixpkgs-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
   outputs = { self, nixpkgs, flake-utils, haskellNix }:
     let
       supportedSystems = [
@@ -19,7 +22,6 @@
             hixProject =
               final.haskell-nix.hix.project {
                 src = ./.;
-                evalSystem = "x86_64-linux";
               };
           })
         ];
@@ -28,13 +30,10 @@
       in flake // {
         legacyPackages = pkgs;
 
-        packages = flake.packages // { default = flake.packages."site2021:exe:site"; };
+        packages.default = flake.packages."site2021:exe:site";
 
-        devShells.default = pkgs.mkShell {
-          inputsFrom = [
-            flake.packages."site2021:exe:site"
-          ];
-          buildInputs = with pkgs; [
+        devShells.default = flake.devShells.default.overrideAttrs {
+          propagatedBuildInputs = with pkgs; [
             (callPackage nix/asciidoctor {})
             (python3.withPackages (ps: [ps.fontforge])) ttfautohint-nox imagemagick
           ];
