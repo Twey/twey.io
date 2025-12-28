@@ -406,13 +406,25 @@ main {
         }
     }
 
-    article a {
+    a {
         &:link {
             text-decoration: underline;
         }
 
         &:visited {
             color: var(--colour-slightly-faded);
+        }
+    }
+
+    h2 a, h3 a {
+        &:link, &:visited, &:hover {
+            color: var(--colour-fg);
+            text-decoration: none;
+        }
+
+        &:hover:after {
+            color: var(--colour-highlight-fg);
+            content: ' §';
         }
     }
 }

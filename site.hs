@@ -93,11 +93,6 @@ compilePage = foldl ((>=>)) return
   [ relativizeUrls
   ]
 
-data Section = Section
-  { sectionFragment :: String
-  , sectionTitle :: String
-  }
-
 -- | Customized TagSoup renderer. The default TagSoup renderer escape CSS
 -- within style tags, and doesn't properly minimize.
 renderTags' :: [TS.Tag String] -> String
@@ -114,19 +109,13 @@ renderTags' = TS.renderTagsOptions TS.RenderOptions
         ]
 
 tocField :: String -> Snapshot -> Context String
-tocField name snapshot = listFieldWith name sectionContext $ \item -> do
+tocField name snapshot = listFieldWith name (field "title" (return . itemBody)) $ \item -> do
   body <- itemBody <$> loadSnapshot (itemIdentifier item) snapshot
   let tags = TST.universeTree (TST.parseTree body :: [TST.TagTree String])
   return $ do
     TST.TagBranch "section" as cs <- tags
-    id <- maybeToList $ lookup "id" as
-    title <- maybeToList $ getTitle cs
-    [flip itemSetBody item $ Section { sectionFragment = id, sectionTitle = renderTags' title }]
-  where
-    sectionContext :: Context Section
-    sectionContext = field "fragment" (return . sectionFragment . itemBody)
-                  <> field "title" (return . sectionTitle . itemBody)
-    getTitle xs = TST.flattenTree <$> listToMaybe [ c | TST.TagBranch "h2" _ c <- xs ]
+    title <- take 1 [ c | TST.TagBranch "h2" _ c <- cs ]
+    [flip itemSetBody item . renderTags' $ TST.flattenTree title]
 
 data Header = Header
   { headerTag :: TS.Tag String
