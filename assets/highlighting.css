@@ -110,7 +110,7 @@
 
 .colist {
     font-size: .9em;
-    margin: -1em 0 1em;
+    margin-top: -0.5em;
 
     &>table>tbody>tr, &>table>tr {
         &>:first-child {
