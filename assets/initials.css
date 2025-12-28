@@ -1,5 +1,5 @@
 main h2 + p .initial {
-  color: var(--colour-dark-highlight);
+  color: var(--colour-highlight-fg);
   font-family: 'EB Garamond Initials Foreground';
 
   font-size: 4em;
