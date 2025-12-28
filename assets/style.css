@@ -298,6 +298,10 @@ kbd {
         margin-bottom: 0.5rem;
     }
 
+    section > a:link:first-of-type {
+        text-decoration: none;
+    }
+
     h3 {
         font-size: 1.3em;
         margin: 0;
@@ -416,7 +420,7 @@ main {
         }
     }
 
-    h2 a, h3 a {
+    h2 a, h3 a, h4 a {
         &:link, &:visited, &:hover {
             color: var(--colour-fg);
             text-decoration: none;
