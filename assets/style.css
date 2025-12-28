@@ -14,6 +14,7 @@
     -moz-osx-font-smoothing: grayscale;
 }
 :root {
+    --colour-dark-highlight: #8e1a00;
     --colour-highlight-fg: #ae1a00;
     --colour-bright-highlight: #f00500;
     --colour-highlight-bg: #ccc;
@@ -138,7 +139,7 @@ body {
             top: 1rem;
         }
 
-        a.active {
+        a:link.active, a:visited.active {
             color: var(--colour-fg);
         }
     }
@@ -407,7 +408,6 @@ main {
 
     article a {
         &:link {
-            color: var(--colour-highlight-fg);
             text-decoration: underline;
         }
 
