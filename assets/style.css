@@ -14,8 +14,8 @@
     -moz-osx-font-smoothing: grayscale;
 }
 :root {
-    --colour-highlight-fg: #8e0a00;
-    --colour-bright-highlight: #b00500;
+    --colour-highlight-fg: #ae1a00;
+    --colour-bright-highlight: #f00500;
     --colour-highlight-bg: #ccc;
     --colour-slight-highlight-bg: #e5e5e5;
     --colour-bg: #eee;
@@ -27,8 +27,6 @@
 }
 @media (prefers-color-scheme: dark) {
     :root {
-        --colour-highlight-fg: #8e0a00;
-        --colour-bright-highlight: #b00500;
         --colour-highlight-bg: #333;
         --colour-slight-highlight-bg: #191919;
         --colour-bg: #111;
@@ -138,6 +136,10 @@ body {
         ul {
             position: sticky;
             top: 1rem;
+        }
+
+        a.active {
+            color: var(--colour-fg);
         }
     }
 
@@ -524,8 +526,7 @@ nav {
         }
 
         &:hover,
-        &:active,
-        &.active {
+        &:active {
             color: var(--colour-fg);
         }
     }
