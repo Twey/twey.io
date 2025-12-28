@@ -50,7 +50,7 @@ body {
     margin: 0 auto;
     min-height: 100dvh;
     max-width: 80rem;
-    justify-content: center;
+    justify-content: start;
     padding: 5rem;
     padding-bottom: 0;
 }
@@ -150,10 +150,6 @@ body {
 }
 
 @media (width >= 89rem) {
-    body {
-        grid-template-columns: 20rem 35rem 20rem;
-    }
-
     aside {
         float: right;
         margin-right: -20rem;
