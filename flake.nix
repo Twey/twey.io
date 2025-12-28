@@ -5,40 +5,30 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils, haskellNix }:
+  outputs = { nixpkgs, flake-utils, haskellNix, ... }:
+    flake-utils.lib.eachSystem [ "x86_64-linux"] (system:
     let
-      supportedSystems = [
-        "x86_64-linux"
-        "x86_64-darwin"
-        "aarch64-linux"
-        "aarch64-darwin"
-      ];
-    in
-      flake-utils.lib.eachSystem supportedSystems (system:
-      let
-        overlays = [
-          haskellNix.overlay
-          (final: prev: {
-            hixProject =
-              final.haskell-nix.hix.project {
-                src = ./.;
-              };
-          })
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ haskellNix.overlay ];
+        inherit (haskellNix) config;
+      };
+      theFlake = (pkgs.haskell-nix.hix.project { src = ./.; }).flake;
+      flake = theFlake {};
+    in {
+      legacyPackages = pkgs;
+      theFlake = theFlake;
+      packages.default = flake.packages."site2021:exe:site";
+      devShells.default = flake.devShells.default.overrideAttrs {
+        buildInputs = with pkgs; [
+          (callPackage nix/asciidoctor {})
+          (python3.withPackages (ps: [ps.fontforge]))
+          ttfautohint-nox
+          imagemagick
+          pkgs.haskell-nix.haskellPackages.haskell-language-server
         ];
-        pkgs = import nixpkgs { inherit system overlays; inherit (haskellNix) config; };
-        flake = pkgs.hixProject.flake {};
-      in flake // {
-        legacyPackages = pkgs;
-
-        packages.default = flake.packages."site2021:exe:site";
-
-        devShells.default = flake.devShells.default.overrideAttrs {
-          propagatedBuildInputs = with pkgs; [
-            (callPackage nix/asciidoctor {})
-            (python3.withPackages (ps: [ps.fontforge])) ttfautohint-nox imagemagick
-          ];
-        };
-      });
+      };
+    });
 
   # --- Flake Local Nix Configuration ----------------------------
   nixConfig = {
