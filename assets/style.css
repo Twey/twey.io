@@ -180,16 +180,17 @@ body {
     color: var(--colour-fg);
     background-color: var(--colour-bg);
     font-family: var(--font-text);
-    line-height: 1.5;
 }
 
-h1,
 h2,
 h3 {
     font-family: var(--font-header);
     text-wrap: balance;
     line-height: 1.2;
-    margin-bottom: 0.5em;
+}
+
+h1 {
+    margin: 0;
 }
 
 h2 {
@@ -255,17 +256,23 @@ kbd {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
 
         p {
-            padding: 2rem 1rem 0;
-            text-align: right;
+            padding: 2rem 0;
             font-size: 1.3em;
-            margin-bottom: 2rem;
+            line-height: 1.5em;
+            text-align: center;
+            max-width: 30rem;
         }
 
         a {
             white-space: nowrap;
         }
+    }
+
+    hr {
+        margin-top: 0;
     }
 
     nav {
@@ -314,6 +321,8 @@ kbd {
 }
 
 main {
+    line-height: 1.5;
+
     p {
         margin-top: 0;
     }
@@ -461,14 +470,16 @@ header {
     text-align: right;
     font-family: var(--font-header);
     font-weight: bold;
-    padding-bottom: 1rem;
+    margin-bottom: 1rem;
 
     h1 {
         font-size: 1.5rem;
     }
 
     p {
-        margin-bottom: 0.5rem;
+        margin-top: 0;
+        margin-bottom: 0;
+        text-wrap: balance;
     }
 
     time {
@@ -501,6 +512,7 @@ nav {
 
         li {
             padding: 0.5rem 0;
+            font-size: 1.1em;
         }
     }
 
