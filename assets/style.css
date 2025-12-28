@@ -50,7 +50,7 @@ body {
     margin: 0 auto;
     min-height: 100dvh;
     max-width: 80rem;
-    justify-content: start;
+    justify-content: center;
     padding: 5rem;
     padding-bottom: 0;
 }
@@ -113,6 +113,8 @@ body {
             "title main  "
             "nav   main  "
             ".     footer";
+
+        justify-content: start;
 
         &.post,
         &.archive {
