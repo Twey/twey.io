@@ -1,8 +1,10 @@
-<% if content.chr =~ /[A-Z]/ %>
-    <p><span class="initial" style="--initial-letter: '<%= content.chr %>'"><%= content.chr %></span><%= content[1..-1] %></p>
+<% $content = content %>
+
+<% if $content.chr =~ /[A-Z]/ %>
+    <p><span class="initial" style="--initial-letter: '<%= $content.chr %>'"><%= $content.chr %></span><%= $content[1..-1] %></p>
 <% else %>
-    <p><%= content %></p>
-<% end  %>
+    <p><%= $content %></p>
+<% end %>
 
 <% if !defined?($not_teaser) %><!--more--><% end %>
 <% $not_teaser = true %>

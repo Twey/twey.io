@@ -1,7 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Mono&display=swap");
-@import url("fonts/urw-palladio/font.css");
-@import url("fonts/eb-garamond/font.css");
-
 :root {
     --font-text: "URW Palladio", "Liberation Serif", "Times New Roman", serif;
     --font-header: "EB Garamond", "Times New Roman", serif;
@@ -167,9 +163,14 @@ body {
     line-height: 1.2;
     color: var(--colour-slightly-faded);
     border-bottom: dashed 1px var(--colour-very-faded);
+
+    .sidenote-id {
+        display: none;
+    }
 }
 
-@media (width < 84rem) {
+@media (width < 85rem) {
+    .sidenote-id { display: none; }
     label.sidenote-toggle {
         display: inline-block;
         cursor: pointer;
@@ -194,7 +195,7 @@ body {
     }
 }
 
-@media (width >= 84rem) {
+@media (width >= 85rem) {
     aside {
         float: right;
         margin-right: -20rem;
@@ -208,8 +209,20 @@ body {
     .sidenote {
         float: right;
         clear: both;
-        margin: 0 -17rem 1.5rem 1rem;
+        margin: 0 -18rem 1.5rem 1rem;
         padding-bottom: 0.5em;
+
+        .sidenote-id {
+            width: 2em;
+            display: block;
+            float: left;
+            text-align: right;
+            margin-left: -2.2em;
+
+            a:link, a:visited {
+                text-decoration: none;
+            }
+        }
     }
 
     .sidenote-toggle {
@@ -604,14 +617,13 @@ article p,
 
 .quoteblock {
     font-style: italic;
-    margin: 1em;
 }
 
 .quoteblock blockquote {
     padding-left: 1em;
+    margin-left: 0;
     margin-bottom: 0.3em;
     border-left: 2px solid var(--colour-highlight-bg);
-    font-family: var(--font-header);
     font-size: 1.3em;
 }
 
@@ -678,3 +690,7 @@ footer {
 .ordinal-suffix {
     text-decoration: underline;
 }
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono&display=swap");
+@import url("fonts/urw-palladio/font.css");
+@import url("fonts/eb-garamond/font.css");

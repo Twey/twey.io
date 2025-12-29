@@ -56,14 +56,6 @@
 }
 
 @font-face {
-    font-family: 'EB Garamond Initials';
-    font-style: normal;
-    font-weight: bold;
-    font-display: swap;
-    src: url(EBGaramond-Initials.woff) format('woff');
-}
-
-@font-face {
   font-family: 'EB Garamond Initials Background';
   font-style: normal;
   font-weight: bold;
