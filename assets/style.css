@@ -37,7 +37,13 @@
         --colour-very-faded: #444;
     }
 
-    img.logo {
+    .imageblock.mono .content > *,
+    img.mono,
+    hr {
+        filter: invert(50%);
+    }
+
+    .logo img {
         filter: invert(100%);
     }
 }
@@ -148,6 +154,38 @@ body {
     .index .logo {
         align-items: end;
         margin-right: -2rem;
+    }
+}
+
+
+@media (width < 89rem) {
+    /* TODO this isn't very mobile-first of me */
+    .sidenote {
+        display: block;
+        margin: 1em;
+        margin-top: 0;
+    }
+    label.sidenote-toggle {
+        display: inline-block;
+        cursor: pointer;
+        font-family: "EB Garamond 12";
+        color: var(--colour-highlight-fg);
+        margin-bottom: 0;
+        height: 1em;
+        vertical-align: top;
+    }
+    input.sidenote-toggle:not(:checked) + label.sidenote-toggle::before {
+        content: "❦";
+        margin-right: 0.3em;
+    }
+    input.sidenote-toggle:checked + label.sidenote-toggle::before {
+        content: "❧";
+    }
+    input.sidenote-toggle {
+        display: none;
+    }
+    input.sidenote-toggle:not(:checked) + label.sidenote-toggle + .sidenote {
+        display: none;
     }
 }
 
@@ -451,18 +489,6 @@ hr {
     filter: opacity(50%);
 }
 
-@media (prefers-color-scheme: dark) {
-    .imageblock.mono .content > *,
-    img.mono,
-    hr {
-        filter: invert(50%);
-    }
-
-    .logo img {
-        filter: invert(100%);
-    }
-}
-
 ul.posts time {
     display: block;
     margin-left: 2em;
@@ -652,36 +678,6 @@ footer {
 .admonitionblock.tip .title::before {
     color: #0a8e00;
     content: "Moneō: ";
-}
-
-@media (width < 80rem) {
-    .sidenote {
-        display: block;
-        margin: 1em;
-        margin-top: 0;
-    }
-    label.sidenote-toggle {
-        display: inline-block;
-        cursor: pointer;
-        font-family: "EB Garamond 12";
-        color: var(--colour-highlight-fg);
-        margin-bottom: 0;
-        height: 1em;
-        vertical-align: top;
-    }
-    input.sidenote-toggle:not(:checked) + label.sidenote-toggle::before {
-        content: "❦";
-        margin-right: 0.3em;
-    }
-    input.sidenote-toggle:checked + label.sidenote-toggle::before {
-        content: "❧";
-    }
-    input.sidenote-toggle {
-        display: none;
-    }
-    input.sidenote-toggle:not(:checked) + label.sidenote-toggle + .sidenote {
-        display: none;
-    }
 }
 
 .ordinal-suffix {
