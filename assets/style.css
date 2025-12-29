@@ -160,7 +160,7 @@ body {
 .sidenote {
     display: block;
     margin: 0 auto 1rem;
-    max-width: 15rem;
+    width: 15rem;
 
     font-size: 0.9em;
     padding-top: 0.1em; /* compensate text-top alignment for font-size */
