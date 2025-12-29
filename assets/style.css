@@ -157,14 +157,19 @@ body {
     }
 }
 
+.sidenote {
+    display: block;
+    margin: 0 auto 1rem;
+    max-width: 15rem;
 
-@media (width < 89rem) {
-    /* TODO this isn't very mobile-first of me */
-    .sidenote {
-        display: block;
-        margin: 1em;
-        margin-top: 0;
-    }
+    font-size: 0.9em;
+    padding-top: 0.1em; /* compensate text-top alignment for font-size */
+    line-height: 1.2;
+    color: var(--colour-slightly-faded);
+    border-bottom: dashed 1px var(--colour-very-faded);
+}
+
+@media (width < 84rem) {
     label.sidenote-toggle {
         display: inline-block;
         cursor: pointer;
@@ -189,7 +194,7 @@ body {
     }
 }
 
-@media (width >= 89rem) {
+@media (width >= 84rem) {
     aside {
         float: right;
         margin-right: -20rem;
@@ -201,12 +206,10 @@ body {
     }
 
     .sidenote {
-        display: block;
         float: right;
-        margin-right: -22rem;
-        max-width: 20rem;
-        margin-left: 1rem;
-        margin-bottom: 1rem;
+        clear: both;
+        margin: 0 -17rem 1.5rem 1rem;
+        padding-bottom: 0.5em;
     }
 
     .sidenote-toggle {
@@ -398,7 +401,6 @@ main {
         margin-left: 1.5em;
         padding-left: 0;
         list-style-position: outside;
-        clear: both;
     }
 
     li {
@@ -636,13 +638,6 @@ footer {
             }
         }
     }
-}
-
-.sidenote {
-    font-size: 0.9em;
-    padding-top: 0.1em; /* compensate text-top alignment for font-size */
-    line-height: 1.2;
-    color: var(--colour-slightly-faded);
 }
 
 .admonitionblock {
