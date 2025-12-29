@@ -1,16 +1,16 @@
 HERE = $(shell pwd)
 
 build: assets
-	nix run . -- build
+	cabal run . -- build
 
 rebuild: assets
-	nix run . -- rebuild
+	cabal run . -- rebuild
 
 watch: assets
-	nix run . -- watch
+	cabal run . -- watch
 
 clean-site:
-	nix run . -- clean
+	cabal run . -- clean
 
 clean-fonts:
 	make -C fonts/EB-Garamond clean
