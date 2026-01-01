@@ -52,6 +52,7 @@
   font-weight: bold;
   font-display: swap;
   font-variant-ligatures: historical-ligatures;
+  font-variant-numeric: oldstyle-nums;
   src: url(EBGaramond12-Regular.woff) format('woff');
 }
 

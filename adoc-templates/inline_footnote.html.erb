@@ -1,4 +1,8 @@
-<input
+<sup
+    class="sidenote-id"
+    id="sidenote-id:<%= attr :index %>"
+    >&NoBreak;[<a href="#sidenote:<%= attr :index %>"><%= attr :index %></a>]</sup
+><input
     type="checkbox"
     id="sidenote-toggle:<%= attr :index %>"
     class="sidenote-toggle"
@@ -6,10 +10,6 @@
     for="sidenote-toggle:<%= attr :index %>"
     class="sidenote-toggle"
     ></label
-><sup
-    class="sidenote-id"
-    id="sidenote-id:<%= attr :index %>"
-    >&NoBreak;[<a href="#sidenote:<%= attr :index %>"><%= attr :index %></a>]</sup
 ><span
     class="sidenote"
     id="sidenote:<%= attr :index %>"

@@ -1,3 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono&display=swap");
+@import url("fonts/urw-palladio/font.css");
+@import url("fonts/eb-garamond/font.css");
+
 :root {
     --font-text: "URW Palladio", "Liberation Serif", "Times New Roman", serif;
     --font-header: "EB Garamond", "Times New Roman", serif;
@@ -91,9 +95,9 @@ body {
     article h2 {
         background-image: linear-gradient(
             to top,
-            var(--colour-bg-transparent),
-            1%,
-            var(--colour-bg)
+            var(--colour-bg-transparent) 0%,
+            var(--colour-bg) .25em,
+            var(--colour-bg) 100%
         );
         position: sticky;
         top: 0;
@@ -153,6 +157,10 @@ body {
     }
 }
 
+.sidenote-id {
+    display: none;
+}
+
 .sidenote {
     display: block;
     margin: 0 auto 1rem;
@@ -163,29 +171,25 @@ body {
     line-height: 1.2;
     color: var(--colour-slightly-faded);
     border-bottom: dashed 1px var(--colour-very-faded);
-
-    .sidenote-id {
-        display: none;
-    }
 }
 
-@media (width < 85rem) {
-    .sidenote-id { display: none; }
+@media (width < 84rem) {
     label.sidenote-toggle {
         display: inline-block;
         cursor: pointer;
         font-family: "EB Garamond 12";
         color: var(--colour-highlight-fg);
-        margin-bottom: 0;
         height: 1em;
         vertical-align: top;
+        margin-left: 0.3em;
     }
     input.sidenote-toggle:not(:checked) + label.sidenote-toggle::before {
         content: "❦";
-        margin-right: 0.3em;
     }
     input.sidenote-toggle:checked + label.sidenote-toggle::before {
         content: "❧";
+        position: relative;
+        top: -3px;
     }
     input.sidenote-toggle {
         display: none;
@@ -195,7 +199,7 @@ body {
     }
 }
 
-@media (width >= 85rem) {
+@media (width >= 84rem) {
     aside {
         float: right;
         margin-right: -20rem;
@@ -206,10 +210,19 @@ body {
         }
     }
 
+    .sidenote-id {
+        font-family: var(--font-header);
+        font-variant-numeric: oldstyle-nums;
+    }
+
+    .sidenote-id {
+        display: initial;
+    }
+
     .sidenote {
         float: right;
         clear: both;
-        margin: 0 -18rem 1.5rem 1rem;
+        margin: 0 -17rem 1.5rem 1rem;
         padding-bottom: 0.5em;
 
         .sidenote-id {
@@ -265,8 +278,6 @@ article > section {
 }
 
 code {
-    /* bootstrap defines this to be a rather violent shade of fuschia */
-    color: currentColor;
     background-color: var(--colour-slight-highlight-bg);
     font-family: var(--font-code);
     padding: 0 0.3em;
@@ -690,7 +701,3 @@ footer {
 .ordinal-suffix {
     text-decoration: underline;
 }
-
-@import url("https://fonts.googleapis.com/css2?family=DM+Mono&display=swap");
-@import url("fonts/urw-palladio/font.css");
-@import url("fonts/eb-garamond/font.css");
