@@ -1,0 +1,359 @@
+---
+title: Whys, whats, and hows
+subtitle: or, how I learnt to stop worrying and love nondeterminism
+tags: Programming languages, Semantics, Nondeterminism, Logic programming
+---
+
+== Introduction
+
+Like many people, as part of my technical education I was taught logic
+programming with Prolog. At the time I found it confusing and scary, and too
+high-level to be meaningful. As I've progressed through my career I've
+increasingly found myself sympathizing with nondeterminism in languages, and
+I'd like to share the qualms I initially had and how I got over them.
+
+== My background
+
+Of the link:https://josephg.com/blog/3-tribes/[three programming tribes], I've
+cycled through all of them at different points in my technical journey, though
+some more than others. The points I give here I'll try to mark as being
+particularly pertinent to one or the other.
+
+== What we talk about when we talk about nondeterminism
+
+Nondeterminism can mean different things to different people, but here I'll be
+using it to mean _code that can produce multiple, possibly infinite, answers in
+an unspecified order_. Notably this doesn't mean undefined behaviour, where the
+code may return things that are not type-correct or have unscoped influences on
+the rest of the program or system, like crashing or corrupting memory.
+
+There is another, less well-behaved variant of nondeterminism, which is code
+that will return one of the set of possible values, but which one is left
+undefined or implementation-defined. This is useful for modeling real-world
+behaviours, but I'll try to argue later that it is adequately subsumed by the
+version I'll talk about here.
+
+== Nondeterminism maps naturally to how we break down problems
+
+At first glance nondeterminism can look a little forced. Functional programmers
+will say that
+link:https://wiki.haskell.org/Logic_programming_example[nondeterministic
+functions are just functions in the list monad], and they'll be right.
+Imperative programmers will say that nondeterministic programming is just
+procedural programming with a backtracking operation, and they'll be right. Both
+of these perspectives see nondeterminism as something that can be added on to
+existing languages, and while that's certainly true, I'd like to show that
+nondeterminism is also a natural generalization of things that already occur in
+these languages. But first, let's back up a little bit and talk about the way a
+problem gets solved.
+
+=== The lifecycle of a problem
+
+Let's assume (as an example, but the structure translates well to many
+other environments) a corporate setting. Violently simplifying, there's a rather
+old-fashioned structure of company that has several largely disjoint rôles:
+
+- *Leadership* finds a *Problem*. They hand it down to
+
+- *Product*, who create a *Specification* indicating what the company needs to
+  do to be able to claim to have a solution to the problem, and pass it on to
+
+- *Engineering*, who write an *Implementation* that is a description of the
+solution that a computer can execute.
+
+The production of each of these artefacts requires a different skillset, as each
+artefact includes new information that is specialized to the particular layer.
+
+Leadership's inputs to the Problem include knowledge of the company's
+relationship to the entities around it, like:
+
+- *market forces*: what are people trying to do? how much money do they have?
+  what is it worth to them to solve the problem?
+
+- *business relationships*: who will trust the company to deliver a working
+  solution?
+
+- *investor relationships*: how can the company get resources to solve the
+  problem? how does the problem fit into the current investment climate? how can
+  it synergize with or hedge other bets investors are making?
+
+Product's inputs to the Specification include the Problem, but also:
+
+- *user input*: who are the people who would use the solution? what are they
+  trying to achieve? what do they care about? what do they not care about?
+
+- *problem difficulty*: can the company even solve the Problem in a way
+  that customers would want?
+
+- *financial viability*: who will pay the company to solve the Problem? how much
+  will they pay? what will it cost to solve? can the company make money?
+
+- *resource allocation*: how much capital does the company have to deliver the
+  solution? what will the cost be to the company? what other initiatives will the
+  company have to abandon or deprioritize?
+
+Engineering take that Specification and merge it with information about:
+
+- *the software landscape*: what libraries are available that could be useful in
+  implementing the Specification? what operating system features can the
+  Implementation use?
+
+- *the hardware landscape*: what hardware requirements does the Implementation
+  have? are they realistic? how much will it cost to achieve them? how does the
+  Implementation need to be optimized to fit within a reasonable budget?
+
+- *the theoretical landscape*: what algorithms have been produced to do the
+  tasks the Implementation needs? what's the maximum amount of information that
+  needs to be stored during the running of the Implementation? how can the
+  Problem be decomposed in ways that are conceptually simple?
+
+- *the broader technical posture of the company*: how does the software interact
+  with other solutions the company owns? how can the new solution be integrated
+  with them? is there work that can be deduplicated? how should the solution be
+  extensible? what new requirements are likely to arise?
+
+It's a long list, but it's far from exhaustive: each of these rôles has a
+complexity equal to the full professional capacity of a human (or sometimes even
+a team of humans). It's common to refer to this as ‘the why, the what, and the
+how’: someone defines the motivations for building the implementation, someone
+defines what the implementation should look like, and finally someone produces
+an explanation of how the implementation should work. But this absolute
+addressing is short-sighted. Taking away the global observer, each layer is
+tasked with converting a ‘what’ into a ‘how’. footnote:[This leads to the LLM
+fallacy: because LLMs accept and produce natural language, which is the syntax
+of specifications, people think that their rôle has shifted up this scale
+towards the ‘product’ rôle. But the level of discourse is still at the
+‘engineering’ rôle, just in natural language instead of the formal languages
+that are usually used to write things unambiguously at this level. This removes
+the learning of syntax as a barrier to entry, and in some cases where the syntax
+is cumbersome can speed up program input — but it doesn't reduce the required
+knowledge of the relevant systems, and adding the ambiguity of natural language
+is many developers' first encounter with problems that lawyers and
+mathematicians have been struggling with for centuries, with the latter
+eventually giving rise to modern programming languages.] Indeed, this division
+is somewhat arbitrary: in one-person open-source efforts all these rôles can be
+assigned to a single person, and each of the rôles can be broken down further.
+
+=== Problems in engineering
+
+I consider myself a technical person, and while I've dabbled I don't presume to
+be able to do the upper end of this spectrum justice.footnote:[Apologies to
+those whose rôles I've misrepresented: I promise it's from ignorance, not
+malice!] As such I'm going to focus on the technical end, but I hope I've argued
+convincingly that, at least in theory, the difference in (this aspect of) these
+rôles is _what information they pull in to the artefact_. The upper levels of
+the spectrum are in theory amenable to formal analysis,footnote:[For example,
+link:https://www.oreilly.com/library/view/essential-business-process/0596008430/ch03s02.html[business
+processes can be represented in the π-calculus], a computational formalism.]
+but to the best of my knowledge nobody has managed it robustly yet. Zooming in
+on the engineering end, however, reveals a rich, layered world of nested
+abstractions, with a wealth of tools used to preserve the abstraction — i.e. to
+separate the ‘what’ from the ‘how’. Not only do developers build these
+abstractions for ourselves and each other every day in the form of functions,
+modules, libraries, and protocols, but we also work on top of a lot of
+abstractions we take for granted. It's tempting to think of a definition like
+this:
+
+[quote]
+A *specification* is simply an underdetermined implementation. An
+*implementation* is a specification with additional constraints sufficient to
+identify a single point in the space of possible implementations.
+
+But this is committing the same error as above: all implementations are also
+specifications. To the upper layer stem:[n + 1] the layer stem:[n] is a black
+box, an implementation that presents a certain interface to be consumed by layer
+stem:[n + 1]. But to the lower layer stem:[n - 1] the layer stem:[n] is a
+specification with some (again underdetermined!) expectations about how layer
+stem:[n - 1] should behave.
+
+To give a concrete example, a developer might have an idea for an application
+that scratches some personal itch — say, organizing their cat pictures.
+
+- They sketch out some UI designs for how the application will look and interact
+  with the user, adding details like how the cat pictures will be arranged
+  onscreen and what the UX flow is for adding a new cat picture, and assuming
+  there will be code to take care of things like handling button presses.
+
+- They write some code for the frontend of the application, translating the
+  designs into HTML, CSS, and JavaScript, and specifying things like how the
+  different parts of the application move around in response to different window
+  sizes and what state needs to be kept track of to correctly handle a button
+  press. At the same time, they assume the existence of a REST backend that can
+  handle requests like `POST /cats`, `GET /cats` and `GET /cats/fluffy`.
+
+- They implement the backend in some high-level language. The backend implements
+  the interface consumed by the frontend, but also adds some details of its own:
+  it uses a PostgreSQL database, for example, and it's written in a language
+  compatible with CRuby.
+
+- The backend is run on CRuby. To CRuby, the Ruby program is a specification of
+  how it should behave. To that specification CRuby adds details about how memory
+  should be managed, and how long different operations will take. At the same
+  time, the CRuby code assumes a (say) C99-compatible C implementation, and a
+  POSIX-compliant set of syscalls.
+
+- The code is being run on a particular flavour of Linux, which sees the
+  syscalls as a specification for how it should interact with the hardware. At the
+  same time, it assumes a GNU C99 C implementation, as well as an
+  x86_64-compatible processor.
+
+- The processor exposes an x86_64 ISA, but internally it works quite differently
+  to the i386. It has a Java-inspired coprocessor and a highly sophisticated
+  dependence analysis subsystem, and it assumes that raising the voltage of
+  certain wires will cause certain actions.
+
+We could go on forever, or at least until we find a unified theory of
+everything. Each layer is always underdetermined with respect to the layers
+beneath it — at no point does anybody in the stack write down something that is
+fully specified. Indeed, the very concept of an implementation being
+‘deterministic’, i.e. constrained to uniqueness, is not borne out by physical
+reality!
+
+== Nondeterminism already exists in mainstream programming practices
+
+This is all very good, but isn't nondeterminism very _complicated_? Doesn't it
+add significant complexity to our programming languages? I'd like to argue that
+it doesn't, and what complexity it does add to the semantics it immediately pays
+for by providing a general mechanism for other features that are currently
+special cases in most languages.
+
+=== Types are underdetermined values
+
+The development world has roughly three tools to define abstraction boundaries:
+
+- *documentation* specifies the ‘what’ for humans
+
+- *types* and *tests* (which are a subset of types) specify the ‘what’ for machines
+
+After reading the talk about layering above, it should be no surprise that
+nondeterminism is immediately applicable to the discipline of type-checking.
+After all, typesfootnote:[As seen in most languages; some less commonly seen
+variants of types include additional constraints on types built from the types,
+as in
+link:https://homotopytypetheory.org/2012/11/12/abstract-types-with-isomorphic-types/[higher
+inductive types] or
+link:https://nuprl-web.cs.cornell.edu/KB/show.php?ID=722[partial equivalence
+relations].] are exactly a notation for specifying a (potentially infinite) set
+of values: a type is just an underdetermined value! With that in mind, it's
+unsurprising that most type systems function by a unification procedure
+reminiscent of Prolog. In fact, most sophisticated type systems are
+Turing-complete (up to recursion limits) by this mechanism. Anyone who's spent
+some time diving into the weeds of TypeScript type inference, Rust trait
+unification, or C++ templates can attest that programming in the type language
+is a totally different experience to programming in the value language: in order
+to be proficient with these languages you need to be fluent in _two_ different
+languages that are totally unrelated, even down to their evaluation
+semantics.footnote:[It doesn't help, of course, that the type language is
+typically a second-class citizen, being inferior to the value language in
+syntax, ergonomics, tooling, and execution speed.]
+
+// need more concrete examples, but don't want to introduce a whole language here…
+// probably should also talk about Girard's two notions of typing
+
+=== Selection constructs are bounded nondeterminism
+
+// work on this and below — try replacing backtracking (Kanren doesn't do backtracking).
+// good chat to be had about cloning vs undoing (backtracking) (i.e. store a snapshot or a delta)
+
+If nondeterminism were only useful for types we wouldn't be gaining much. But
+let's take a look at a beloved construct in programming languages: select.
+
+The select construct takes many different forms in different languages. Some common ones:
+
+[source,c]
+if (condition1)
+  …
+else if (condition2)
+  …
+else
+  …
+
+[source,c]
+select (expression) {
+  case value1: …
+  case value2: …
+  default: …
+}
+
+[source,python]
+match expression:
+  case value1:
+    …
+  case value2:
+    …
+
+[source,rust]
+match expression {
+  Variant1 => …,
+  Variant2 => …,
+}
+
+[source,haskell]
+case expression of
+  Variant1 -> …
+  Variant2 -> …
+
+[source,haskell]
+function Variant1 = …
+function Variant2 = …
+
+The ergonomics differ, but, with some contortion, these constructs are all equivalent in expressive power: they allow the program to take one path or another (with their attendant side effects, in the case of the languages with uncontrolled side effects) depending on the result of executing some code.
+
+What may be less obvious is that the condition part of these expressions establishes what's known in logic programming circles as a _choice point_: within the conditions there is the opportunity to give up on the current code path and fall through to the next one.
+The choice is delimited, however, in the sense that after the condition matches or returns true the capability to backtrack and choose a different path is lost.
+This delimiting has an interesting effect on resource usage: given that the choice point can never be used again, once the choice of code path is resolved the compiler can dispose of the resources that would be needed to backtrack and try another choice.
+This is a property not held by many logic languages, such as Prolog, in which backtracking is effectively undelimited, and without some carefootnote:[In Prolog choice points can be explicitly eliminated using the ‘cut’ operator `!` (sadly unrelated to the ‘cut’ axiom in logic) but to do so is often frowned upon as it harms the ability to run the program in other modes (for example, retrieving an ‘input’ given an ‘output’).] choice points can pile up.
+
+In the case of more restricted languages like Haskell the backtrackable part of the program is limited to a pure subset, but the most general form of the select – the unrestricted `if` of Algol and its descendents, such as C — can run arbitrary code with side effects to select the code path, and no attempt to unwind the effects is made.
+The only thing that makes this feasible is the fact that the conditions are run in a predictable order from top to bottom, so the programmer has the opportunity to manage the effects by hand.
+Even for pure languages, though, the slightly arbitrary choice of cutting on the first matching variant has the undesirable consequence that the result of the program depends on the order in which its clauses are written.
+This gives a rather imperative flavour to the language: one can no longer reason about the outcome as a series of equalities (as the Haskell syntax might suggest), but instead needs to reason statefully, mentally simulating the in-order execution of the clauses, and the meaning of a program can change depending on the order of the clauses.footnote:[This also poses a syntactic challenge for graphical or other ‘orderless’ programming language syntaxes, in which one would like the resulting programs to be invariant to a variety of rotations and permutations, and there isn't necessarily an obvious ‘top to bottom’ ordering available.]
+
+=== Exceptions are backtracking
+
+This isn't particularly surprising, but probably bears mentioning.
+Exceptions, along with various internal encodings of them (`Result` sum types, multi-value error returns, et cetera) allow code to ‘fail’ up to the nearest choice point (a `catch` expression) and try something else.
+Notably, one way of trying something else is to try the same code path (calling the same function) again, repeating the side-effects and possibly with different values.
+Their generalization, algebraic effects, allows skipping the recomputation, writing a new value directly into the paused process and continuing where it left off.
+
+[#resources]
+=== Non-linear resource usage is undelimited backtracking
+
+// maybe rephrase in terms of linear/affine/… cps
+
+In languages like Rust with resource constraints, something very interesting occurs.
+Take an API like link:https://docs.rs/papaya/[Papaya]'s link:https://docs.rs/papaya/latest/papaya/struct.HashMap.html#method.update[`HashMap::update`] function.
+Because the updating function may need to be retried several times, possibly on different values, depending on the state of the map, it must be given as a `Fn` function, as opposed to a `FnOnce` function.
+In Rust notation, this means that the function must be able to be called many times, including re-entrantly, without consuming or otherwise invalidating any of its context.
+In other words, the closure acts as a choice point!
+If the closure never returns, it can encode failure truly, canceling the whole process; but it can also return a value to the caller to continue with.
+In either case, it effectivelyfootnote:[Though, in Rust, not implementationally: only those variables in lexical scope of the closure are accessible, as if the stack had been unwound, but the stack between the definition and usage of the closure will remain in memory as now possibly dead code.] unwinds the stack.
+This is a standard technique for implementing backtracking computation known as link:https://en.wikipedia.org/wiki/Continuation-passing_style[continuation-passing style], but it stands out in Rust because of the marked contrast with _affine_ continuations `FnOnce() -> !`, which can be resumed only one time.
+
+// diagram: closure
+
+- nod to linear and bounded-resource programming
+
+- backtracking control is equivalent to resource control
+
+- nondeterminism with resource control = programming in the rationals (Sabry)
+
+- nondeterminism without resource control = programming without allocation control (e.g. stack allocation)
+
+== Nondeterminism enables multi-agent programming
+
+- concurrency: determination is message-passing
+
+- distributed software
+
+- specification languages
+
+- choreographies
+
+- code synthesis/LLMs
+
+- type checking as a three-way interaction between program, programmer, and type checker (see above)
+
+== (notes)
+
+- work in link:https://www.sciencedirect.com/science/article/abs/pii/0004370280900326[Sussman] somewhere?
