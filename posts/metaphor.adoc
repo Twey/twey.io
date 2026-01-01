@@ -1,7 +1,36 @@
 ---
-title: The rôle of metaphor in programming
-subtitle: where LLMs can shine
+title: LLMs, HoTT, and Lisp
+subtitle: the rôle of metaphor in programming
 tags: Programming languages, Natural languages
 ---
 
-== Introduction ==
+== Metaphor in natural language
+
+- language is built of layered metaphor
+- people in the past didn't speak in a particularly flowery or metaphorical way: these metaphors were their plain and basic language
+- our modern language too is built on layers of metaphor that are lexicalized to the point that we think of them as literal expressions
+- how has programming jargon (i.e. natural language about programming) evolved metaphorically? What concepts are basic to us that programmers from the past would consider weird?
+
+== Metaphor in programming
+
+- programming languages aren't ‘languages’ in the linguistic sense (c.n.). but what if they were? c.f. Perl
+- what metaphors have evolved within programming languages? what is the analogous layered structure?
+- what metaphors are used within programs, i.e. in a formal language?
+- consider: Lisp macros as metaphor?
+- async programming as metaphor? (it's like procedural programming, but…)
+- type classes as metaphor? (monoids, monads, foldable, traversable)
+- better stories, better languages https://github.com/fare/better-stories
+
+== Homotopy type theory and univalence
+
+- brief overview
+- univalence principle as formally respecting metaphor
+- path types as formal metaphor
+
+== Ludics as metaphor
+
+- selectively break abstraction to transform inner part of structure
+
+== LLMs and metaphor
+
+- LLMs capable of transporting a program along a metaphor in the same sense as univalence, but stochastically + based on natural language semantics
