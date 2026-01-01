@@ -24,7 +24,7 @@ clean-assets: clean-fonts clean-logo
 clean: clean-site clean-assets
 
 push: build
-	scp -r _site/* twey.co.uk:www.io/
+	rsync -r _site/ twey.co.uk:www.io/
 
 fonts:
 	make -C fonts/EB-Garamond WEB=../../assets/fonts/eb-garamond webfonts
