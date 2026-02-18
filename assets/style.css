@@ -181,7 +181,8 @@ body {
         color: var(--colour-highlight-fg);
         height: 1em;
         vertical-align: top;
-        margin-left: 0.3em;
+        margin-left: 0.2em;
+        margin-right: 0.2em;
     }
     input.sidenote-toggle:not(:checked) + label.sidenote-toggle::before {
         content: "❦";
@@ -221,7 +222,7 @@ body {
 
     .sidenote {
         float: right;
-        clear: both;
+        clear: right;
         margin: 0 -17rem 1.5rem 1rem;
         padding-bottom: 0.5em;
 
